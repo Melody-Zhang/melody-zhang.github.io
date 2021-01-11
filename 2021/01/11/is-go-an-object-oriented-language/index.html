@@ -24,16 +24,17 @@
     var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta name="description" content="ssssss">
+  <meta name="description" content="According to official documents, this is one of the “Frequently Asked Questions(FAQ)”. And it’s what the answer is in the documents below. I divided it into 5 points.  Although go has types and method">
 <meta property="og:type" content="article">
-<meta property="og:title" content="is go an object-oriented language?">
+<meta property="og:title" content="Is go an object-oriented language?">
 <meta property="og:url" content="https://github.com/Melody-Zhang/2021/01/11/is-go-an-object-oriented-language/index.html">
 <meta property="og:site_name" content="yuxin&#39;s blog">
-<meta property="og:description" content="ssssss">
+<meta property="og:description" content="According to official documents, this is one of the “Frequently Asked Questions(FAQ)”. And it’s what the answer is in the documents below. I divided it into 5 points.  Although go has types and method">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-11T13:38:16.000Z">
-<meta property="article:modified_time" content="2021-01-11T13:41:16.752Z">
+<meta property="article:modified_time" content="2021-01-11T15:24:24.555Z">
 <meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="go tech">
 <meta name="twitter:card" content="summary">
 
 
@@ -50,7 +51,7 @@
   };
 </script>
 
-  <title>is go an object-oriented language? | yuxin's blog</title>
+  <title>Is go an object-oriented language? | yuxin's blog</title>
   
 
 
@@ -167,6 +168,10 @@
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
   </nav>
 </div>
 
@@ -218,7 +223,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          is go an object-oriented language?
+          Is go an object-oriented language?
         </h1>
 
         <div class="post-meta-container">
@@ -230,7 +235,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-01-11 21:38:16 / Modified: 21:41:16" itemprop="dateCreated datePublished" datetime="2021-01-11T21:38:16+08:00">2021-01-11</time>
+      <time title="Created: 2021-01-11 21:38:16 / Modified: 23:24:24" itemprop="dateCreated datePublished" datetime="2021-01-11T21:38:16+08:00">2021-01-11</time>
     </span>
 
   
@@ -243,7 +248,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>sss<br>sss</p>
+        <p>According to official documents, this is one of the “Frequently Asked Questions(FAQ)”. And it’s what the answer is in the documents below.</p>
+<p>I divided it into 5 points.</p>
+<ol>
+<li><p>Although go has types and methods and allows an object-oriented style of programming. there is no type hierarchy.</p>
+</li>
+<li><p>The concept of “interface” in go provides a different approach that we believe is easy to use and in some ways more general.</p>
+</li>
+<li><p>There are also ways to embed types in other types to provides something analogous, but not identical, to subclassing.</p>
+</li>
+<li><p>Moreover, methods in go are more general than in C++ or Java: they can be defined for any sort of data, even built-in types, such as plain, “unboxed” integers. They are not restricted to structs(classes).</p>
+</li>
+<li><p>Also the lack of an type hierarchy, makes “objects” in go feel much more lightweight than in languages such as C++ or Java.</p>
+</li>
+</ol>
+<p>ref: <a target="_blank" rel="noopener" href="https://golang.org/doc/faq">https://golang.org/doc/faq</a><br>key-word: object-oriented</p>
 
     </div>
 
@@ -252,6 +271,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/go-tech/" rel="tag"># go tech</a>
+          </div>
 
         
 
