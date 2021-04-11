@@ -159,7 +159,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -204,6 +204,79 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/11/go-%E4%B8%A4%E4%B8%AA%E5%8D%8F%E7%A8%8B%E6%8E%A5%E6%9B%BF%E6%89%93%E5%8D%B0%E5%9F%BA%E6%95%B0%E5%92%8C%E5%81%B6%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/11/go-%E4%B8%A4%E4%B8%AA%E5%8D%8F%E7%A8%8B%E6%8E%A5%E6%9B%BF%E6%89%93%E5%8D%B0%E5%9F%BA%E6%95%B0%E5%92%8C%E5%81%B6%E6%95%B0/" class="post-title-link" itemprop="url">go - 两个协程接替打印基数和偶数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-11 23:44:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:44:32+08:00">2021-04-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-12 00:22:47" itemprop="dateModified" datetime="2021-04-12T00:22:47+08:00">2021-04-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用 sync.WaitGroup 和 channel </p>
+<p>Next: go - 常用数据结构的常用操作</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/11/go-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B8%B8%E9%A9%BB%E5%86%85%E5%AD%98%E5%A2%9E%E9%95%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +303,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-04-11 17:40:03 / Modified: 18:53:40" itemprop="dateCreated datePublished" datetime="2021-04-11T17:40:03+08:00">2021-04-11</time>
+      <time title="Created: 2021-04-11 17:40:03 / Modified: 19:17:46" itemprop="dateCreated datePublished" datetime="2021-04-11T17:40:03+08:00">2021-04-11</time>
     </span>
 
   
@@ -243,8 +316,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="test-imgs"><a href="#test-imgs" class="headerlink" title="test imgs"></a>test imgs</h1><p><a href="https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg">https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg</a><br><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg" alt="image"><br><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg?raw=true" alt="image"></p>
-
+          <h1 id="业务场景监控"><a href="#业务场景监控" class="headerlink" title="业务场景监控"></a>业务场景监控</h1><p><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg?raw=true" alt="image"><br><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem2.jpeg?raw=true" alt="image"></p>
+<h1 id="go-的内存分配"><a href="#go-的内存分配" class="headerlink" title="go 的内存分配"></a>go 的内存分配</h1><h1 id="go-的常驻内存是如何产生的"><a href="#go-的常驻内存是如何产生的" class="headerlink" title="go 的常驻内存是如何产生的"></a>go 的常驻内存是如何产生的</h1><h1 id="gc-回收的是哪部分内存"><a href="#gc-回收的是哪部分内存" class="headerlink" title="gc 回收的是哪部分内存"></a>gc 回收的是哪部分内存</h1><h1 id="go-内存问题的定位方法-pprof-的使用"><a href="#go-内存问题的定位方法-pprof-的使用" class="headerlink" title="go 内存问题的定位方法 - pprof 的使用"></a>go 内存问题的定位方法 - pprof 的使用</h1><h1 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h1><h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1>
       
     </div>
 
@@ -294,10 +367,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-04-05 22:41:47 / Modified: 22:42:59" itemprop="dateCreated datePublished" datetime="2021-04-05T22:41:47+08:00">2021-04-05</time>
+      <time title="Created: 2021-04-05 22:41:47" itemprop="dateCreated datePublished" datetime="2021-04-05T22:41:47+08:00">2021-04-05</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-11 23:43:43" itemprop="dateModified" datetime="2021-04-11T23:43:43+08:00">2021-04-11</time>
+      </span>
 
   
 </div>
@@ -309,7 +388,48 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="main"><a href="#main" class="headerlink" title="main"></a>main</h1><h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1>
+          <h1 id="go-语言的独特之处"><a href="#go-语言的独特之处" class="headerlink" title="go 语言的独特之处"></a>go 语言的独特之处</h1><ol>
+<li>go 对类型非常苛刻，不允许强制的类型转换，不能隐式的类型转换(即使是原有类型和别名)，可以显式的类型转换</li>
+<li>go 没有前置++</li>
+<li>与 c,c++ 相比，go 的string 默认值是””, 而不是nil</li>
+<li>不支持指针运算</li>
+<li>不同长度数组之间不可用 “==” 进行比较</li>
+<li>数组对应位置元素也要相等，才是true</li>
+</ol>
+<h1 id="main"><a href="#main" class="headerlink" title="main"></a>main</h1><ul>
+<li>应用程序入口 cli.go - 不必须是 main.go</li>
+<li>package main - must</li>
+<li>func main(){} - must, and no args、no returns</li>
+<li>args 通过 os.Args or flag</li>
+<li>return 通过 os.Exit(0) 正常退出，os.Exit(non-zero) 异常退出，其中的数字即为应用程序的退出状态，或者main函数返回值</li>
+<li>可以通过build cli.go, echo $? 进行查看</li>
+</ul>
+<h1 id="panic-和-os-Exit"><a href="#panic-和-os-Exit" class="headerlink" title="panic 和 os.Exit()"></a>panic 和 os.Exit()</h1><p>panic - defer &amp; stack info<br>os.Exit - no defer &amp; no stack info</p>
+<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><p>包名可以小写<br>通过大小写控制访问权限</p>
+<ul>
+<li>大写: 外部可访问</li>
+<li>小写：外部不可访问<br>结构体中的字段名</li>
+<li>如果字段名，首字母小写, 该字段无法被外部包访问和解析，如json.Marshal()等</li>
+<li>结构体本身的命名，首字母小写，没有关系<br>所以结构体中的字段名最好大写，即使是内部包访问</li>
+</ul>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>花括号</p>
+<h1 id="比较的是内容还是地址"><a href="#比较的是内容还是地址" class="headerlink" title="== 比较的是内容还是地址"></a>== 比较的是内容还是地址</h1><p>according to what kind of type you compare</p>
+<ol>
+<li>基础类型：int, bool, string - 直接比较值</li>
+<li>复合类型：数组和结构体 - 逐字段比较，长度位置数据都要一致</li>
+<li>引用类型：slice, map, channel, ptr, 除了slice 其他都比较引用</li>
+<li>接口类型：interface，比较类型以及值</li>
+<li>slice: 不可以比较</li>
+</ol>
+<h1 id="为什么-slice-不可比较"><a href="#为什么-slice-不可比较" class="headerlink" title="为什么 slice 不可比较"></a>为什么 slice 不可比较</h1><ol>
+<li>因为slice可以引用自己，实现难度大</li>
+<li>slice如果跟array行为不一致，会使人感到混淆</li>
+<li>slice can only be compared to nil<h1 id="自增计数-iota"><a href="#自增计数-iota" class="headerlink" title="自增计数 - iota"></a>自增计数 - iota</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> 1 package main</span><br><span class="line"> 2</span><br><span class="line"> 3 import &quot;fmt&quot;</span><br><span class="line"> 4</span><br><span class="line"> 5 const (</span><br><span class="line"> 6     a &#x3D; iota</span><br><span class="line"> 7     b</span><br><span class="line"> 8     c</span><br><span class="line"> 9     d &#x3D; 0</span><br><span class="line">10     e &#x3D; 0</span><br><span class="line">11     f          &#x2F;&#x2F; 跟随上一个值</span><br><span class="line">12     g &#x3D; iota   &#x2F;&#x2F; 持续计数</span><br><span class="line">13</span><br><span class="line">14     h &#x3D; 1 &lt;&lt; iota</span><br><span class="line">15 )</span><br><span class="line">16</span><br><span class="line">17 func main()&#123;</span><br><span class="line">18     &#x2F;&#x2F; 0 1 2 0 0 0 6 128</span><br><span class="line">19     fmt.Println(a,b,c,d,e,f,g,h)</span><br><span class="line">20 &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>Next: go实现两个协程接替打印1~100中的基数和偶数</p>
+
       
     </div>
 
@@ -367,7 +487,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-06 23:04:56" itemprop="dateModified" datetime="2021-04-06T23:04:56+08:00">2021-04-06</time>
+        <time title="Modified: 2021-04-11 23:26:13" itemprop="dateModified" datetime="2021-04-11T23:26:13+08:00">2021-04-11</time>
       </span>
 
   
@@ -446,7 +566,16 @@
 
 </li>
 </ul>
-<h1 id="print-fmt"><a href="#print-fmt" class="headerlink" title="print, fmt"></a>print, fmt</h1><p>Ref:</p>
+<h1 id="print-fmt"><a href="#print-fmt" class="headerlink" title="print, fmt"></a>print, fmt</h1><ul>
+<li>print/println</li>
+</ul>
+<ol>
+<li>go的内置函数, 写入标准错误流</li>
+<li>print无法打印出数组和结构体<br>illegal types for operand: print for 复合类型，数组和结构体</li>
+<li>对于值类型就会打印出值，对于引用类型就会打印出指针<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The print built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Print is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func print(args ...Type)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The println built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Spaces are always added between arguments and a newline is appended.</span><br><span class="line">&#x2F;&#x2F; Println is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func println(args ...Type)</span><br></pre></td></tr></table></figure>
+fmt, 写入标准输出流</li>
+</ol>
+<p>Ref:</p>
 <ol>
 <li>‘Go语言参数传递是传值还是传引用’<br><a target="_blank" rel="noopener" href="https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html">https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html</a> </li>
 <li>‘slice与array的区别’<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013148775">https://segmentfault.com/a/1190000013148775</a><br><a target="_blank" rel="noopener" href="https://halfrost.com/go_slice/">https://halfrost.com/go_slice/</a><br><a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/">https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/</a><br><a target="_blank" rel="noopener" href="https://i6448038.github.io/2018/08/11/array-and-slice-principle/">https://i6448038.github.io/2018/08/11/array-and-slice-principle/</a></li>
