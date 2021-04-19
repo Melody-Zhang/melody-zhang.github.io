@@ -24,14 +24,17 @@
     var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="过程pointer -&gt; uintptr -&gt; 运算 -&gt; pointer -&gt; 解引用&amp;sth -&gt; unsafe.Pointer() -&gt; uintptr() -&gt; unsafe.Pointer() -&gt; *sthptr -&gt; * go中存储的内存大小int8 - 1byte int - 8bytes string - 16byte">
+<meta property="og:type" content="article">
 <meta property="og:title" content="go常用数据结构操作(八) - pointer">
 <meta property="og:url" content="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/index.html">
 <meta property="og:site_name" content="yuxin&#39;s blog">
+<meta property="og:description" content="过程pointer -&gt; uintptr -&gt; 运算 -&gt; pointer -&gt; 解引用&amp;sth -&gt; unsafe.Pointer() -&gt; uintptr() -&gt; unsafe.Pointer() -&gt; *sthptr -&gt; * go中存储的内存大小int8 - 1byte int - 8bytes string - 16byte">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-18T15:24:17.000Z">
-<meta property="article:modified_time" content="2021-04-18T15:24:17.368Z">
+<meta property="article:modified_time" content="2021-04-19T12:48:57.710Z">
 <meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="go">
 <meta name="twitter:card" content="summary">
 
 
@@ -136,7 +139,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -149,6 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go%E4%B8%AD%E5%AD%98%E5%82%A8%E7%9A%84%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">go中存储的内存大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noted"><span class="nav-number">3.</span> <span class="nav-text">noted</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B-1"><span class="nav-number">4.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ref"><span class="nav-number">5.</span> <span class="nav-text">ref</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -161,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -233,6 +237,13 @@
 
       <time title="Created: 2021-04-18 23:24:17" itemprop="dateCreated datePublished" datetime="2021-04-18T23:24:17+08:00">2021-04-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-19 20:48:57" itemprop="dateModified" datetime="2021-04-19T20:48:57+08:00">2021-04-19</time>
+      </span>
 
   
 </div>
@@ -244,7 +255,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>pointer -&gt; uintptr -&gt; 运算 -&gt; pointer -&gt; <em>解引用<br>&amp;sth -&gt; unsafe.Pointer(</em>) -&gt; uintptr(<em>) -&gt; unsafe.Pointer(</em>) -&gt; *sthptr -&gt; *</p>
+<h1 id="go中存储的内存大小"><a href="#go中存储的内存大小" class="headerlink" title="go中存储的内存大小"></a>go中存储的内存大小</h1><p>int8 - 1byte</p>
+<p>int - 8bytes</p>
+<p>string - 16bytes</p>
+<h1 id="noted"><a href="#noted" class="headerlink" title="noted"></a>noted</h1><p>只有 uintptr 类型可以执行加减操作<br>+1 意味着加一个 byte<br>那么该数据结构占用多少byte就要相应加多少byte<br>如：<br>int8 +1<br>int32 +4<br>int64 +8<br>string +16</p>
+<h1 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h1><p>通过指针访问 arr[1] 的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;unsafe&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	arr :&#x3D; [...]int&#123;1,2,3&#125;</span><br><span class="line">	unsafeArr0 :&#x3D; unsafe.Pointer(&amp;arr[0])</span><br><span class="line">	ptrArr0 :&#x3D; uintptr(unsafeArr0)</span><br><span class="line">	ptrArr0 +&#x3D; 8</span><br><span class="line">	unsafeArr1 :&#x3D; unsafe.Pointer(ptrArr0)</span><br><span class="line">	arr1 :&#x3D; (*int)(unsafeArr1)</span><br><span class="line">	fmt.Println(*arr1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97649559">https://zhuanlan.zhihu.com/p/97649559</a></p>
+
     </div>
 
     
@@ -252,6 +272,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%20%7C%7C%20tags/go/" rel="tag"># go</a>
+          </div>
 
         
 
@@ -262,6 +285,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/04/19/go-closures/" rel="next" title="go - closures">
+                  go - closures <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
