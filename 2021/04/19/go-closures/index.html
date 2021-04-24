@@ -32,7 +32,7 @@
 <meta property="og:description" content="示例https:&#x2F;&#x2F;gobyexample.com&#x2F;closures go 语言中的匿名函数可以直接构造闭包 一个用闭包生成的迭代器 123456789101112131415161718package mainimport &quot;fmt&quot;func seq() func() int &amp;#123;	i :&#x3D; 0	return func() int &amp;#123;		i++">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-19T12:41:35.000Z">
-<meta property="article:modified_time" content="2021-04-19T12:46:37.422Z">
+<meta property="article:modified_time" content="2021-04-20T13:39:45.763Z">
 <meta property="article:author" content="yuxin.zhang">
 <meta property="article:tag" content="go">
 <meta name="twitter:card" content="summary">
@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -234,10 +234,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-04-19 20:41:35 / Modified: 20:46:37" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:35+08:00">2021-04-19</time>
+      <time title="Created: 2021-04-19 20:41:35" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:35+08:00">2021-04-19</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-20 21:39:45" itemprop="dateModified" datetime="2021-04-20T21:39:45+08:00">2021-04-20</time>
+      </span>
 
   
 </div>
@@ -253,6 +259,9 @@
 <p>go 语言中的匿名函数可以直接构造闭包</p>
 <p>一个用闭包生成的迭代器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func seq() func() int &#123;</span><br><span class="line">	i :&#x3D; 0</span><br><span class="line">	return func() int &#123;</span><br><span class="line">		i++</span><br><span class="line">		return i</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	seq1 :&#x3D; seq()</span><br><span class="line">	for i:&#x3D;0;i&lt;10;i++&#123;</span><br><span class="line">		fmt.Println(seq1())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个函数时间装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">func loop() &#123;</span><br><span class="line">	for i:&#x3D;0;i&lt;10000000;i++&#123;</span><br><span class="line">		time.Sleep(1)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func timeSpend(f func()) func()&#123;</span><br><span class="line">	return func() &#123;</span><br><span class="line">		startTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		f()</span><br><span class="line">		endTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		fmt.Println(&quot;spend time: &quot;, (endTime - startTime)&#x2F;1e9)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	a :&#x3D; timeSpend(loop)</span><br><span class="line">	a()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="what-is-closures"><a href="#what-is-closures" class="headerlink" title="what is closures"></a>what is closures</h1><h1 id="how-to-work"><a href="#how-to-work" class="headerlink" title="how to work"></a>how to work</h1><h1 id="why-i-need-it-benefit"><a href="#why-i-need-it-benefit" class="headerlink" title="why i need it (benefit)"></a>why i need it (benefit)</h1>
     </div>
