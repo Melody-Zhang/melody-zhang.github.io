@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="http request response parser for c HTTP Parser这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。 Features: No dependencies处理持久流(kee">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wrk http.parser">
+<meta property="og:url" content="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/index.html">
+<meta property="og:site_name" content="yuxin&#39;s blog">
+<meta property="og:description" content="http request response parser for c HTTP Parser这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。 Features: No dependencies处理持久流(kee">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-06T09:14:25.000Z">
+<meta property="article:modified_time" content="2021-10-06T09:15:30.464Z">
+<meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="wrk">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>wrk http.parser | yuxin's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">yuxin's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuxin.zhang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wrk http.parser
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-06 17:14:25 / Modified: 17:15:30" itemprop="dateCreated datePublished" datetime="2021-10-06T17:14:25+08:00">2021-10-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>http request response parser for c</p>
+<p>HTTP Parser<br>这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。</p>
+<p>Features:</p>
+<p>No dependencies<br>处理持久流(keep-alive)。<br>解码分块编码。<br>Upgrade support<br>防御缓冲区溢出攻击。<br>解析器从HTTP消息中提取以下信息：</p>
+<p>标题字段和值<br>Content-Length<br>Request method<br>响应状态代码<br>Transfer-Encoding<br>HTTP version<br>Request URL<br>Message body<br>Usage<br>每个TCP连接使用一个http_parser对象。使用http_parser_init()初始化结构并设置回调。对于请求解析器，这可能类似于：</p>
+<p>http_parser_settings settings;<br>settings.on_url = my_url_callback;<br>settings.on_header_field = my_header_field_callback;<br>/* … */</p>
+<p>http_parser *parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST);<br>parser-&gt;data = my_socket;<br>当在套接字上接收到数据时，执行解析器并检查错误。</p>
+<p>size_t len = 80*1024, nparsed;<br>char buf[len];<br>ssize_t recved;</p>
+<p>recved = recv(fd, buf, len, 0);</p>
+<p>if (recved &lt; 0) {<br>  /* Handle error. */<br>}</p>
+<p>/* Start up / continue the parser.</p>
+<ul>
+<li>Note we pass recved==0 to signal that EOF has been received.</li>
+<li>/<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</li>
+</ul>
+<p>if (parser-&gt;upgrade) {<br>  /* handle new protocol <em>/<br>} else if (nparsed != recved) {<br>  /</em> Handle error. Usually just close the connection. */<br>}<br>http_parser需要知道流的结尾在哪里。例如，有时服务器发送响应时不使用Content-Length，并期望客户端在EOF之前使用输入（对于主体）。要告诉http_parser关于EOF，将0作为http_parser_execute()的第四个参数。在EOF期间仍然会遇到回调和错误，因此必须准备好接收它们。</p>
+<p>标量值消息信息，如status_code、method和HTTP版本存储在解析器结构中。此数据只临时存储在http_parser中，并在每个新消息上重置。如果以后需要此信息，请在headers_complete回调期间将其从结构中复制出来。</p>
+<p>解析器对请求和响应的transfer-encoding进行透明解码。也就是说，分块编码在被发送到on_body回调之前被解码。</p>
+<p>升级的特殊问题<br>http_parser支持将连接升级到其他协议。一个越来越常见的例子是WebSocket协议，它发送一个请求</p>
+<pre><code>GET /demo HTTP/1.1
+Upgrade: WebSocket
+Connection: Upgrade
+Host: example.com
+Origin: http://example.com
+WebSocket-Protocol: sample</code></pre>
+<p>后跟non-HTTP数据。</p>
+<p>（有关WebSocketprotocol.的更多信息，请参阅RFC6455）</p>
+<p>为了支持这一点，解析器将把它视为没有正文的普通HTTP消息，同时发出on_headers_complete和on_message_complete回调。但是http_parser_execute(）将在头的末尾停止解析并返回。</p>
+<p>用户应该在http_parser_execute()返回后检查parser-&gt;upgrade是否已设置为1。Non-HTTP数据从缓冲区提供的偏移量开始，偏移量由http_parser_execute()返回。</p>
+<p>Callbacks<br>在http_parser_execute()调用期间，http_parser_settings中设置的回调将被执行。解析器维护状态，从不向后看，因此不需要缓冲数据。如果需要保存某些数据以备以后使用，可以从回调中执行此操作。</p>
+<p>有两种类型的回调：</p>
+<p>notification typedef int (<em>http_cb) (http_parser</em>); Callbacks: on_message_begin, on_headers_complete, on_message_complete.<br>data typedef int (<em>http_data_cb) (http_parser</em>, const char *at, size_t length); Callbacks: (requests only) on_url, (common) on_header_field, on_header_value, on_body;<br>成功时回调必须返回0。返回non-zero值将向解析器指示错误，使其立即退出。</p>
+<p>对于需要在回调中传递本地信息的情况，可以使用http_parser对象的data字段。这种情况的一个例子是使用线程处理套接字连接、解析请求，然后通过该套接字给出响应。通过实例化包含相关数据的thread-local结构（例如接受的套接字、为回调写入的分配内存等），解析器的回调能够以线程安全的方式在线程范围和回调范围之间通信数据。这允许http_parser在multi-threaded上下文中使用。</p>
+<p>Example:</p>
+<p>typedef struct {<br>  socket_t sock;<br>  void* buffer;<br>  int buf_len;<br> } custom_data_t;</p>
+<p>int my_url_callback(http_parser* parser, const char <em>at, size_t length) {<br>  /</em> access to thread local custom_data_t struct.<br>Use this access save parsed data for later use into thread local<br>buffer, or communicate over socket<br>*/<br>  parser-&gt;data;<br>  …<br>  return 0;<br>}</p>
+<p>…</p>
+<p>void http_parser_thread(socket_t sock) {<br> int nparsed = 0;<br> /* allocate memory for user data */<br> custom_data_t *my_data = malloc(sizeof(custom_data_t));</p>
+<p> /* some information for use by callbacks.</p>
+<ul>
+<li><p>achieves thread -&gt; callback information flow */<br>my_data-&gt;sock = sock;</p>
+<p>/* instantiate a thread-local parser */<br>http_parser <em>parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST); /</em> initialise parser <em>/<br>/</em> this custom data reference is accessible through the reference to the<br>parser supplied to callback functions */<br>parser-&gt;data = my_data;</p>
+<p>http_parser_settings settings; /* set up callbacks */<br>settings.on_url = my_url_callback;</p>
+<p>/* execute parser */<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</p>
+<p>…<br>/* parsed information copied from callback.<br>can now perform action on data copied into thread-local memory from callbacks.<br>achieves callback -&gt; thread information flow */<br>my_data-&gt;buffer;<br>…<br>}<br>如果您分块解析HTTP消息（即来自socket的read()请求行、parse、read half headers、parse等），那么您的数据回调可能会被多次调用。http_parser保证数据指针只在回调的生存期内有效。如果适合您的应用程序，您还可以将read()放入堆分配的缓冲区中，以避免复制内存。</p>
+</li>
+</ul>
+<p>如果您部分地读取/解析报头，那么读取报头可能是一项棘手的任务。基本上，您需要记住上一次头回调是字段还是值，并应用以下逻辑：</p>
+<p>(on_header_field and on_header_value shortened to on_h_*)</p>
+<hr>
+<p>| State (prev. callback) | Callback   | Description/action                         |</p>
+<hr>
+<p>| nothing (first call)   | on_h_field | Allocate new buffer and copy callback data |<br>|                        |            | into it                                    |</p>
+<hr>
+<p>| value                  | on_h_field | New header started.                        |<br>|                        |            | Copy current name,value buffers to headers |<br>|                        |            | list and allocate new buffer for new name  |</p>
+<hr>
+<p>| field                  | on_h_field | Previous name continues. Reallocate name   |<br>|                        |            | buffer and append callback data to it      |</p>
+<hr>
+<p>| field                  | on_h_value | Value for current header started. Allocate |<br>|                        |            | new buffer and copy callback data to it    |</p>
+<hr>
+<p>| value                  | on_h_value | Value continues. Reallocate value buffer   |<br>|                        |            | and append callback data to it             |</p>
+<hr>
+<p>Parsing URLs<br>一个简单的zero-copyURL解析器作为http_parser_parse_url()提供。这个库的用户可能希望使用它来解析由连续的on_url回调构造的url。</p>
+<p>请参阅标题中的阅读示例：</p>
+<p>C语言中的部分示例<br>从http-parser测试中<br>从Javascript中的节点库</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%20%7C%7C%20tags/wrk/" rel="tag"># wrk</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/04/language-types/" rel="prev" title="language types">
+                  <i class="fa fa-chevron-left"></i> language types
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuxin.zhang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
