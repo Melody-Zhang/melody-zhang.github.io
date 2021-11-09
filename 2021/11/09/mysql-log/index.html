@@ -24,18 +24,21 @@
     var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="go常用数据结构操作(七) - func">
-<meta property="og:url" content="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/index.html">
+  <meta name="description" content="cd &#x2F;usr&#x2F;local&#x2F;mysql&#x2F;index文件： mysql-bin.indexbinlog文件：mysql-bin.000055redolog文件：ib_logfile0undolog文件：undo_001 查看binlog..&#x2F;bin&#x2F;mysqlbinlog –no-defaults mysql-bin.000055 sql -&gt; show binlog events in ‘m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql log">
+<meta property="og:url" content="https://github.com/Melody-Zhang/2021/11/09/mysql-log/index.html">
 <meta property="og:site_name" content="yuxin&#39;s blog">
+<meta property="og:description" content="cd &#x2F;usr&#x2F;local&#x2F;mysql&#x2F;index文件： mysql-bin.indexbinlog文件：mysql-bin.000055redolog文件：ib_logfile0undolog文件：undo_001 查看binlog..&#x2F;bin&#x2F;mysqlbinlog –no-defaults mysql-bin.000055 sql -&gt; show binlog events in ‘m">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-04-18T15:23:57.000Z">
-<meta property="article:modified_time" content="2021-04-18T15:23:57.916Z">
+<meta property="article:published_time" content="2021-11-09T14:44:40.000Z">
+<meta property="article:modified_time" content="2021-11-09T15:27:09.655Z">
 <meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/">
+<link rel="canonical" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
 
 
 <script class="page-configurations">
@@ -48,7 +51,7 @@
   };
 </script>
 
-  <title>go常用数据结构操作(七) - func | yuxin's blog</title>
+  <title>mysql log | yuxin's blog</title>
   
 
 
@@ -136,7 +139,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -149,6 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bbinlog"><span class="nav-number">1.</span> <span class="nav-text">查看binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-BINLOG-%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">查询 BINLOG 格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-BINLOG-%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">查询 BINLOG 位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD-BINLOG-%E5%90%8D%E7%A7%B0%E5%8F%8A%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.3.</span> <span class="nav-text">查询当前数据库中 BINLOG 名称及大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-master-%E6%AD%A3%E5%9C%A8%E5%86%99%E5%85%A5%E7%9A%84-BINLOG-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.4.</span> <span class="nav-text">查看 master 正在写入的 BINLOG 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-offset-%E6%9F%A5%E7%9C%8B-BINLOG-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.5.</span> <span class="nav-text">通过 offset 查看 BINLOG 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-position-%E6%9F%A5%E7%9C%8B-binlog-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.6.</span> <span class="nav-text">通过 position 查看 binlog 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-binlog"><span class="nav-number">1.7.</span> <span class="nav-text">查询 binlog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-BINLOG"><span class="nav-number">1.8.</span> <span class="nav-text">导出 BINLOG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D"><span class="nav-number">1.9.</span> <span class="nav-text">恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-BINLOG-%E8%BF%9B%E8%A1%8C%E6%81%A2%E5%A4%8D%E3%80%82"><span class="nav-number">1.9.1.</span> <span class="nav-text">通过 BINLOG 进行恢复。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-BINLOG-%E5%AF%BC%E5%87%BA%E7%9A%84-sql-%E8%BF%9B%E8%A1%8C%E6%81%A2%E5%A4%8D%E3%80%82"><span class="nav-number">1.9.2.</span> <span class="nav-text">通过 BINLOG 导出的 sql 进行恢复。</span></a></li></ol></li></ol></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -207,7 +211,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -220,7 +224,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          go常用数据结构操作(七) - func
+          mysql log
         </h1>
 
         <div class="post-meta-container">
@@ -230,8 +234,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-04-18 23:23:57" itemprop="dateCreated datePublished" datetime="2021-04-18T23:23:57+08:00">2021-04-18</time>
+      <time title="Created: 2021-11-09 22:44:40 / Modified: 23:27:09" itemprop="dateCreated datePublished" datetime="2021-11-09T22:44:40+08:00">2021-11-09</time>
     </span>
 
   
@@ -244,7 +249,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <p>cd /usr/local/mysql/<br>index文件： mysql-bin.index<br>binlog文件：mysql-bin.000055<br>redolog文件：ib_logfile0<br>undolog文件：undo_001</p>
+<h1 id="查看binlog"><a href="#查看binlog" class="headerlink" title="查看binlog"></a>查看binlog</h1><p>../bin/mysqlbinlog –no-defaults mysql-bin.000055</p>
+<p>sql -&gt; show binlog events in ‘mysql-bin.000055’;<br>sql -&gt; show variables like ‘binlog_format’; // statement or row<br>sql -&gt; show variables like ‘log_%’;<br>sql -&gt; show master status\G;</p>
+<h2 id="查询-BINLOG-格式"><a href="#查询-BINLOG-格式" class="headerlink" title="查询 BINLOG 格式"></a>查询 BINLOG 格式</h2><p>show VARIABLES like ‘binlog_format’;</p>
+<h2 id="查询-BINLOG-位置"><a href="#查询-BINLOG-位置" class="headerlink" title="查询 BINLOG 位置"></a>查询 BINLOG 位置</h2><p>show VARIABLES like ‘datadir’;</p>
+<h2 id="查询当前数据库中-BINLOG-名称及大小"><a href="#查询当前数据库中-BINLOG-名称及大小" class="headerlink" title="查询当前数据库中 BINLOG 名称及大小"></a>查询当前数据库中 BINLOG 名称及大小</h2><p>show binary logs;</p>
+<h2 id="查看-master-正在写入的-BINLOG-信息"><a href="#查看-master-正在写入的-BINLOG-信息" class="headerlink" title="查看 master 正在写入的 BINLOG 信息"></a>查看 master 正在写入的 BINLOG 信息</h2><p>show master status\G;</p>
+<h2 id="通过-offset-查看-BINLOG-信息"><a href="#通过-offset-查看-BINLOG-信息" class="headerlink" title="通过 offset 查看 BINLOG 信息"></a>通过 offset 查看 BINLOG 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ limit 9000,  10;</p>
+<h2 id="通过-position-查看-binlog-信息"><a href="#通过-position-查看-binlog-信息" class="headerlink" title="通过 position 查看 binlog 信息"></a>通过 position 查看 binlog 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ from 1742635 limit 10;</p>
+<h2 id="查询-binlog"><a href="#查询-binlog" class="headerlink" title="查询 binlog"></a>查询 binlog</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055| less</p>
+<h2 id="导出-BINLOG"><a href="#导出-BINLOG" class="headerlink" title="导出 BINLOG"></a>导出 BINLOG</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055 &gt; binlog_raw.sql </p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="通过-BINLOG-进行恢复。"><a href="#通过-BINLOG-进行恢复。" class="headerlink" title="通过 BINLOG 进行恢复。"></a>通过 BINLOG 进行恢复。</h3><p>../bin/mysqlbinlog –no-defaults –start-position=482 –stop-position=1327 –database=testdb  mysql-bin.000055 | mysql -u username -p password</p>
+<h3 id="通过-BINLOG-导出的-sql-进行恢复。"><a href="#通过-BINLOG-导出的-sql-进行恢复。" class="headerlink" title="通过 BINLOG 导出的 sql 进行恢复。"></a>通过 BINLOG 导出的 sql 进行恢复。</h3><p>mysql -u username -p password &lt; binlog_raw.sql </p>
+
     </div>
 
     
@@ -252,19 +270,19 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%20%7C%7C%20tags/mysql/" rel="tag"># mysql</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AD-struct-interface/" rel="prev" title="go常用数据结构操作(六) - struct&interface">
-                  <i class="fa fa-chevron-left"></i> go常用数据结构操作(六) - struct&interface
+                <a href="/2021/11/06/https%E6%9C%8D%E5%8A%A1/" rel="prev" title="https服务">
+                  <i class="fa fa-chevron-left"></i> https服务
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/" rel="next" title="go常用数据结构操作(八) - pointer">
-                  go常用数据结构操作(八) - pointer <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
