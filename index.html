@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,105 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/01/01/redis-AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/01/redis-AE/" class="post-title-link" itemprop="url">redis AE</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-01-01 20:38:34 / Modified: 22:47:08" itemprop="dateCreated datePublished" datetime="2022-01-01T20:38:34+08:00">2022-01-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="AE在wrk中的应用"><a href="#AE在wrk中的应用" class="headerlink" title="AE在wrk中的应用"></a>AE在wrk中的应用</h1><h2 id="wrk开启压测的流程"><a href="#wrk开启压测的流程" class="headerlink" title="wrk开启压测的流程"></a>wrk开启压测的流程</h2><p>主要参数：线程数，连接数，压测时间，超时时间，请求头，压测脚本<br>主要对象：cfg, sock, statistics, http_parse_settings<br>线程对象属性：eventloop, 连接数，lua虚拟机</p>
+<ol>
+<li>解析参数</li>
+<li>定义 schema, host, port, service</li>
+<li>如果schema解析为https，进行ssl连接</li>
+<li>设置忽略 SIGINT（interrupt 中断信号）, SIGPIPE （管道破裂信号）， 否则会导致压测服务退出</li>
+<li>根据压测脚本初始化全局的lua虚拟机</li>
+<li>进行地址解析和socket连接，测试host是否可连接</li>
+<li>根据设置的线程数，创建线程对象，执行线程任务</li>
+<li>睡眠等待压测时间</li>
+<li>阻塞等待所有线程结束</li>
+<li>统计结果输出</li>
+</ol>
+<h2 id="每个线程执行的任务"><a href="#每个线程执行的任务" class="headerlink" title="每个线程执行的任务"></a>每个线程执行的任务</h2><ol>
+<li>根据每个线程需要启动的连接数，建立socket连接</li>
+<li>根据eventloop建立定时事件，每100ms统计一次数据</li>
+<li>开始处理eventloop</li>
+<li>删除eventloop</li>
+</ol>
+<h2 id="建立socket连接做了什么"><a href="#建立socket连接做了什么" class="headerlink" title="建立socket连接做了什么"></a>建立socket连接做了什么</h2><ol>
+<li>建立fd</li>
+<li>设置为O_NONBLOCK</li>
+<li>开启连接</li>
+<li>创建一个文件事件</li>
+</ol>
+<h2 id="文件事件中做了什么"><a href="#文件事件中做了什么" class="headerlink" title="文件事件中做了什么"></a>文件事件中做了什么</h2><ol>
+<li>查看socket连接状态</li>
+<li>初始化httpparser</li>
+<li>创建两个文件事件，fd可读事件，fd可写事件</li>
+</ol>
+<h2 id="fd可写事件"><a href="#fd可写事件" class="headerlink" title="fd可写事件"></a>fd可写事件</h2><p>超时或者写完，删除可写事件</p>
+<h2 id="fd可读事件"><a href="#fd可读事件" class="headerlink" title="fd可读事件"></a>fd可读事件</h2><p>执行http_parser_execute发送请求，等待结果返回，读响应结果，回调response函数</p>
+<h2 id="AE主要函数"><a href="#AE主要函数" class="headerlink" title="AE主要函数"></a>AE主要函数</h2><p>loop = aeCreateEventLoop(10 + cfg.connections * 3)<br>aeCreateTimeEvent(loop, RECORD_INTERVAL_MS, record_rate, thread, NULL)<br>aeCreateFileEvent(loop, fd, flags, socket_connected, c)<br>aeMain(loop)<br>aeDeleteEventLoop(loop)<br>aeCreateFileEvent(loop, fd, flags, socket_connected, c)</p>
+<h1 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h1><p>两个过程：等待数据准备好，将数据从内核态复制到用户态<br>阻塞I/O<br>非阻塞I/O<br>多路复用<br>信号驱动<br>异步</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -1001,70 +1100,6 @@ WebSocket-Protocol: sample</code></pre>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">go - 迭代器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 21:06:41" itemprop="dateCreated datePublished" datetime="2021-04-20T21:06:41+08:00">2021-04-20</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
 
   
   <nav class="pagination">
@@ -1109,7 +1144,7 @@ WebSocket-Protocol: sample</code></pre>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

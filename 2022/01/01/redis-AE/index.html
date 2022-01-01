@@ -24,21 +24,24 @@
     var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta name="description" content="在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。 step 11234j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹hexo new &quot;&amp;#123;title here&amp;#125;&quot; &#x2F;&#x2F; 新建新文件vi source&#x2F;_posts&#x2F;&amp;#123;new doc&amp;#125;.md">
+  <meta name="description" content="AE在wrk中的应用wrk开启压测的流程主要参数：线程数，连接数，压测时间，超时时间，请求头，压测脚本主要对象：cfg, sock, statistics, http_parse_settings线程对象属性：eventloop, 连接数，lua虚拟机  解析参数 定义 schema, host, port, service 如果schema解析为https，进行ssl连接 设置忽略 SIGINT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tutorial: how to create a new blog">
-<meta property="og:url" content="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/index.html">
+<meta property="og:title" content="redis AE">
+<meta property="og:url" content="https://github.com/Melody-Zhang/2022/01/01/redis-AE/index.html">
 <meta property="og:site_name" content="yuxin&#39;s blog">
-<meta property="og:description" content="在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。 step 11234j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹hexo new &quot;&amp;#123;title here&amp;#125;&quot; &#x2F;&#x2F; 新建新文件vi source&#x2F;_posts&#x2F;&amp;#123;new doc&amp;#125;.md">
+<meta property="og:description" content="AE在wrk中的应用wrk开启压测的流程主要参数：线程数，连接数，压测时间，超时时间，请求头，压测脚本主要对象：cfg, sock, statistics, http_parse_settings线程对象属性：eventloop, 连接数，lua虚拟机  解析参数 定义 schema, host, port, service 如果schema解析为https，进行ssl连接 设置忽略 SIGINT">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-10-04T07:49:08.000Z">
-<meta property="article:modified_time" content="2021-10-04T08:10:02.373Z">
+<meta property="article:published_time" content="2022-01-01T12:38:34.000Z">
+<meta property="article:modified_time" content="2022-01-01T14:47:08.082Z">
 <meta property="article:author" content="yuxin.zhang">
-<meta property="article:tag" content="writing">
+<meta property="article:tag" content="wrk">
+<meta property="article:tag" content="ae">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="io">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/">
+<link rel="canonical" href="https://github.com/Melody-Zhang/2022/01/01/redis-AE/">
 
 
 <script class="page-configurations">
@@ -51,7 +54,7 @@
   };
 </script>
 
-  <title>tutorial: how to create a new blog | yuxin's blog</title>
+  <title>redis AE | yuxin's blog</title>
   
 
 
@@ -152,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#step-1"><span class="nav-number">1.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-2"><span class="nav-number">2.</span> <span class="nav-text">step 2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-3"><span class="nav-number">3.</span> <span class="nav-text">step 3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-4"><span class="nav-number">4.</span> <span class="nav-text">step 4</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AE%E5%9C%A8wrk%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">AE在wrk中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#wrk%E5%BC%80%E5%90%AF%E5%8E%8B%E6%B5%8B%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">wrk开启压测的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">每个线程执行的任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8Bsocket%E8%BF%9E%E6%8E%A5%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">建立socket连接做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E4%B8%AD%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.4.</span> <span class="nav-text">文件事件中做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fd%E5%8F%AF%E5%86%99%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">fd可写事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fd%E5%8F%AF%E8%AF%BB%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.6.</span> <span class="nav-text">fd可读事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AE%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">AE主要函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O"><span class="nav-number">2.</span> <span class="nav-text">I&#x2F;O</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -211,7 +214,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/01/01/redis-AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -224,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          tutorial: how to create a new blog
+          redis AE
         </h1>
 
         <div class="post-meta-container">
@@ -236,7 +239,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-10-04 15:49:08 / Modified: 16:10:02" itemprop="dateCreated datePublished" datetime="2021-10-04T15:49:08+08:00">2021-10-04</time>
+      <time title="Created: 2022-01-01 20:38:34 / Modified: 22:47:08" itemprop="dateCreated datePublished" datetime="2022-01-01T20:38:34+08:00">2022-01-01</time>
     </span>
 
   
@@ -249,16 +252,40 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。</p>
-<h1 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹</span><br><span class="line">hexo new &quot;&#123;title here&#125;&quot; &#x2F;&#x2F; 新建新文件</span><br><span class="line">vi source&#x2F;_posts&#x2F;&#123;new doc&#125;.md &#x2F;&#x2F; 在文件中编写内容</span><br><span class="line">hexo g -d &#x2F;&#x2F; 上传到git，一段时间后即可在https:&#x2F;&#x2F;melody-zhang.github.io&#x2F;看到更新的文章（这里之所以要等一段时间，是因为资源上传需要时间，静态资源的有缓存，更新也需要时间，所以如果一段时间后打开发现刚上传的文件依旧不存在，可尝试多次刷新页面并等待...）</span><br></pre></td></tr></table></figure>
-
-<h1 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h1><p>如果在文章中需要插入一些图片资源，需要将图片资源上传到<a href="https://github.com/Melody-Zhang/imgs/blob/master/">https://github.com/Melody-Zhang/imgs/blob/master/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j imgs &#x2F;&#x2F; git图片资源仓库</span><br></pre></td></tr></table></figure>
-<p>之后复制图片链接url，在.md文件相应位置插入以下模版：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![image](https:&#x2F;&#x2F;github.com&#x2F;Melody-Zhang&#x2F;imgs&#x2F;blob&#x2F;master&#x2F;mem2.jpeg?raw&#x3D;true)</span><br></pre></td></tr></table></figure>
-<p>注意：图片链接url之后一定要加参数 <code>raw=true</code>， 参数的存在是为了确保你链接到的图片会被原样呈现。 这意味着只有图片会被链接到，而不是该文件的整个GitHub 界面。</p>
-<h1 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h1><p>画图： sketch<br>选色：<a target="_blank" rel="noopener" href="https://coolors.co/">https://coolors.co/</a></p>
-<h1 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h1><p>other questions pls refer to:<br>技术文章配图指南 <a target="_blank" rel="noopener" href="https://draveness.me/sketch-and-sketch/">https://draveness.me/sketch-and-sketch/</a><br>hexo官网文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">https://hexo.io/zh-cn/docs/commands</a></p>
+        <h1 id="AE在wrk中的应用"><a href="#AE在wrk中的应用" class="headerlink" title="AE在wrk中的应用"></a>AE在wrk中的应用</h1><h2 id="wrk开启压测的流程"><a href="#wrk开启压测的流程" class="headerlink" title="wrk开启压测的流程"></a>wrk开启压测的流程</h2><p>主要参数：线程数，连接数，压测时间，超时时间，请求头，压测脚本<br>主要对象：cfg, sock, statistics, http_parse_settings<br>线程对象属性：eventloop, 连接数，lua虚拟机</p>
+<ol>
+<li>解析参数</li>
+<li>定义 schema, host, port, service</li>
+<li>如果schema解析为https，进行ssl连接</li>
+<li>设置忽略 SIGINT（interrupt 中断信号）, SIGPIPE （管道破裂信号）， 否则会导致压测服务退出</li>
+<li>根据压测脚本初始化全局的lua虚拟机</li>
+<li>进行地址解析和socket连接，测试host是否可连接</li>
+<li>根据设置的线程数，创建线程对象，执行线程任务</li>
+<li>睡眠等待压测时间</li>
+<li>阻塞等待所有线程结束</li>
+<li>统计结果输出</li>
+</ol>
+<h2 id="每个线程执行的任务"><a href="#每个线程执行的任务" class="headerlink" title="每个线程执行的任务"></a>每个线程执行的任务</h2><ol>
+<li>根据每个线程需要启动的连接数，建立socket连接</li>
+<li>根据eventloop建立定时事件，每100ms统计一次数据</li>
+<li>开始处理eventloop</li>
+<li>删除eventloop</li>
+</ol>
+<h2 id="建立socket连接做了什么"><a href="#建立socket连接做了什么" class="headerlink" title="建立socket连接做了什么"></a>建立socket连接做了什么</h2><ol>
+<li>建立fd</li>
+<li>设置为O_NONBLOCK</li>
+<li>开启连接</li>
+<li>创建一个文件事件</li>
+</ol>
+<h2 id="文件事件中做了什么"><a href="#文件事件中做了什么" class="headerlink" title="文件事件中做了什么"></a>文件事件中做了什么</h2><ol>
+<li>查看socket连接状态</li>
+<li>初始化httpparser</li>
+<li>创建两个文件事件，fd可读事件，fd可写事件</li>
+</ol>
+<h2 id="fd可写事件"><a href="#fd可写事件" class="headerlink" title="fd可写事件"></a>fd可写事件</h2><p>超时或者写完，删除可写事件</p>
+<h2 id="fd可读事件"><a href="#fd可读事件" class="headerlink" title="fd可读事件"></a>fd可读事件</h2><p>执行http_parser_execute发送请求，等待结果返回，读响应结果，回调response函数</p>
+<h2 id="AE主要函数"><a href="#AE主要函数" class="headerlink" title="AE主要函数"></a>AE主要函数</h2><p>loop = aeCreateEventLoop(10 + cfg.connections * 3)<br>aeCreateTimeEvent(loop, RECORD_INTERVAL_MS, record_rate, thread, NULL)<br>aeCreateFileEvent(loop, fd, flags, socket_connected, c)<br>aeMain(loop)<br>aeDeleteEventLoop(loop)<br>aeCreateFileEvent(loop, fd, flags, socket_connected, c)</p>
+<h1 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h1><p>两个过程：等待数据准备好，将数据从内核态复制到用户态<br>阻塞I/O<br>非阻塞I/O<br>多路复用<br>信号驱动<br>异步</p>
 
     </div>
 
@@ -268,21 +295,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%20%7C%7C%20tags/writing/" rel="tag"># writing</a>
+              <a href="/tags/%20%7C%7C%20tags/wrk/" rel="tag"># wrk</a>
+              <a href="/tags/%20%7C%7C%20tags/ae/" rel="tag"># ae</a>
+              <a href="/tags/%20%7C%7C%20tags/redis/" rel="tag"># redis</a>
+              <a href="/tags/%20%7C%7C%20tags/io/" rel="tag"># io</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/10/04/wrk/" rel="prev" title="wrk">
-                  <i class="fa fa-chevron-left"></i> wrk
+                <a href="/2021/11/10/redis-HA/" rel="prev" title="redis HA">
+                  <i class="fa fa-chevron-left"></i> redis HA
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/04/language-types/" rel="next" title="language types">
-                  language types <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
