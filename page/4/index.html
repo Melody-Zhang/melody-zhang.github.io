@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,76 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/why-we-need-kafka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/05/why-we-need-kafka/" class="post-title-link" itemprop="url">why we need kafka</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-04-05 18:48:19 / Modified: 19:48:44" itemprop="dateCreated datePublished" datetime="2021-04-05T18:48:19+08:00">2021-04-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>data powers the development of enterprise.<br>consumers views products on the web page -&gt; collect infos -&gt; recommend products</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>数据是非常重要的，而且不能是片面的数据，而是全面的数据。<br>所以需要数据管道，这样一个关键性的组件，将来自各个不同地方的数据，以最高效的方式聚集在一起。</p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>消息队列，进程间通道<br>-&gt; 出现多对多, 节点间连接混乱<br>-&gt; 独立中间件, 提供应用程序接收来自其他应用程序的度量指标，并为其他系统提供查询服务器，即独立的队列系统<br>-&gt; 业务场景多，如用户页面指标，活动指标，日志，监控(数据库)等。出现多个队列系统<br>-&gt; 集成多个消息系统为单一的集中式的队列系统，可以发布通用型的数据，可以随业务数据增长而增长。</p>
+<h1 id="因为以上问题，kafka出现了"><a href="#因为以上问题，kafka出现了" class="headerlink" title="因为以上问题，kafka出现了"></a>因为以上问题，kafka出现了</h1><p>kafka是一款基于发布与订阅的消息系统，用于保存所有事务的持久化记录，可以按需读取，可以用于通过重放日志重建系统状态。<br>具有数据故障保护能力和性能伸缩能力。</p>
+<p>next: kafka 与其他发布订阅消息系统的不同 </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 

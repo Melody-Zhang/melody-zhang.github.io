@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,163 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/wrk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/wrk/" class="post-title-link" itemprop="url">wrk</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-04 15:39:08" itemprop="dateCreated datePublished" datetime="2021-10-04T15:39:08+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-06 17:07:14" itemprop="dateModified" datetime="2021-10-06T17:07:14+08:00">2021-10-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>wrk是团队开发的压测平台所使用的压测引擎，在使用上支持对固定域名服务的不同接口进行高并发压测，相较于其他压测工具，使用了同redis一样的AE事件驱动器, 通过I/O多路复用技术，使得一个线程可以无阻塞处理多个socket连接，从而达到使用更少的资源（thread）产生更大的并发（socket）的效果。</p>
+<p>wrk对外提供一些回调函数，支持使用lua脚本，对请求前、请求中、请求后进行一些处理。这使得wrk不仅可以压测固定的url, 相同域名下的所有url都可以在一次压测中进行，达到全链路压测的效果。</p>
+<p>但问题是，对于某些收购的项目，全链路压测中的需要压测到的接口，涉及了多个域名，并且多个域名的url请求之间还有数据传递，所以需要研究并修改wrk源码，使得在request回调里，能修改域名变量，以方便对域名+path的url做处理。</p>
+<h1 id="知识结构"><a href="#知识结构" class="headerlink" title="知识结构"></a>知识结构</h1><ol>
+<li>IO模型和基于事件驱动的IO多路复用模式</li>
+<li>redis AE实现</li>
+<li>socket &amp; fd &amp; inode</li>
+<li>ssl</li>
+<li>c语言与lua脚本的交互</li>
+</ol>
+<h1 id="wrk流程图"><a href="#wrk流程图" class="headerlink" title="wrk流程图"></a>wrk流程图</h1><p><img src="https://github.com/Melody-Zhang/imgs/blob/master/wrk.png?raw=true" alt="image"></p>
+<h1 id="修改思路"><a href="#修改思路" class="headerlink" title="修改思路"></a>修改思路</h1><h2 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h2><ul>
+<li>cfg.host</li>
+<li>addr</li>
+</ul>
+<h2 id="建立连接的过程"><a href="#建立连接的过程" class="headerlink" title="建立连接的过程"></a>建立连接的过程</h2><h3 id="aeEventLoop角度"><a href="#aeEventLoop角度" class="headerlink" title="aeEventLoop角度"></a>aeEventLoop角度</h3><p>每个线程创建了一个独立的 aeEventLoop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br></pre></td></tr></table></figure>
+<p>每个线程注册定时器（aeCreateTimeEvent），每 100ms 执行一次统计请求和响应结果<br>线程内创建若干 connection（socket），并为每个 socket 句柄注册事件（aeCreateFileEvent），包括：AE_READABLE，AE_WRITABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void *thread_main(void *arg) &#123;</span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br><span class="line">aeEventLoop *loop &#x3D; thread-&gt;loop;</span><br><span class="line">aeCreateTimeEvent(loop, RECORD_INTERVAL_MS, record_rate, thread, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int connect_socket(thread *thread, connection *c) &#123;</span><br><span class="line">    ...</span><br><span class="line">    flags &#x3D; AE_READABLE | AE_WRITABLE;</span><br><span class="line">    if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="host角度"><a href="#host角度" class="headerlink" title="host角度"></a>host角度</h3><p>main()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lua_State *L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">if (!script_resolve(L, host, service)) &#123;</span><br><span class="line">        char *msg &#x3D; strerror(errno);</span><br><span class="line">        fprintf(stderr, &quot;unable to connect to %s:%s %s\n&quot;, host, service, msg);</span><br><span class="line">        exit(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">cfg.host &#x3D; host;</span><br><span class="line"></span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br><span class="line"></span><br><span class="line">        t-&gt;L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">        script_init(L, t, argc - optind, &amp;argv[optind]);</span><br><span class="line"></span><br><span class="line">        if (i &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            cfg.pipeline &#x3D; script_verify_request(t-&gt;L);</span><br><span class="line">            cfg.dynamic  &#x3D; !script_is_static(t-&gt;L);</span><br><span class="line">            cfg.delay    &#x3D; script_has_delay(t-&gt;L);</span><br><span class="line">            if (script_want_response(t-&gt;L)) &#123;</span><br><span class="line">                parser_settings.on_header_field &#x3D; header_field;</span><br><span class="line">                parser_settings.on_header_value &#x3D; header_value;</span><br><span class="line">                parser_settings.on_body         &#x3D; response_body;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>全局创建一个lua_State， 每一个线程也创建一个lua_State<br>使用全局创建的 L, 初始化线程的 t.L</p>
+<h4 id="script-create-做了什么"><a href="#script-create-做了什么" class="headerlink" title="script_create 做了什么"></a>script_create 做了什么</h4><h4 id="script-init-做了什么"><a href="#script-init-做了什么" class="headerlink" title="script_init 做了什么"></a>script_init 做了什么</h4><p>做完以上两步, thread结构体中的数据就已经出初始化完了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br></pre></td></tr></table></figure>
+<p>这里比较重要的就是 <code>*addr</code> 这个参数，之后会用于socket链接</p>
+<p>创建的每个线程都会去执行 <code>thread_main</code> 函数，在此函数做的工作主要为：</p>
+<ol>
+<li>通过 <code>script_request</code> 接受lua脚本中request函数对请求进行的修改<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function request()</span><br><span class="line">	return wrk.format(method, path, headers, body)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></li>
+<li>为每一个线程建立若干个socket链接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">thread-&gt;cs &#x3D; zcalloc(thread-&gt;connections * sizeof(connection));</span><br><span class="line">    connection *c &#x3D; thread-&gt;cs;</span><br><span class="line"></span><br><span class="line">    for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+所以实际上 <code>connect_socket</code> 是最后建立链接并发请求的地方。<br>看看 <code>connect_socket</code> 做了什么。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd &#x3D; socket(addr-&gt;ai_family, addr-&gt;ai_socktype, addr-&gt;ai_protocol);</span><br><span class="line"></span><br><span class="line">if (connect(fd, addr-&gt;ai_addr, addr-&gt;ai_addrlen) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">    if (errno !&#x3D; EINPROGRESS) goto error;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<code>aeCreateFileEvent</code>的作用是添加监听的客户端连接<br>要监听一个客户端连接的状态变化，需要调用 <code>aeCreateFileEvent()</code> 函数把客户端连接添加到事件驱动对象中进行监听， <code>aeCreateFileEvent() </code>函数原型如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask, aeFileProc *proc, void *clientData);</span><br></pre></td></tr></table></figure>
+参数含义：<br><code>eventLoop</code>：由 aeCreateEventLoop() 函数创建的事件驱动对象。<br><code>fd</code>：客户端连接socket句柄。<br><code>mask</code>：监听客户端连接的事件，有 <code>AE_READABLE</code>（读） 和 <code>AE_WRITABLE</code>（写） 两种事件。<br><code>proc</code>：事件发生时的处理函数。<br><code>clientData</code>：proc 函数的参数</li>
+</ol>
+<p>从 <code>aeCreateFileEvent</code> 的用法可以看出，<br><code>aeCreateFileEvent(loop, fd, flags, socket_connected, c)</code>的含义是：监听 loop 中的这个 fd 的读/写事件，如果事件发生，就执行<code>socket_connected(c)</code>。</p>
+<p>所以我们再来看看 <code>socket_connected</code> 做了什么工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">connection *c &#x3D; data;</span><br><span class="line"></span><br><span class="line">switch (sock.connect(c, cfg.host)) &#123;</span><br><span class="line">    case OK:    break;</span><br><span class="line">    case ERROR: goto error;</span><br><span class="line">    case RETRY: return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct sock sock &#x3D; &#123;</span><br><span class="line">    .connect  &#x3D; sock_connect,</span><br><span class="line">    .close    &#x3D; sock_close,</span><br><span class="line">    .read     &#x3D; sock_read,</span><br><span class="line">    .write    &#x3D; sock_write,</span><br><span class="line">    .readable &#x3D; sock_readable</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>sock 是一个对象，实际上 <code>sock.connect(c, cfg.host)</code> always return “OK”。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">status sock_connect(connection *c, char *host) &#123;</span><br><span class="line">    return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>==》由以上分析得出结论，看一下 <code>script_create</code> <code>script_init</code> 是如何赋值 <code>t.addr</code> 的，尝试可不可以通过 lua 脚本传参改变 <code>t.addr</code> 的值。</p>
+<p>看起来 <code>script_wrk_lookup</code> <code>script_wrk_connect</code> <code>script_thread_index</code> 在其中起了不小的作用。<br>为了搞清楚他们到底做了些什么，要先学习下 c 语言是如何与 lua 脚本交互的。</p>
+<h1 id="c-amp-lua"><a href="#c-amp-lua" class="headerlink" title="c &amp; lua"></a>c &amp; lua</h1><p>lua与C的交互只能通过栈来执行。其交互形式也分两种，lua调用c函数，c解释执行lua代码。</p>
+<p>Lua 使用一个 虚拟栈 来和 C 互传值。 栈上的的每个元素都是一个 Lua 值 （nil，数字，字符串，等等）。</p>
+<p>无论何时 Lua 调用 C，被调用的函数都得到一个新的栈， 这个栈独立于 C 函数本身的栈，也独立于之前的 Lua 栈。 它里面包含了 Lua 传递给 C 函数的所有参数， 而 C 函数则把要返回的结果放入这个栈以返回给调用者 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lua_State *lua_newstate (lua_Alloc f, void *ud);</span><br><span class="line">创建一个运行在新的独立的状态机中的线程。 如果无法创建线程或状态机（由于内存有限）则返回 NULL。 参数 f 是一个分配器函数； Lua 将通过这个函数做状态机内所有的内存分配操作。 第二个参数 ud ，这个指针将在每次调用分配器时被转入。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>script_request 返回一个 addr<br>方法：根据 script_wrk_lookup 中的方法，传入 host， service， 调用 getaddrinfo 生成一个 addr 对象</p>
+<h1 id="c语言语法"><a href="#c语言语法" class="headerlink" title="c语言语法"></a>c语言语法</h1><p>宏定义#ifndef……#define……#endif主要是为了避免头文件重复引用</p>
+<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用，这个时候，在重复引用的头文件中使用#ifndef……#define……#endif是非常有必要的。</p>
+<p>首先，源代码在编译之前需要进行预处理（也就是预编译），预编译干什么呢？我所知道的就是进行头文件展开、宏定义替换等操作。</p>
+<p>b.cpp包含a.h头文件的时候，就已经把A_H和C_H这两个宏添加到自己本文件的作用域内了，说明宏的作用范围只属于它的本身文件，所以b.cpp文件不能直接就对A_H和C_H宏进行判断。</p>
+<p>编译指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test2.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -ldl -lm</span><br></pre></td></tr></table></figure>
+
+<p>-I指定头文件的目录，-L指定库文件的目录，LIBS告诉链接器要链接哪些库文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LDFLAGS&#x3D;&quot;-L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib&quot;</span><br><span class="line">export CFLAGS&#x3D;&quot;-I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1&quot;</span><br><span class="line">export LIBS&#x3D;&quot;-lluajit-5.1 -ldl -lm&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成lua可以调用的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c -I&#x2F;usr&#x2F;local&#x2F;include test.c    &#x2F;&#x2F;编译不连接</span><br><span class="line">gcc -bundle -undefined dynamic_lookup -o mytestlib.so test.o  &#x2F;&#x2F;连接生成动态库</span><br></pre></td></tr></table></figure>
+
+<p>可能遇到的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld: symbol(s) not found for architecture x86_64</span><br></pre></td></tr></table></figure>
+
+<p>在C语言中调用lua脚本，并传递接收参数的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;lua.h&gt;</span><br><span class="line">#include&lt;lualib.h&gt;</span><br><span class="line">#include&lt;lauxlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;创建一个Lua的解释器</span><br><span class="line">    lua_State *L &#x3D; luaL_newstate();</span><br><span class="line">    &#x2F;&#x2F;载入Lua的库文件</span><br><span class="line">    luaL_openlibs(L);</span><br><span class="line">    &#x2F;&#x2F;利用这个&quot;L&quot;解释器，执行test.lua文件</span><br><span class="line">    printf(&quot;stack hight &#x3D; %d\n&quot;, lua_gettop(L));</span><br><span class="line">    luaL_dofile(L,&quot;test.lua&quot;);</span><br><span class="line">    &#x2F;&#x2F; 接收函数返回值</span><br><span class="line">    int a &#x3D; lua_tonumber(L, -1); </span><br><span class="line">&#x2F;&#x2F;关闭资源</span><br><span class="line">    lua_close(L);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在lua中调用C语言中定义的函数</p>
+<p>编译指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc mylib.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -fPIC -shared -o mylib.so -Wall </span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -c -o mylib.o mylib.c</span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -shared -o mylib.so mylib.o -llua5.1</span><br></pre></td></tr></table></figure>
+<p>目前在mac上会发生 bus error 或者 Segmentation fault<br><a target="_blank" rel="noopener" href="http://lua-users.org/lists/lua-l/2011-09/msg00442.html">http://lua-users.org/lists/lua-l/2011-09/msg00442.html</a></p>
+<h1 id="在-Lua-中管理-C-对象的生存期"><a href="#在-Lua-中管理-C-对象的生存期" class="headerlink" title="在 Lua 中管理 C 对象的生存期"></a>在 Lua 中管理 C 对象的生存期</h1><p><a target="_blank" rel="noopener" href="https://blog.codingnow.com/cloud/LuaReferObject">https://blog.codingnow.com/cloud/LuaReferObject</a></p>
+<h1 id="从-lua-数据结构看设计思想"><a href="#从-lua-数据结构看设计思想" class="headerlink" title="从 lua 数据结构看设计思想"></a>从 lua 数据结构看设计思想</h1><h1 id="改动"><a href="#改动" class="headerlink" title="改动"></a>改动</h1><p>wrk.lua: request 返回两个参数 host,body</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function wrk.format(host, method, path, headers, body)</span><br><span class="line">   local host    &#x3D; host  or wrk.host</span><br><span class="line">   local method  &#x3D; method  or wrk.method</span><br><span class="line">   local path    &#x3D; path    or wrk.path</span><br><span class="line">   local headers &#x3D; headers or wrk.headers</span><br><span class="line">   local body    &#x3D; body    or wrk.body</span><br><span class="line">   local s       &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">   if host then</span><br><span class="line">      wrk.headers[&quot;Host&quot;] &#x3D; host</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   if not headers[&quot;Host&quot;] then</span><br><span class="line">      headers[&quot;Host&quot;] &#x3D; wrk.headers[&quot;Host&quot;]</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   headers[&quot;Content-Length&quot;] &#x3D; body and string.len(body)</span><br><span class="line"></span><br><span class="line">   s[1] &#x3D; string.format(&quot;%s %s HTTP&#x2F;1.1&quot;, method, path)</span><br><span class="line">   for name, value in pairs(headers) do</span><br><span class="line">      s[#s+1] &#x3D; string.format(&quot;%s: %s&quot;, name, value)</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   s[#s+1] &#x3D; &quot;&quot;</span><br><span class="line">   s[#s+1] &#x3D; body or &quot;&quot;</span><br><span class="line"></span><br><span class="line">   return host, table.concat(s, &quot;\r\n&quot;)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>script.c</p>
+<h1 id="从-lua-看状态机"><a href="#从-lua-看状态机" class="headerlink" title="从 lua 看状态机"></a>从 lua 看状态机</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/47434856">https://zhuanlan.zhihu.com/p/47434856</a></p>
+<h1 id="几个比较重要的数据结构"><a href="#几个比较重要的数据结构" class="headerlink" title="几个比较重要的数据结构"></a>几个比较重要的数据结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">struct http_parser_settings &#123;</span><br><span class="line">  http_cb      on_message_begin;</span><br><span class="line">  http_data_cb on_url;</span><br><span class="line">  http_data_cb on_status;</span><br><span class="line">  http_data_cb on_header_field;</span><br><span class="line">  http_data_cb on_header_value;</span><br><span class="line">  http_cb      on_headers_complete;</span><br><span class="line">  http_data_cb on_body;</span><br><span class="line">  http_cb      on_message_complete;</span><br><span class="line">  &#x2F;* When on_chunk_header is called, the current chunk length is stored</span><br><span class="line">   * in parser-&gt;content_length.</span><br><span class="line">   *&#x2F;</span><br><span class="line">  http_cb      on_chunk_header;</span><br><span class="line">  http_cb      on_chunk_complete;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br><span class="line"></span><br><span class="line">typedef struct connection &#123;</span><br><span class="line">    thread *thread;</span><br><span class="line">    http_parser parser;</span><br><span class="line">    enum &#123;</span><br><span class="line">        FIELD, VALUE</span><br><span class="line">    &#125; state;</span><br><span class="line">    int fd;</span><br><span class="line">    SSL *ssl;</span><br><span class="line">    bool delayed;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    char *request;</span><br><span class="line">    size_t length;</span><br><span class="line">    size_t written;</span><br><span class="line">    uint64_t pending;</span><br><span class="line">    buffer headers;</span><br><span class="line">    buffer body;</span><br><span class="line">    char buf[RECVBUF];</span><br><span class="line">&#125; connection;</span><br></pre></td></tr></table></figure>
+<p>response_complete 是<br>http_parser_execute</p>
+<p>CALLBACK_NOTIFY(message_complete);</p>
+<p>通过对比成功和失败的日志可以看出，连接建立成功了，也有写，但是在第一次读的时候，http_parser_execute 失败，执行了response_complete回调函数，返回了响应错误码，读错误加一，并重新建立socket连接。</p>
+<p>再通过实验，如果request中的host与全局host一致，是不会有问题的，所以猜测是socket连接没有指向localhost。再次进行验证。</p>
+<h1 id="成功的修改了host"><a href="#成功的修改了host" class="headerlink" title="成功的修改了host"></a>成功的修改了host</h1><h1 id="最后一步学习如何打包镜像"><a href="#最后一步学习如何打包镜像" class="headerlink" title="最后一步学习如何打包镜像"></a>最后一步学习如何打包镜像</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -774,70 +931,6 @@
       <span class="post-meta-item-text">Posted on</span>
 
       <time title="Created: 2021-04-18 23:22:20" itemprop="dateCreated datePublished" datetime="2021-04-18T23:22:20+08:00">2021-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%9B%9B-map/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%9B%9B-map/" class="post-title-link" itemprop="url">go常用数据结构操作(四) - map</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-18 23:22:09" itemprop="dateCreated datePublished" datetime="2021-04-18T23:22:09+08:00">2021-04-18</time>
     </span>
 
   
