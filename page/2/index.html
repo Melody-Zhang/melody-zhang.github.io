@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,277 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/06/wrk-http-parser/" class="post-title-link" itemprop="url">wrk http.parser</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-06 17:14:25 / Modified: 17:15:30" itemprop="dateCreated datePublished" datetime="2021-10-06T17:14:25+08:00">2021-10-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>http request response parser for c</p>
+<p>HTTP Parser<br>这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。</p>
+<p>Features:</p>
+<p>No dependencies<br>处理持久流(keep-alive)。<br>解码分块编码。<br>Upgrade support<br>防御缓冲区溢出攻击。<br>解析器从HTTP消息中提取以下信息：</p>
+<p>标题字段和值<br>Content-Length<br>Request method<br>响应状态代码<br>Transfer-Encoding<br>HTTP version<br>Request URL<br>Message body<br>Usage<br>每个TCP连接使用一个http_parser对象。使用http_parser_init()初始化结构并设置回调。对于请求解析器，这可能类似于：</p>
+<p>http_parser_settings settings;<br>settings.on_url = my_url_callback;<br>settings.on_header_field = my_header_field_callback;<br>/* … */</p>
+<p>http_parser *parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST);<br>parser-&gt;data = my_socket;<br>当在套接字上接收到数据时，执行解析器并检查错误。</p>
+<p>size_t len = 80*1024, nparsed;<br>char buf[len];<br>ssize_t recved;</p>
+<p>recved = recv(fd, buf, len, 0);</p>
+<p>if (recved &lt; 0) {<br>  /* Handle error. */<br>}</p>
+<p>/* Start up / continue the parser.</p>
+<ul>
+<li>Note we pass recved==0 to signal that EOF has been received.</li>
+<li>/<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</li>
+</ul>
+<p>if (parser-&gt;upgrade) {<br>  /* handle new protocol <em>/<br>} else if (nparsed != recved) {<br>  /</em> Handle error. Usually just close the connection. */<br>}<br>http_parser需要知道流的结尾在哪里。例如，有时服务器发送响应时不使用Content-Length，并期望客户端在EOF之前使用输入（对于主体）。要告诉http_parser关于EOF，将0作为http_parser_execute()的第四个参数。在EOF期间仍然会遇到回调和错误，因此必须准备好接收它们。</p>
+<p>标量值消息信息，如status_code、method和HTTP版本存储在解析器结构中。此数据只临时存储在http_parser中，并在每个新消息上重置。如果以后需要此信息，请在headers_complete回调期间将其从结构中复制出来。</p>
+<p>解析器对请求和响应的transfer-encoding进行透明解码。也就是说，分块编码在被发送到on_body回调之前被解码。</p>
+<p>升级的特殊问题<br>http_parser支持将连接升级到其他协议。一个越来越常见的例子是WebSocket协议，它发送一个请求</p>
+<pre><code>GET /demo HTTP/1.1
+Upgrade: WebSocket
+Connection: Upgrade
+Host: example.com
+Origin: http://example.com
+WebSocket-Protocol: sample</code></pre>
+<p>后跟non-HTTP数据。</p>
+<p>（有关WebSocketprotocol.的更多信息，请参阅RFC6455）</p>
+<p>为了支持这一点，解析器将把它视为没有正文的普通HTTP消息，同时发出on_headers_complete和on_message_complete回调。但是http_parser_execute(）将在头的末尾停止解析并返回。</p>
+<p>用户应该在http_parser_execute()返回后检查parser-&gt;upgrade是否已设置为1。Non-HTTP数据从缓冲区提供的偏移量开始，偏移量由http_parser_execute()返回。</p>
+<p>Callbacks<br>在http_parser_execute()调用期间，http_parser_settings中设置的回调将被执行。解析器维护状态，从不向后看，因此不需要缓冲数据。如果需要保存某些数据以备以后使用，可以从回调中执行此操作。</p>
+<p>有两种类型的回调：</p>
+<p>notification typedef int (<em>http_cb) (http_parser</em>); Callbacks: on_message_begin, on_headers_complete, on_message_complete.<br>data typedef int (<em>http_data_cb) (http_parser</em>, const char *at, size_t length); Callbacks: (requests only) on_url, (common) on_header_field, on_header_value, on_body;<br>成功时回调必须返回0。返回non-zero值将向解析器指示错误，使其立即退出。</p>
+<p>对于需要在回调中传递本地信息的情况，可以使用http_parser对象的data字段。这种情况的一个例子是使用线程处理套接字连接、解析请求，然后通过该套接字给出响应。通过实例化包含相关数据的thread-local结构（例如接受的套接字、为回调写入的分配内存等），解析器的回调能够以线程安全的方式在线程范围和回调范围之间通信数据。这允许http_parser在multi-threaded上下文中使用。</p>
+<p>Example:</p>
+<p>typedef struct {<br>  socket_t sock;<br>  void* buffer;<br>  int buf_len;<br> } custom_data_t;</p>
+<p>int my_url_callback(http_parser* parser, const char <em>at, size_t length) {<br>  /</em> access to thread local custom_data_t struct.<br>Use this access save parsed data for later use into thread local<br>buffer, or communicate over socket<br>*/<br>  parser-&gt;data;<br>  …<br>  return 0;<br>}</p>
+<p>…</p>
+<p>void http_parser_thread(socket_t sock) {<br> int nparsed = 0;<br> /* allocate memory for user data */<br> custom_data_t *my_data = malloc(sizeof(custom_data_t));</p>
+<p> /* some information for use by callbacks.</p>
+<ul>
+<li><p>achieves thread -&gt; callback information flow */<br>my_data-&gt;sock = sock;</p>
+<p>/* instantiate a thread-local parser */<br>http_parser <em>parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST); /</em> initialise parser <em>/<br>/</em> this custom data reference is accessible through the reference to the<br>parser supplied to callback functions */<br>parser-&gt;data = my_data;</p>
+<p>http_parser_settings settings; /* set up callbacks */<br>settings.on_url = my_url_callback;</p>
+<p>/* execute parser */<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</p>
+<p>…<br>/* parsed information copied from callback.<br>can now perform action on data copied into thread-local memory from callbacks.<br>achieves callback -&gt; thread information flow */<br>my_data-&gt;buffer;<br>…<br>}<br>如果您分块解析HTTP消息（即来自socket的read()请求行、parse、read half headers、parse等），那么您的数据回调可能会被多次调用。http_parser保证数据指针只在回调的生存期内有效。如果适合您的应用程序，您还可以将read()放入堆分配的缓冲区中，以避免复制内存。</p>
+</li>
+</ul>
+<p>如果您部分地读取/解析报头，那么读取报头可能是一项棘手的任务。基本上，您需要记住上一次头回调是字段还是值，并应用以下逻辑：</p>
+<p>(on_header_field and on_header_value shortened to on_h_*)</p>
+<hr>
+<p>| State (prev. callback) | Callback   | Description/action                         |</p>
+<hr>
+<p>| nothing (first call)   | on_h_field | Allocate new buffer and copy callback data |<br>|                        |            | into it                                    |</p>
+<hr>
+<p>| value                  | on_h_field | New header started.                        |<br>|                        |            | Copy current name,value buffers to headers |<br>|                        |            | list and allocate new buffer for new name  |</p>
+<hr>
+<p>| field                  | on_h_field | Previous name continues. Reallocate name   |<br>|                        |            | buffer and append callback data to it      |</p>
+<hr>
+<p>| field                  | on_h_value | Value for current header started. Allocate |<br>|                        |            | new buffer and copy callback data to it    |</p>
+<hr>
+<p>| value                  | on_h_value | Value continues. Reallocate value buffer   |<br>|                        |            | and append callback data to it             |</p>
+<hr>
+<p>Parsing URLs<br>一个简单的zero-copyURL解析器作为http_parser_parse_url()提供。这个库的用户可能希望使用它来解析由连续的on_url回调构造的url。</p>
+<p>请参阅标题中的阅读示例：</p>
+<p>C语言中的部分示例<br>从http-parser测试中<br>从Javascript中的节点库</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/language-types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/language-types/" class="post-title-link" itemprop="url">language types</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-04 17:18:14 / Modified: 17:19:53" itemprop="dateCreated datePublished" datetime="2021-10-04T17:18:14+08:00">2021-10-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>动态/静态类型，强/弱类型<br><img src="https://github.com/Melody-Zhang/imgs/blob/master/types.png?raw=true" alt="image"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/tutorial-how-to-create-a-new-blog/" class="post-title-link" itemprop="url">tutorial: how to create a new blog</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-04 15:49:08 / Modified: 16:10:02" itemprop="dateCreated datePublished" datetime="2021-10-04T15:49:08+08:00">2021-10-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。</p>
+<h1 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹</span><br><span class="line">hexo new &quot;&#123;title here&#125;&quot; &#x2F;&#x2F; 新建新文件</span><br><span class="line">vi source&#x2F;_posts&#x2F;&#123;new doc&#125;.md &#x2F;&#x2F; 在文件中编写内容</span><br><span class="line">hexo g -d &#x2F;&#x2F; 上传到git，一段时间后即可在https:&#x2F;&#x2F;melody-zhang.github.io&#x2F;看到更新的文章（这里之所以要等一段时间，是因为资源上传需要时间，静态资源的有缓存，更新也需要时间，所以如果一段时间后打开发现刚上传的文件依旧不存在，可尝试多次刷新页面并等待...）</span><br></pre></td></tr></table></figure>
+
+<h1 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h1><p>如果在文章中需要插入一些图片资源，需要将图片资源上传到<a href="https://github.com/Melody-Zhang/imgs/blob/master/">https://github.com/Melody-Zhang/imgs/blob/master/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j imgs &#x2F;&#x2F; git图片资源仓库</span><br></pre></td></tr></table></figure>
+<p>之后复制图片链接url，在.md文件相应位置插入以下模版：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![image](https:&#x2F;&#x2F;github.com&#x2F;Melody-Zhang&#x2F;imgs&#x2F;blob&#x2F;master&#x2F;mem2.jpeg?raw&#x3D;true)</span><br></pre></td></tr></table></figure>
+<p>注意：图片链接url之后一定要加参数 <code>raw=true</code>， 参数的存在是为了确保你链接到的图片会被原样呈现。 这意味着只有图片会被链接到，而不是该文件的整个GitHub 界面。</p>
+<h1 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h1><p>画图： sketch<br>选色：<a target="_blank" rel="noopener" href="https://coolors.co/">https://coolors.co/</a></p>
+<h1 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h1><p>other questions pls refer to:<br>技术文章配图指南 <a target="_blank" rel="noopener" href="https://draveness.me/sketch-and-sketch/">https://draveness.me/sketch-and-sketch/</a><br>hexo官网文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">https://hexo.io/zh-cn/docs/commands</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -751,199 +1022,6 @@
 
 <h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97649559">https://zhuanlan.zhihu.com/p/97649559</a></p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/" class="post-title-link" itemprop="url">go常用数据结构操作(七) - func</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-18 23:23:57" itemprop="dateCreated datePublished" datetime="2021-04-18T23:23:57+08:00">2021-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AD-struct-interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AD-struct-interface/" class="post-title-link" itemprop="url">go常用数据结构操作(六) - struct&interface</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-04-18 23:23:34 / Modified: 23:26:04" itemprop="dateCreated datePublished" datetime="2021-04-18T23:23:34+08:00">2021-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="行为的定义和封装"><a href="#行为的定义和封装" class="headerlink" title="行为的定义和封装"></a>行为的定义和封装</h1>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%94-chan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%94-chan/" class="post-title-link" itemprop="url">go常用数据结构操作(五) - chan</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-18 23:22:20" itemprop="dateCreated datePublished" datetime="2021-04-18T23:22:20+08:00">2021-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
       
     </div>
 

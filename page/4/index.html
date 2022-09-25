@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,363 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/go-knowledge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/05/go-knowledge/" class="post-title-link" itemprop="url">go - knowledge</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-05 22:41:47" itemprop="dateCreated datePublished" datetime="2021-04-05T22:41:47+08:00">2021-04-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-11 23:43:43" itemprop="dateModified" datetime="2021-04-11T23:43:43+08:00">2021-04-11</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="go-语言的独特之处"><a href="#go-语言的独特之处" class="headerlink" title="go 语言的独特之处"></a>go 语言的独特之处</h1><ol>
+<li>go 对类型非常苛刻，不允许强制的类型转换，不能隐式的类型转换(即使是原有类型和别名)，可以显式的类型转换</li>
+<li>go 没有前置++</li>
+<li>与 c,c++ 相比，go 的string 默认值是””, 而不是nil</li>
+<li>不支持指针运算</li>
+<li>不同长度数组之间不可用 “==” 进行比较</li>
+<li>数组对应位置元素也要相等，才是true</li>
+</ol>
+<h1 id="main"><a href="#main" class="headerlink" title="main"></a>main</h1><ul>
+<li>应用程序入口 cli.go - 不必须是 main.go</li>
+<li>package main - must</li>
+<li>func main(){} - must, and no args、no returns</li>
+<li>args 通过 os.Args or flag</li>
+<li>return 通过 os.Exit(0) 正常退出，os.Exit(non-zero) 异常退出，其中的数字即为应用程序的退出状态，或者main函数返回值</li>
+<li>可以通过build cli.go, echo $? 进行查看</li>
+</ul>
+<h1 id="panic-和-os-Exit"><a href="#panic-和-os-Exit" class="headerlink" title="panic 和 os.Exit()"></a>panic 和 os.Exit()</h1><p>panic - defer &amp; stack info<br>os.Exit - no defer &amp; no stack info</p>
+<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><p>包名可以小写<br>通过大小写控制访问权限</p>
+<ul>
+<li>大写: 外部可访问</li>
+<li>小写：外部不可访问<br>结构体中的字段名</li>
+<li>如果字段名，首字母小写, 该字段无法被外部包访问和解析，如json.Marshal()等</li>
+<li>结构体本身的命名，首字母小写，没有关系<br>所以结构体中的字段名最好大写，即使是内部包访问</li>
+</ul>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>花括号</p>
+<h1 id="比较的是内容还是地址"><a href="#比较的是内容还是地址" class="headerlink" title="== 比较的是内容还是地址"></a>== 比较的是内容还是地址</h1><p>according to what kind of type you compare</p>
+<ol>
+<li>基础类型：int, bool, string - 直接比较值</li>
+<li>复合类型：数组和结构体 - 逐字段比较，长度位置数据都要一致</li>
+<li>引用类型：slice, map, channel, ptr, 除了slice 其他都比较引用</li>
+<li>接口类型：interface，比较类型以及值</li>
+<li>slice: 不可以比较</li>
+</ol>
+<h1 id="为什么-slice-不可比较"><a href="#为什么-slice-不可比较" class="headerlink" title="为什么 slice 不可比较"></a>为什么 slice 不可比较</h1><ol>
+<li>因为slice可以引用自己，实现难度大</li>
+<li>slice如果跟array行为不一致，会使人感到混淆</li>
+<li>slice can only be compared to nil<h1 id="自增计数-iota"><a href="#自增计数-iota" class="headerlink" title="自增计数 - iota"></a>自增计数 - iota</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> 1 package main</span><br><span class="line"> 2</span><br><span class="line"> 3 import &quot;fmt&quot;</span><br><span class="line"> 4</span><br><span class="line"> 5 const (</span><br><span class="line"> 6     a &#x3D; iota</span><br><span class="line"> 7     b</span><br><span class="line"> 8     c</span><br><span class="line"> 9     d &#x3D; 0</span><br><span class="line">10     e &#x3D; 0</span><br><span class="line">11     f          &#x2F;&#x2F; 跟随上一个值</span><br><span class="line">12     g &#x3D; iota   &#x2F;&#x2F; 持续计数</span><br><span class="line">13</span><br><span class="line">14     h &#x3D; 1 &lt;&lt; iota</span><br><span class="line">15 )</span><br><span class="line">16</span><br><span class="line">17 func main()&#123;</span><br><span class="line">18     &#x2F;&#x2F; 0 1 2 0 0 0 6 128</span><br><span class="line">19     fmt.Println(a,b,c,d,e,f,g,h)</span><br><span class="line">20 &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>Next: go实现两个协程接替打印1~100中的基数和偶数</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/go-data-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/05/go-data-structure/" class="post-title-link" itemprop="url">go - data structure</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-05 20:34:51" itemprop="dateCreated datePublished" datetime="2021-04-05T20:34:51+08:00">2021-04-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-13 21:28:18" itemprop="dateModified" datetime="2021-04-13T21:28:18+08:00">2021-04-13</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h1><p>数据类型的出现，是为了把数据分成所需内存大小不同的数据进行存储。</p>
+<h1 id="go-的几个关键数字"><a href="#go-的几个关键数字" class="headerlink" title="go 的几个关键数字"></a>go 的几个关键数字</h1><p>25 个关键字<br>3 个基本数据类型</p>
+<ul>
+<li>bool(false), num(0), string(“”)<br>8 个复合数据类型(除了struct, default: nil)</li>
+<li>pointer, array, slice, map, channel, struct, func, interface</li>
+</ul>
+<h2 id="值类型"><a href="#值类型" class="headerlink" title="值类型"></a>值类型</h2><p>基本数据类型，int,float,bool,string, 以及数组和 struct 特点：变量直接存储值，内存通常在栈中分配，栈在函数调用完会被释放</p>
+<h2 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h2><p>slice, map, channel, pointer, func, interface<br>是一种结构体+元素指针的混合类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type slice struct &#123;</span><br><span class="line">	array unsafe.Pointer</span><br><span class="line">	len   int</span><br><span class="line">	cap   int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><p>bool, num, string<br>num:</p>
+<ul>
+<li>int, int8, int16, int32, int64</li>
+<li>uint, uint8, uint16, uint32, unit64, uintptr</li>
+<li>byte // uint8</li>
+<li>rune // int32 for unicode</li>
+<li>float32, float64</li>
+<li>complex64, complex32</li>
+</ul>
+<h2 id="int"><a href="#int" class="headerlink" title="int"></a>int</h2><p>go 中的 int 是 int 64</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func printBytes(n int)&#123;</span><br><span class="line">	fmt.Println(&amp;n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var a int</span><br><span class="line">	a &#x3D; 1</span><br><span class="line">	fmt.Println(&amp;a)</span><br><span class="line">	printBytes(a)</span><br><span class="line">	fmt.Println(&amp;a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">0xc000136008</span><br><span class="line">0xc000136020</span><br><span class="line">0xc000136008</span><br></pre></td></tr></table></figure>
+<p>由上，因为a是int64，所以不同存储空间间隔8bytes=64bits<br>不仅如此还可以证明，在go语言中，参数传递，传递的是“值”，而不是引用。<br>“值” 意思是传递一个拷贝，一个副本。<br>对于非引用类型：int、string、struct 地址变化，值不可改<br>对于引用类型：map、slice、chan、func, pointer 指针地址变化，但是值地址不变，可通过指针改</p>
+<h2 id="string-byte-rune"><a href="#string-byte-rune" class="headerlink" title="string, byte, rune"></a>string, byte, rune</h2><h3 id="utf8-unicode"><a href="#utf8-unicode" class="headerlink" title="utf8, unicode"></a>utf8, unicode</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23374078">https://www.zhihu.com/question/23374078</a></p>
+<p>unicode 是字符集，16进制范围 0000-FFFF, 0～65536<br>utf-8是一种编码方式，一种转换规则，将字符集变成计算机可以理解的二进制序列, 顾名思义，是一套以8位为一个编码单位的可变长编码。</p>
+<p>每一个16进制数，表示成一个四位的二进制数<br>16^4 = 2^4^4 = 2^16<br>unicode 用16位二进制代表一个符号</p>
+<p>问题：<br>英文只有8bit, 所以所有字符都用16bit存放浪费空间<br>所以一些编码规则出现，为了更合理高效的利用内存</p>
+<p>规则为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UTF-8是这样做的：1. 单字节的字符，字节的第一位设为0，对于英语文本，UTF-8码只占用一个字节，和ASCII码完全相同；2. n个字节的字符(n&gt;1)，第一个字节的前n位设为1，第n+1位设为0，后面字节的前两位都设为10，这n个字节的其余空位填充该字符unicode码，高位用0补足。这样就形成了如下的UTF-8标记位：</span><br><span class="line">0xxxxxxx</span><br><span class="line">110xxxxx 10xxxxxx</span><br><span class="line">1110xxxx 10xxxxxx 10xxxxxx - 3byte</span><br><span class="line">11110xxx 10xxxxxx 10xxxxxx 10xxxxxx - 4byte rune</span><br></pre></td></tr></table></figure>
+
+
+<p>string是一个字节 []uint8 , rune是4个字节 []int32 (正好对应最大的utf8)<br>所以rune可以直接将[]byte解析成对应的unicode字符</p>
+<p>中文的特殊性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type byte &#x3D; uint8</span><br><span class="line">type rune &#x3D; int32</span><br></pre></td></tr></table></figure>
+
+<p>内存地址是最小单位是 1byte, 也就是打印出来的16进制指针的单位是byte<br>string 底层实现是 byte 数组，所以长度是字节长度<br>1byte 是 8bit, 每一个string是一个unit8, 也就是 1byte<br>但是</p>
+<p>go 为每一个 string 类型分配 16byte 内存</p>
+<h3 id="地址访问"><a href="#地址访问" class="headerlink" title="地址访问"></a>地址访问</h3><p>可以访问string类型的地址<br>==但是不能通过索引访问其中某个元素的地址==</p>
+<h3 id="但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素"><a href="#但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素" class="headerlink" title="但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素"></a>但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印出str中的每一个byte的10进制值</span><br><span class="line">for i:&#x3D;0; i&lt;len(str); i++ &#123;</span><br><span class="line">		fmt.Println(str[i])</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#x2F;&#x2F; 如果想看到真实的值，需要用格式化输出 %q</span><br><span class="line">&#x2F;&#x2F; %q 对应go语法字符字面值，必要时会采取安全的转义</span><br><span class="line">&#x2F;&#x2F; %s 直接输出字符串或者[]byte</span><br><span class="line">&#x2F;&#x2F; 使用反射获取变量类型，或使用%s</span><br><span class="line">func main() &#123;</span><br><span class="line">	a :&#x3D; &quot;a张宇鑫&quot;</span><br><span class="line">	fmt.Println(&quot;*** print uint8 ***&quot;)</span><br><span class="line">	for i:&#x3D;0; i&lt;len(a); i++ &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(a[i]))</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, a[i])</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(&quot;*** print rune(int32) ***&quot;)</span><br><span class="line">	for k,v :&#x3D; range a &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(v))</span><br><span class="line">		fmt.Println(&quot;k,v: &quot;)</span><br><span class="line">		fmt.Println(k,v)</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, v)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(&quot;*** change str to rune ***&quot;)</span><br><span class="line">	b :&#x3D; []rune(a)</span><br><span class="line">	for i:&#x3D;0; i&lt;len(b); i++ &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(b[i]))</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, b[i])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">*** print uint8 ***</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;229), &#39;å&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;188), &#39;¼&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;160), &#39;\u00a0&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;229), &#39;å&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;174), &#39;®&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;135), &#39;\u0087&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;233), &#39;é&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;145), &#39;\u0091&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;171), &#39;«&#39;</span><br><span class="line">*** print rune(int32) ***</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">0 97</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">1 24352</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;24352), &#39;张&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">4 23431</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;23431), &#39;宇&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">7 37995</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;37995), &#39;鑫&#39;</span><br><span class="line">*** change str to rune ***</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;24352), &#39;张&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;23431), &#39;宇&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;37995), &#39;鑫&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取字符串真实长度的方法"><a href="#获取字符串真实长度的方法" class="headerlink" title="获取字符串真实长度的方法"></a>获取字符串真实长度的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;golang中的unicode&#x2F;utf8包提供了用utf-8获取长度的方法</span><br><span class="line">    fmt.Println(&quot;RuneCountInString:&quot;, utf8.RuneCountInString(str))</span><br></pre></td></tr></table></figure>
+
+<h2 id="slice-array"><a href="#slice-array" class="headerlink" title="slice, array"></a>slice, array</h2><h3 id="从表现形式上来看"><a href="#从表现形式上来看" class="headerlink" title="从表现形式上来看"></a>从表现形式上来看</h3><ol>
+<li><p>类型不同<br>array是值类型，可类比于有序的struct，传递的是整个数组的拷贝<br>slice是引用类型，又被称为动态的数组，传递的是一个的指向数组切片的指针</p>
+</li>
+<li><p>定义方式不同<br>array需要在定义时指定长度[10]int, […]int，长度本身也是数据结构的一部分<br>slice不需要指定长度，可变长的数组，在容量不足时可以自动扩容</p>
+</li>
+<li><p>底层实现不同<br>array跟其他语言的实现都是一样的：一段连续的内存空间，每个元素有唯一索引来访问，由于内存连续，cpu可以很快的计算索引，快速迭代数组里面的所有元素<br>但是使用方式不一样，例如与c语言相比，C语言的数组变量是指向第一个数组元素的指针，而go的数组变量是一个值，不可分割。 – 那应该是不能像c语言那样通过指针++来访问其中的元素的吧<br>slice是对数组的抽象，它的数据结构中有一个是指向 array 的指针</p>
+</li>
+</ol>
+<h3 id="从底层实现上来看"><a href="#从底层实现上来看" class="headerlink" title="从底层实现上来看"></a>从底层实现上来看</h3><h4 id="编译期间"><a href="#编译期间" class="headerlink" title="编译期间"></a>编译期间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Array contains Type fields specific to array types.</span><br><span class="line">type Array struct &#123;</span><br><span class="line">	Elem  *Type &#x2F;&#x2F; element type</span><br><span class="line">	Bound int64 &#x2F;&#x2F; number of elements; &lt;0 if unknown yet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Slice contains Type fields specific to slice types.</span><br><span class="line">type Slice struct &#123;</span><br><span class="line">	Elem *Type &#x2F;&#x2F; element type</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; NewArray returns a new fixed-length array Type.</span><br><span class="line">func NewArray(elem *Type, bound int64) *Type &#123;</span><br><span class="line">	if bound &lt; 0 &#123;</span><br><span class="line">		base.Fatalf(&quot;NewArray: invalid bound %v&quot;, bound)</span><br><span class="line">	&#125;</span><br><span class="line">	t :&#x3D; New(TARRAY)</span><br><span class="line">	t.Extra &#x3D; &amp;Array&#123;Elem: elem, Bound: bound&#125;</span><br><span class="line">	t.SetNotInHeap(elem.NotInHeap())</span><br><span class="line">	if elem.HasTParam() &#123;</span><br><span class="line">		t.SetHasTParam(true)</span><br><span class="line">	&#125;</span><br><span class="line">	return t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; NewSlice returns the slice Type with element type elem.</span><br><span class="line">func NewSlice(elem *Type) *Type &#123;</span><br><span class="line">	if t :&#x3D; elem.cache.slice; t !&#x3D; nil &#123;</span><br><span class="line">		if t.Elem() !&#x3D; elem &#123;</span><br><span class="line">			base.Fatalf(&quot;elem mismatch&quot;)</span><br><span class="line">		&#125;</span><br><span class="line">		return t</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	t :&#x3D; New(TSLICE)</span><br><span class="line">	t.Extra &#x3D; Slice&#123;Elem: elem&#125;</span><br><span class="line">	elem.cache.slice &#x3D; t</span><br><span class="line">	if elem.HasTParam() &#123;</span><br><span class="line">		t.SetHasTParam(true)</span><br><span class="line">	&#125;</span><br><span class="line">	return t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行期间"><a href="#运行期间" class="headerlink" title="运行期间"></a>运行期间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type SliceHeader struct &#123;</span><br><span class="line">	Data uintptr</span><br><span class="line">	Len  int</span><br><span class="line">	Cap  int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var identifier type</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第一种，定义且不初始化, 为default value</span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	a int</span><br><span class="line">	b bool</span><br><span class="line">	c string</span><br><span class="line">	d uintptr</span><br><span class="line">	e [1]int</span><br><span class="line">	f []int</span><br><span class="line">	g map[string]int</span><br><span class="line">	h chan int</span><br><span class="line">	i func(string)int</span><br><span class="line">	j error</span><br><span class="line">	k interface&#123;&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type l struct&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var (</span><br><span class="line">		m int</span><br><span class="line">		n int</span><br><span class="line">	)</span><br><span class="line">	fmt.Println( a, b, c, d, e, f, g, h, i, j, k, &amp;l&#123;&#125;)</span><br><span class="line">	fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">0 false  0 [0] [] map[] &lt;nil&gt; &lt;nil&gt; &lt;nil&gt; &lt;nil&gt; &amp;&#123;&#125;</span><br><span class="line">0 0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第二种，定义的时候初始化</span><br><span class="line">var a,b int &#x3D; 1,2</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var a int &#x3D; 1</span><br><span class="line">	var b bool &#x3D; true</span><br><span class="line">	var c string &#x3D; &quot;s&quot;</span><br><span class="line">	var d uintptr &#x3D; 1</span><br><span class="line">	var e [1]int &#x3D; [1]int&#123;1&#125;</span><br><span class="line">	var f []int &#x3D; []int&#123;1,2&#125;</span><br><span class="line">	var g map[string]int &#x3D; map[string]int&#123;&quot;name&quot;:1, &quot;age&quot;:2&#125;</span><br><span class="line">	var h chan int</span><br><span class="line">	h &#x3D; make(chan int)</span><br><span class="line">	var i func(string)int &#x3D; func(string)int&#123;return 1&#125;</span><br><span class="line">	var j error &#x3D; errors.New(&quot;error&quot;)</span><br><span class="line">	type k interface &#123;</span><br><span class="line">		say()</span><br><span class="line">	&#125;</span><br><span class="line">	var k1 &#x3D; new(k)</span><br><span class="line"></span><br><span class="line">	type l struct &#123;</span><br><span class="line">		name string</span><br><span class="line">		sex string</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var l1 &#x3D; &amp;l&#123;&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println( a, b, c, d, e, f, g, h, i(&quot;a&quot;), j, k1, l1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">1 true s 1 [1] [1 2] map[age:2 name:1] 0xc00008c060 1 error 0xc00008e1f0 &amp;&#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第三种，定义时不指定类型，自动推断</span><br><span class="line">var t &#x3D; true</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第四种，使用声明语句，自动推断类型, 左边至少有一个新的变量 - 只能用于函数中，不能用于全局声明</span><br><span class="line">a :&#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第五种，使用make, 仅适用于&quot;slice, map, channel&quot;</span><br><span class="line">slice :&#x3D; make([]int, 0, 100)</span><br><span class="line">hash :&#x3D; make(map[int]bool, 10)</span><br><span class="line">ch :&#x3D; make(chan int, 5)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第六种，使用new, 适用于所有数据类型，返回一个指针</span><br><span class="line">i :&#x3D; new(int)</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>花括号</p>
+<h1 id="byte-unitptr-unsafe-Pointer-reflect"><a href="#byte-unitptr-unsafe-Pointer-reflect" class="headerlink" title="byte, unitptr, unsafe.Pointer, reflect"></a>byte, unitptr, unsafe.Pointer, reflect</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunsky303/p/11820500.html">https://www.cnblogs.com/sunsky303/p/11820500.html</a></p>
+<h1 id="new-make"><a href="#new-make" class="headerlink" title="new, make"></a>new, make</h1><p>都是用来分配内存的内建函数，分配在堆上，通过GC回收</p>
+<ul>
+<li>make, 即分配，也初始化数据结构</li>
+<li>new, 分配内存，返回指向内存的指针<br><a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/part2-foundation/ch05-keyword/golang-make-and-new/">https://draveness.me/golang/docs/part2-foundation/ch05-keyword/golang-make-and-new/</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018967149#:~:text=make%E5%92%8Cnew%E9%83%BD%E6%98%AF,%E6%98%AF%E6%8C%87%E5%90%91%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88%E3%80%82">https://segmentfault.com/a/1190000018967149#:~:text=make%E5%92%8Cnew%E9%83%BD%E6%98%AF,%E6%98%AF%E6%8C%87%E5%90%91%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88%E3%80%82</a></li>
+</ul>
+<p>对于一个已经存在变量，可对其指针进行赋值<br>如果不是已经存在的变量会如何呢？能对其直接赋值吗？ </p>
+<ul>
+<li>不能<br>panic: runtime error: invalid memory address or nil pointer dereference<br>通过Go提供了new来初始化这一地址就可以解决。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var v *int</span><br><span class="line">&#x2F;&#x2F;fmt.Println(*v) &#x2F;&#x2F; panic</span><br><span class="line">fmt.Println(v) &#x2F;&#x2F;&lt;nil&gt;</span><br><span class="line">v &#x3D; new(int)</span><br><span class="line">fmt.Println(*v) &#x2F;&#x2F; 0</span><br><span class="line">fmt.Println(v) &#x2F;&#x2F; 0xc0000b4010</span><br></pre></td></tr></table></figure>
+对于普通类型，var后是nil, new不仅会返回一个指针，还会初始化指针指向的内容。所以之后可以直接通过指针赋值了。但对于引用类型不可以，new以后还是不可以赋值，因为new之后内容还是nil。<br>but:<br>主要区别在于引用类型。go会给引用类型初始化为nil，nil是不能直接赋值的。不能用new分配内存，无法直接赋值。<br>make 不仅可以开辟内存，还可以给内存的类型初始化为其默认值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">av :&#x3D; make([]int, 5)</span><br><span class="line">fmt.Printf(&quot;av: %p %#v \n&quot;, &amp;av, av) &#x2F;&#x2F;av: 0xc000046400 []int&#123;0, 0, 0, 0, 0&#125;</span><br><span class="line">av[0] &#x3D; 1</span><br><span class="line">fmt.Printf(&quot;av: %p %#v \n&quot;, &amp;av, av) &#x2F;&#x2F;av: 0xc000046400 []int&#123;1, 0, 0, 0, 0&#125;</span><br><span class="line">mv :&#x3D; make(map[string]string)</span><br><span class="line">fmt.Printf(&quot;mv: %p %#v \n&quot;, &amp;mv, mv) &#x2F;&#x2F;mv: 0xc000074020 map[string]string&#123;&#125;</span><br><span class="line">mv[&quot;m&quot;] &#x3D; &quot;m&quot;</span><br><span class="line">fmt.Printf(&quot;mv: %p %#v \n&quot;, &amp;mv, mv) &#x2F;&#x2F;mv: 0xc000074020 map[string]string&#123;&quot;m&quot;:&quot;m&quot;&#125;</span><br><span class="line">chv :&#x3D; make(chan string)</span><br><span class="line">fmt.Printf(&quot;chv: %p %#v \n&quot;, &amp;chv, chv) &#x2F;&#x2F;chv: 0xc000074028 (chan string)(0xc00003e060)</span><br><span class="line">go func(message string) &#123;</span><br><span class="line">   chv &lt;- message &#x2F;&#x2F; 存消息</span><br><span class="line">&#125;(&quot;Ping!&quot;)</span><br><span class="line">fmt.Println(&lt;-chv) &#x2F;&#x2F; 取消息 &#x2F;&#x2F;&quot;Ping!&quot;</span><br><span class="line">close(chv)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="print-fmt"><a href="#print-fmt" class="headerlink" title="print, fmt"></a>print, fmt</h1><ul>
+<li>print/println</li>
+</ul>
+<ol>
+<li>go的内置函数, 写入标准错误流</li>
+<li>print无法打印出数组和结构体<br>illegal types for operand: print for 复合类型，数组和结构体</li>
+<li>对于值类型就会打印出值，对于引用类型就会打印出指针<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The print built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Print is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func print(args ...Type)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The println built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Spaces are always added between arguments and a newline is appended.</span><br><span class="line">&#x2F;&#x2F; Println is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func println(args ...Type)</span><br></pre></td></tr></table></figure>
+fmt, 写入标准输出流</li>
+</ol>
+<p>Ref:</p>
+<ol>
+<li>‘Go语言参数传递是传值还是传引用’<br><a target="_blank" rel="noopener" href="https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html">https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html</a> </li>
+<li>‘slice与array的区别’<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013148775">https://segmentfault.com/a/1190000013148775</a><br><a target="_blank" rel="noopener" href="https://halfrost.com/go_slice/">https://halfrost.com/go_slice/</a><br><a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/">https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/</a><br><a target="_blank" rel="noopener" href="https://i6448038.github.io/2018/08/11/array-and-slice-principle/">https://i6448038.github.io/2018/08/11/array-and-slice-principle/</a></li>
+</ol>
+<p>Next:<br>go - knowledge</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/Traffic-Replay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/05/Traffic-Replay/" class="post-title-link" itemprop="url">Traffic Replay</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-04-05 19:54:29 / Modified: 20:14:11" itemprop="dateCreated datePublished" datetime="2021-04-05T19:54:29+08:00">2021-04-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="“流量回放”-调研"><a href="#“流量回放”-调研" class="headerlink" title="“流量回放” 调研"></a>“流量回放” 调研</h1><p>next: </p>
+<ol>
+<li>core dump or 系统/虚拟机状态快照<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24591108">https://zhuanlan.zhihu.com/p/24591108</a></li>
+<li>利用快照恢复数据<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/s/video/BV1kp4y1S7qv">https://www.bilibili.com/s/video/BV1kp4y1S7qv</a></li>
+<li>Go-cupaloy:简单的golang快照测试<br><a href="https://github.com/bradleyjkemp/cupaloy">https://github.com/bradleyjkemp/cupaloy</a></li>
+<li>Apollo灰度发布功能</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
