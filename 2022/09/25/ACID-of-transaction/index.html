@@ -24,14 +24,17 @@
     var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="数据库的逻辑架构分为三层： 处理连接 缓存，解析和优化语句 存储 和 提取数据  事务不是数据库服务器层实现的，而是存储引擎实现的InnoDB引擎支持事务 语法：123start transaction;...commit;  四个特性：Atomicity 原子性consistency 一致性Isolation 隔离性durability 持久性 事务不一定满足这四个性质如innodb默认隔离级别">
+<meta property="og:type" content="article">
 <meta property="og:title" content="ACID of transaction">
 <meta property="og:url" content="https://github.com/Melody-Zhang/2022/09/25/ACID-of-transaction/index.html">
 <meta property="og:site_name" content="yuxin&#39;s blog">
+<meta property="og:description" content="数据库的逻辑架构分为三层： 处理连接 缓存，解析和优化语句 存储 和 提取数据  事务不是数据库服务器层实现的，而是存储引擎实现的InnoDB引擎支持事务 语法：123start transaction;...commit;  四个特性：Atomicity 原子性consistency 一致性Isolation 隔离性durability 持久性 事务不一定满足这四个性质如innodb默认隔离级别">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-25T07:25:29.000Z">
-<meta property="article:modified_time" content="2022-09-25T07:25:29.061Z">
+<meta property="article:modified_time" content="2022-09-26T14:47:56.333Z">
 <meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
 
 
@@ -136,7 +139,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -149,6 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84%E5%88%86%E4%B8%BA%E4%B8%89%E5%B1%82%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">数据库的逻辑架构分为三层：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">语法：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">四个特性：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E5%8E%9F%E5%AD%90%E6%80%A7%EF%BC%9Aundo-log"><span class="nav-number">4.1.</span> <span class="nav-text">for 原子性：undo log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E6%8C%81%E4%B9%85%E6%80%A7%EF%BC%9Aredo-log"><span class="nav-number">4.2.</span> <span class="nav-text">for 持久性：redo log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">4.3.</span> <span class="nav-text">for 一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-%E9%9A%94%E7%A6%BB%E6%80%A7-undo-log"><span class="nav-number">4.4.</span> <span class="nav-text">for 隔离性: undo log</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -233,6 +237,13 @@
 
       <time title="Created: 2022-09-25 15:25:29" itemprop="dateCreated datePublished" datetime="2022-09-25T15:25:29+08:00">2022-09-25</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-26 22:47:56" itemprop="dateModified" datetime="2022-09-26T22:47:56+08:00">2022-09-26</time>
+      </span>
 
   
 </div>
@@ -244,7 +255,40 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <h1 id="数据库的逻辑架构分为三层："><a href="#数据库的逻辑架构分为三层：" class="headerlink" title="数据库的逻辑架构分为三层："></a>数据库的逻辑架构分为三层：</h1><ol>
+<li>处理连接</li>
+<li>缓存，解析和优化语句</li>
+<li>存储 和 提取数据</li>
+</ol>
+<p>事务不是数据库服务器层实现的，而是存储引擎实现的<br>InnoDB引擎支持事务</p>
+<h1 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start transaction;</span><br><span class="line">...</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四个特性："><a href="#四个特性：" class="headerlink" title="四个特性："></a>四个特性：</h1><p>Atomicity 原子性<br>consistency 一致性<br>Isolation 隔离性<br>durability 持久性</p>
+<p>事务不一定满足这四个性质<br>如innodb默认隔离级别是：可重复读RR， 不满足隔离性</p>
+<h1 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h1><h2 id="for-原子性：undo-log"><a href="#for-原子性：undo-log" class="headerlink" title="for 原子性：undo log"></a>for 原子性：undo log</h2><p>原子性就是保证全部执行，如果出错，则全部rollback<br>所以rollback是关键， undolog 就是用来rollback的<br>undolog是逻辑日志，记录执行操作，之前的值，之后的值，rollback就是根据undolog执行相反的语句以恢复数据</p>
+<h2 id="for-持久性：redo-log"><a href="#for-持久性：redo-log" class="headerlink" title="for 持久性：redo log"></a>for 持久性：redo log</h2><p>持久性是保证commit之后，对数据库的改变是永久的。而不能受到故障的影响。<br>数据  –&gt; buffer pool –&gt; 磁盘<br>buffer pool 中存放的是磁盘中部分数据页的映射。<br>持久性问题主要是由于buffer pool中数据未能落盘导致的。</p>
+<p>buffer pool 是每隔一段时间，以页(16kb)为单位刷盘</p>
+<p>改进方法：<br>数据修改时，先写redolog，再写buffer pool, 当commit的时候，调用redo log对数据进行刷盘。这样如果数据库宕机，在重启的时候就可以根据redo log进行恢复。</p>
+<p>redolog刷盘和buffer pool刷盘之间的区别：</p>
+<ol>
+<li>redolog是顺序io, buffer pool是随机io</li>
+<li>redolog只追加修改部分，buffer pool要刷修改部分所在的整个一页数据<br>综上，redolog比buffer pool要更快更少，效率更高一些。</li>
+</ol>
+<p>binlog和redolog的区别：<br>binlog是二进制，记录执行了什么语句的执行日志，在事务commit的时候写入，定期刷盘。主要用来根据时间点恢复数据，和主从复制。</p>
+<h2 id="for-一致性"><a href="#for-一致性" class="headerlink" title="for 一致性"></a>for 一致性</h2><p>一致性是最终的目标，由前三者共同保障，不仅需要数据库层面的保障，还需要应用层的保障</p>
+<h2 id="for-隔离性-undo-log"><a href="#for-隔离性-undo-log" class="headerlink" title="for 隔离性: undo log"></a>for 隔离性: undo log</h2><p>隔离性是隔离不同事务，使 “并发执行” 的事务之间相互不干扰。<br>真正的隔离性级别是：serialization<br>假设有A,B两个事务，以下4个场景：<br>A读B写： MVCC<br>A写B读<br>A读B读<br>A写B写： 锁</p>
+<p>锁分为行锁，表锁<br>锁分为读锁（共享锁），写锁（排它锁）</p>
+<p>读操作存在的问题：</p>
+<ol>
+<li>脏读：B事务修改数据未提交，A读到B未提交的数据</li>
+<li>不可重复读：B事务修改数据已提交，A在B提交前读的数据，和B提交后分别读取一次数据，两次结果不一样</li>
+<li>幻读：也是不可重复读，但区别是B不是修改数据，而是新增数据，A查询到的数据行数变了。</li>
+</ol>
+<p>事务的隔离级别：<br>读未提交：啥问题都有<br>读已提交：解决脏读<br>可重复读：解决不可重复读<br>串行化：解决幻读</p>
+<p>InnoDB实现的RR避免了幻读问题 ？ 那不就是实现了隔离性？<br>MVCC最大的优点是，读不加锁，所以读写不冲突，并发性能好。</p>
+<p>读分为两种：快照读，当前读<br>mvcc不加锁：就是快照读<br>加锁：就是当前读<br>什么情况下是加锁：<br>共享锁读取<br>select…lock in share mode<br>排它锁读取<br>select…for update<br>update …<br>如果先快照读，再当前读，就会发生数据不一致的情况<br>还可以通过next-key lock(record lock行锁 + gap lock间隙锁) 来解决幻读的问题</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kismetv/p/10331633.html">https://www.cnblogs.com/kismetv/p/10331633.html</a></p>
+
     </div>
 
     
@@ -252,6 +296,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%20%7C%7C%20tags/interview/" rel="tag"># interview</a>
+          </div>
 
         
 
