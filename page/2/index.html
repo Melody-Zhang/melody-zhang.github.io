@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,6 +196,255 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/10/redis-HA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/10/redis-HA/" class="post-title-link" itemprop="url">redis HA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-10 00:02:23 / Modified: 00:04:50" itemprop="dateCreated datePublished" datetime="2021-11-10T00:02:23+08:00">2021-11-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h1><p> 持久化、主从复制、哨兵、集群</p>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>rdb<br>aof<br>原理，优缺点</p>
+<h1 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h1><p>问题：内存/磁盘使用率较高<br>解决方案：</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/09/mysql-log/" class="post-title-link" itemprop="url">mysql log</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-09 22:44:40 / Modified: 23:27:09" itemprop="dateCreated datePublished" datetime="2021-11-09T22:44:40+08:00">2021-11-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>cd /usr/local/mysql/<br>index文件： mysql-bin.index<br>binlog文件：mysql-bin.000055<br>redolog文件：ib_logfile0<br>undolog文件：undo_001</p>
+<h1 id="查看binlog"><a href="#查看binlog" class="headerlink" title="查看binlog"></a>查看binlog</h1><p>../bin/mysqlbinlog –no-defaults mysql-bin.000055</p>
+<p>sql -&gt; show binlog events in ‘mysql-bin.000055’;<br>sql -&gt; show variables like ‘binlog_format’; // statement or row<br>sql -&gt; show variables like ‘log_%’;<br>sql -&gt; show master status\G;</p>
+<h2 id="查询-BINLOG-格式"><a href="#查询-BINLOG-格式" class="headerlink" title="查询 BINLOG 格式"></a>查询 BINLOG 格式</h2><p>show VARIABLES like ‘binlog_format’;</p>
+<h2 id="查询-BINLOG-位置"><a href="#查询-BINLOG-位置" class="headerlink" title="查询 BINLOG 位置"></a>查询 BINLOG 位置</h2><p>show VARIABLES like ‘datadir’;</p>
+<h2 id="查询当前数据库中-BINLOG-名称及大小"><a href="#查询当前数据库中-BINLOG-名称及大小" class="headerlink" title="查询当前数据库中 BINLOG 名称及大小"></a>查询当前数据库中 BINLOG 名称及大小</h2><p>show binary logs;</p>
+<h2 id="查看-master-正在写入的-BINLOG-信息"><a href="#查看-master-正在写入的-BINLOG-信息" class="headerlink" title="查看 master 正在写入的 BINLOG 信息"></a>查看 master 正在写入的 BINLOG 信息</h2><p>show master status\G;</p>
+<h2 id="通过-offset-查看-BINLOG-信息"><a href="#通过-offset-查看-BINLOG-信息" class="headerlink" title="通过 offset 查看 BINLOG 信息"></a>通过 offset 查看 BINLOG 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ limit 9000,  10;</p>
+<h2 id="通过-position-查看-binlog-信息"><a href="#通过-position-查看-binlog-信息" class="headerlink" title="通过 position 查看 binlog 信息"></a>通过 position 查看 binlog 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ from 1742635 limit 10;</p>
+<h2 id="查询-binlog"><a href="#查询-binlog" class="headerlink" title="查询 binlog"></a>查询 binlog</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055| less</p>
+<h2 id="导出-BINLOG"><a href="#导出-BINLOG" class="headerlink" title="导出 BINLOG"></a>导出 BINLOG</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055 &gt; binlog_raw.sql </p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="通过-BINLOG-进行恢复。"><a href="#通过-BINLOG-进行恢复。" class="headerlink" title="通过 BINLOG 进行恢复。"></a>通过 BINLOG 进行恢复。</h3><p>../bin/mysqlbinlog –no-defaults –start-position=482 –stop-position=1327 –database=testdb  mysql-bin.000055 | mysql -u username -p password</p>
+<h3 id="通过-BINLOG-导出的-sql-进行恢复。"><a href="#通过-BINLOG-导出的-sql-进行恢复。" class="headerlink" title="通过 BINLOG 导出的 sql 进行恢复。"></a>通过 BINLOG 导出的 sql 进行恢复。</h3><p>mysql -u username -p password &lt; binlog_raw.sql </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/06/https%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/06/https%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">https服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-06 19:12:06" itemprop="dateCreated datePublished" datetime="2021-11-06T19:12:06+08:00">2021-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-08 21:13:17" itemprop="dateModified" datetime="2021-11-08T21:13:17+08:00">2021-11-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>在tcp连接之外，增加了ssl/tls协议。<br>tls协议在tcp协议之后建立。</p>
+<h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>ssl: secure sockets layer 安全套接层<br>tls: transport layer security 传输层安全</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>tcp<br>client: syn<br>server: syn,ack<br>client: ack</p>
+<p>tlsv1.2<br>client: Client Hello<br>server: Server Hello, Certificate, Server Key Exchange, Server Hello Done<br>client: Client Key Exchange, Change Cipher Spec, Encrypted Handshake message<br>server: New Session Ticket, Change Cipher Spec, Encrypted Handshake message</p>
+<p>开始通信：<br>client: Application Data<br>server: Application Data</p>
+<h2 id="证书中包含的信息"><a href="#证书中包含的信息" class="headerlink" title="证书中包含的信息"></a>证书中包含的信息</h2><p>申请人信息<br>签名算法：带RSA加密的SHA-1<br>有效期<br>公共密钥信息</p>
+<ul>
+<li>算法：RSA</li>
+<li>公共密钥：256字节</li>
+<li>密钥大小：2048位<br>签名<br>密钥ID<br>指纹：SHA-256,SHA-1 (摘要-安全散列算法)</li>
+</ul>
+<h2 id="信任本地根证书"><a href="#信任本地根证书" class="headerlink" title="信任本地根证书"></a>信任本地根证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo security add-trusted-cert -d -r trustRoot -k &#x2F;Library&#x2F;Keychains&#x2F;System.keychain &#x2F;Users&#x2F;zhangyuxin&#x2F;language_learn&#x2F;entrytask_go&#x2F;cert.pem</span><br></pre></td></tr></table></figure>
+
+<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><p>高级 -&gt; thisisunsafe</p>
+<h1 id="go配置文件解析"><a href="#go配置文件解析" class="headerlink" title="go配置文件解析"></a>go配置文件解析</h1><h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><h2 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h2><h1 id="鉴权：Auth-Session-Token的鉴权机制"><a href="#鉴权：Auth-Session-Token的鉴权机制" class="headerlink" title="鉴权：Auth/Session Token的鉴权机制"></a>鉴权：Auth/Session Token的鉴权机制</h1><h2 id="四种方法"><a href="#四种方法" class="headerlink" title="四种方法"></a>四种方法</h2><p>http basic<br>session-cookie<br>token<br>oauth</p>
+<h2 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h2><ol>
+<li>请求授权码</li>
+<li>返回授权码</li>
+<li>请求令牌</li>
+<li>返回令牌</li>
+</ol>
+<h2 id="sso-single-sign-on"><a href="#sso-single-sign-on" class="headerlink" title="sso  single sign-on"></a>sso  single sign-on</h2><p>一个账号对应的token同一时间只有一个生效</p>
+<h2 id="JWT生成规则-json-web-token"><a href="#JWT生成规则-json-web-token" class="headerlink" title="JWT生成规则 (json web token)"></a>JWT生成规则 (json web token)</h2><h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><h2 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h2><p>“github.com/gomodule/redigo/redis”<br>“github.com/go-redis/redis/v8”</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li>Golang创建最简单的HTTP和HTTPS服务 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/14947">https://studygolang.com/articles/14947</a></li>
+<li>详解TCP三次握手以及TLS-SSL握手 <a target="_blank" rel="noopener" href="https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/">https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/</a></li>
+<li>常见登录鉴权方案 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/271768645">https://zhuanlan.zhihu.com/p/271768645</a></li>
+<li>Go 鉴权 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/22040">https://studygolang.com/articles/22040</a></li>
+<li>单点登录（SSO）看这一篇就够了 <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/636281">https://developer.aliyun.com/article/636281</a></li>
+<li>在 GO 语言中创建你自己的 OAuth2 服务：客户端凭据授权流程 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903784498331661">https://juejin.cn/post/6844903784498331661</a></li>
+<li>理解OAuth 2.0 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -816,233 +1065,10 @@ WebSocket-Protocol: sample</code></pre>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/19/go-pointer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/19/go-pointer/" class="post-title-link" itemprop="url">go - pointer</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-19 20:41:54" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:54+08:00">2021-04-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/19/go-closures/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/19/go-closures/" class="post-title-link" itemprop="url">go - closures</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-19 20:41:35" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:35+08:00">2021-04-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-20 21:39:45" itemprop="dateModified" datetime="2021-04-20T21:39:45+08:00">2021-04-20</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p><a target="_blank" rel="noopener" href="https://gobyexample.com/closures">https://gobyexample.com/closures</a></p>
-<p>go 语言中的匿名函数可以直接构造闭包</p>
-<p>一个用闭包生成的迭代器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func seq() func() int &#123;</span><br><span class="line">	i :&#x3D; 0</span><br><span class="line">	return func() int &#123;</span><br><span class="line">		i++</span><br><span class="line">		return i</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	seq1 :&#x3D; seq()</span><br><span class="line">	for i:&#x3D;0;i&lt;10;i++&#123;</span><br><span class="line">		fmt.Println(seq1())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个函数时间装饰器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">func loop() &#123;</span><br><span class="line">	for i:&#x3D;0;i&lt;10000000;i++&#123;</span><br><span class="line">		time.Sleep(1)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func timeSpend(f func()) func()&#123;</span><br><span class="line">	return func() &#123;</span><br><span class="line">		startTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		f()</span><br><span class="line">		endTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		fmt.Println(&quot;spend time: &quot;, (endTime - startTime)&#x2F;1e9)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	a :&#x3D; timeSpend(loop)</span><br><span class="line">	a()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="what-is-closures"><a href="#what-is-closures" class="headerlink" title="what is closures"></a>what is closures</h1><h1 id="how-to-work"><a href="#how-to-work" class="headerlink" title="how to work"></a>how to work</h1><h1 id="why-i-need-it-benefit"><a href="#why-i-need-it-benefit" class="headerlink" title="why i need it (benefit)"></a>why i need it (benefit)</h1>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/" class="post-title-link" itemprop="url">go常用数据结构操作(八) - pointer</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-18 23:24:17" itemprop="dateCreated datePublished" datetime="2021-04-18T23:24:17+08:00">2021-04-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-19 20:48:57" itemprop="dateModified" datetime="2021-04-19T20:48:57+08:00">2021-04-19</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>pointer -&gt; uintptr -&gt; 运算 -&gt; pointer -&gt; <em>解引用<br>&amp;sth -&gt; unsafe.Pointer(</em>) -&gt; uintptr(<em>) -&gt; unsafe.Pointer(</em>) -&gt; *sthptr -&gt; *</p>
-<h1 id="go中存储的内存大小"><a href="#go中存储的内存大小" class="headerlink" title="go中存储的内存大小"></a>go中存储的内存大小</h1><p>int8 - 1byte</p>
-<p>int - 8bytes</p>
-<p>string - 16bytes</p>
-<h1 id="noted"><a href="#noted" class="headerlink" title="noted"></a>noted</h1><p>只有 uintptr 类型可以执行加减操作<br>+1 意味着加一个 byte<br>那么该数据结构占用多少byte就要相应加多少byte<br>如：<br>int8 +1<br>int32 +4<br>int64 +8<br>string +16</p>
-<h1 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h1><p>通过指针访问 arr[1] 的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;unsafe&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	arr :&#x3D; [...]int&#123;1,2,3&#125;</span><br><span class="line">	unsafeArr0 :&#x3D; unsafe.Pointer(&amp;arr[0])</span><br><span class="line">	ptrArr0 :&#x3D; uintptr(unsafeArr0)</span><br><span class="line">	ptrArr0 +&#x3D; 8</span><br><span class="line">	unsafeArr1 :&#x3D; unsafe.Pointer(ptrArr0)</span><br><span class="line">	arr1 :&#x3D; (*int)(unsafeArr1)</span><br><span class="line">	fmt.Println(*arr1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97649559">https://zhuanlan.zhihu.com/p/97649559</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
