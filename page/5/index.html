@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2020/11/10/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +218,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/10/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">go - 迭代器</a>
         </h2>
 
         <div class="post-meta-container">
@@ -229,7 +229,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-11-10 20:31:03" itemprop="dateCreated datePublished" datetime="2020-11-10T20:31:03+08:00">2020-11-10</time>
+      <time title="Created: 2021-04-20 21:06:41" itemprop="dateCreated datePublished" datetime="2021-04-20T21:06:41+08:00">2021-04-20</time>
     </span>
 
   
@@ -242,19 +242,755 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/19/go-pointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/19/go-pointer/" class="post-title-link" itemprop="url">go - pointer</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-19 20:41:54" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:54+08:00">2021-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/19/go-closures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/19/go-closures/" class="post-title-link" itemprop="url">go - closures</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-19 20:41:35" itemprop="dateCreated datePublished" datetime="2021-04-19T20:41:35+08:00">2021-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-20 21:39:45" itemprop="dateModified" datetime="2021-04-20T21:39:45+08:00">2021-04-20</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p><a target="_blank" rel="noopener" href="https://gobyexample.com/closures">https://gobyexample.com/closures</a></p>
+<p>go 语言中的匿名函数可以直接构造闭包</p>
+<p>一个用闭包生成的迭代器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func seq() func() int &#123;</span><br><span class="line">	i :&#x3D; 0</span><br><span class="line">	return func() int &#123;</span><br><span class="line">		i++</span><br><span class="line">		return i</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	seq1 :&#x3D; seq()</span><br><span class="line">	for i:&#x3D;0;i&lt;10;i++&#123;</span><br><span class="line">		fmt.Println(seq1())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个函数时间装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">func loop() &#123;</span><br><span class="line">	for i:&#x3D;0;i&lt;10000000;i++&#123;</span><br><span class="line">		time.Sleep(1)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func timeSpend(f func()) func()&#123;</span><br><span class="line">	return func() &#123;</span><br><span class="line">		startTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		f()</span><br><span class="line">		endTime :&#x3D; time.Now().UnixNano()</span><br><span class="line">		fmt.Println(&quot;spend time: &quot;, (endTime - startTime)&#x2F;1e9)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	a :&#x3D; timeSpend(loop)</span><br><span class="line">	a()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="what-is-closures"><a href="#what-is-closures" class="headerlink" title="what is closures"></a>what is closures</h1><h1 id="how-to-work"><a href="#how-to-work" class="headerlink" title="how to work"></a>how to work</h1><h1 id="why-i-need-it-benefit"><a href="#why-i-need-it-benefit" class="headerlink" title="why i need it (benefit)"></a>why i need it (benefit)</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AB-pointer/" class="post-title-link" itemprop="url">go常用数据结构操作(八) - pointer</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:24:17" itemprop="dateCreated datePublished" datetime="2021-04-18T23:24:17+08:00">2021-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-19 20:48:57" itemprop="dateModified" datetime="2021-04-19T20:48:57+08:00">2021-04-19</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>pointer -&gt; uintptr -&gt; 运算 -&gt; pointer -&gt; <em>解引用<br>&amp;sth -&gt; unsafe.Pointer(</em>) -&gt; uintptr(<em>) -&gt; unsafe.Pointer(</em>) -&gt; *sthptr -&gt; *</p>
+<h1 id="go中存储的内存大小"><a href="#go中存储的内存大小" class="headerlink" title="go中存储的内存大小"></a>go中存储的内存大小</h1><p>int8 - 1byte</p>
+<p>int - 8bytes</p>
+<p>string - 16bytes</p>
+<h1 id="noted"><a href="#noted" class="headerlink" title="noted"></a>noted</h1><p>只有 uintptr 类型可以执行加减操作<br>+1 意味着加一个 byte<br>那么该数据结构占用多少byte就要相应加多少byte<br>如：<br>int8 +1<br>int32 +4<br>int64 +8<br>string +16</p>
+<h1 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h1><p>通过指针访问 arr[1] 的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;unsafe&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	arr :&#x3D; [...]int&#123;1,2,3&#125;</span><br><span class="line">	unsafeArr0 :&#x3D; unsafe.Pointer(&amp;arr[0])</span><br><span class="line">	ptrArr0 :&#x3D; uintptr(unsafeArr0)</span><br><span class="line">	ptrArr0 +&#x3D; 8</span><br><span class="line">	unsafeArr1 :&#x3D; unsafe.Pointer(ptrArr0)</span><br><span class="line">	arr1 :&#x3D; (*int)(unsafeArr1)</span><br><span class="line">	fmt.Println(*arr1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97649559">https://zhuanlan.zhihu.com/p/97649559</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%83-func/" class="post-title-link" itemprop="url">go常用数据结构操作(七) - func</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:23:57" itemprop="dateCreated datePublished" datetime="2021-04-18T23:23:57+08:00">2021-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AD-struct-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%85%AD-struct-interface/" class="post-title-link" itemprop="url">go常用数据结构操作(六) - struct&interface</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-04-18 23:23:34 / Modified: 23:26:04" itemprop="dateCreated datePublished" datetime="2021-04-18T23:23:34+08:00">2021-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="行为的定义和封装"><a href="#行为的定义和封装" class="headerlink" title="行为的定义和封装"></a>行为的定义和封装</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%94-chan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%94-chan/" class="post-title-link" itemprop="url">go常用数据结构操作(五) - chan</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:22:20" itemprop="dateCreated datePublished" datetime="2021-04-18T23:22:20+08:00">2021-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-11-01 20:39:49" itemprop="dateModified" datetime="2022-11-01T20:39:49+08:00">2022-11-01</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>共享内存和消息传递是两种不同的并发模型。<br>不同于传统的多线程并发模型使用共享内存来实现线程间的通信，golang是通过channel 来实现协程之间的通信来实现共享。<br>优点：读写都是原子有序的操作，避免了race condition下复杂的锁机制。</p>
+<p>tips: 进程之间的交互需要满足两个基本条件，同步（互斥）和通信（合作）。<br>而通信隐含了同步的信息，因为只有在一个进程发送消息后，另一个进程才可以收消息。</p>
+<h1 id="channel是"><a href="#channel是" class="headerlink" title="channel是"></a>channel是</h1><p>原子通道，有序FIFO队列，引用类型</p>
+<h1 id="go的同步原语primitives"><a href="#go的同步原语primitives" class="headerlink" title="go的同步原语primitives"></a>go的同步原语primitives</h1><ol>
+<li>共享内存：sync, atomic</li>
+<li>消息通信：goroutine + channel + select (协程+通信+协调)</li>
+</ol>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/go-channel-intro.html">https://www.runoob.com/w3cnote/go-channel-intro.html</a><br>channel是引用类型<br>使用之前需要先创建</p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch :&#x3D; make(chan int)</span><br></pre></td></tr></table></figure>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ch1 :&#x3D; make(chan int) 收发</span><br><span class="line">ch2 :&#x3D; make(&lt;-chan int) 左收</span><br><span class="line">ch2 :&#x3D; make(chan&lt;- int) 右发</span><br></pre></td></tr></table></figure>
+
+<h2 id="nil-无缓存，有缓存"><a href="#nil-无缓存，有缓存" class="headerlink" title="nil, 无缓存，有缓存"></a>nil, 无缓存，有缓存</h2><p>nil不能通信<br>channel可以设置容量（缓存）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch :&#x3D; make(chan int) &#x2F;&#x2F; 无缓存</span><br><span class="line">ch :&#x3D; make(chan int, 10) &#x2F;&#x2F; 缓存10个</span><br></pre></td></tr></table></figure>
+<p>原则是：缓存满了，发送方阻塞；缓存空了，接收方阻塞<br>Q: 所以缓存为1和没有缓存的区别是什么呢？<br>A: 没有缓存的通道，要接收方为两个协程，两个都准备好了，才可以发送或者接收，而缓存为1的通道不需要等待。简单来说，如果是无缓存的channel只有在receiver准备好后send才被执行，但是缓存为1的通道无需等待receiver准备好就可以发送一个消息。如下程序所示，test1会deadlock, test2正常输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func test1() &#123;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    ch &lt;- 1</span><br><span class="line">    fmt.Println(&lt;-ch)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func test2() &#123;</span><br><span class="line">    ch :&#x3D; make(chan int, 1)</span><br><span class="line">    ch &lt;- 1</span><br><span class="line">    fmt.Println(&lt;-ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="缓存的好处"><a href="#缓存的好处" class="headerlink" title="缓存的好处"></a>缓存的好处</h2><p>减少阻塞，提高应用性能（提速）</p>
+<h2 id="关闭与多值判断"><a href="#关闭与多值判断" class="headerlink" title="关闭与多值判断"></a>关闭与多值判断</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">close(ch)</span><br><span class="line">v,ok :&#x3D; &lt;-ch</span><br></pre></td></tr></table></figure>
+<p>因为即使关闭v读取也为0，所以用ok判断是关闭了为0，还是值本就为0</p>
+<h2 id="迭代遍历"><a href="#迭代遍历" class="headerlink" title="迭代遍历"></a>迭代遍历</h2><p>只要ch没有被关闭for range就会一直阻塞等待接收数据<br>如果ch没有被关闭，发送协程就结束了，那么会deadlock<br>所以结束循环的唯一正确方法就是close(ch)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for v :&#x3D; range ch &#123;</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而且close有延迟关闭的作用，调用后，只有所有的数据都被读出之后才会关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c :&#x3D; make(chan int, 10)</span><br><span class="line">c &lt;- 1</span><br><span class="line">c &lt;- 2</span><br><span class="line">close(c)</span><br><span class="line">for i :&#x3D; range c &#123;</span><br><span class="line">    fmt.Println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="条件select"><a href="#条件select" class="headerlink" title="条件select"></a>条件select</h2><p>select是用来处理通信操作的switch<br>如果没有符合条件的case, 阻塞或者可以自己定义default<br>如果有符合条件的多个case，“随机” 选择一个处理（这里注意不是选第一个）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select &#123;</span><br><span class="line">    case c &lt;- x:</span><br><span class="line">        x, y &#x3D; y, x+y</span><br><span class="line">    case &lt;-quit:</span><br><span class="line">        fmt.Println(&quot;quit&quot;)</span><br><span class="line">        return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="预防阻塞-timeout"><a href="#预防阻塞-timeout" class="headerlink" title="预防阻塞 timeout"></a>预防阻塞 timeout</h3><p>可以用default来预防，但是有时候是需要等待的，这时候可以引入超时机制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select &#123;</span><br><span class="line">    case res:&#x3D;&lt;-ch:</span><br><span class="line">        fmt.Println(res)</span><br><span class="line">    case &lt;- time.After(1*time.Second):</span><br><span class="line">        fmt.Println(&quot;time out&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="关于时间的两个channel-Timer-Ticker"><a href="#关于时间的两个channel-Timer-Ticker" class="headerlink" title="关于时间的两个channel Timer+Ticker"></a>关于时间的两个channel Timer+Ticker</h1><p>timer是一个定时器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">timer :&#x3D; time.NewTimer(1*time.Second)</span><br><span class="line">go func()&#123;</span><br><span class="line">    &lt;-timer.C &#x2F;&#x2F; 时间到之前阻塞</span><br><span class="line">    &#125;()</span><br><span class="line">stop :&#x3D; timer.Stop() &#x2F;&#x2F; 停止计时器, 不用担心重复停止的问题</span><br></pre></td></tr></table></figure>
+<p>ticker是一个循环的定时器，隔一段时间就触发一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ticker :&#x3D; time.NewTicker(1*time.Second)</span><br><span class="line">go func()&#123;</span><br><span class="line">    for t :&#x3D; range ticker &#123;</span><br><span class="line">        fmt.Println(t)</span><br><span class="line">&#125;</span><br><span class="line">&#125;()</span><br><span class="line">ticker.Stop()</span><br></pre></td></tr></table></figure>
+<h1 id="协程同步"><a href="#协程同步" class="headerlink" title="协程同步"></a>协程同步</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> func work(done chan int) &#123;</span><br><span class="line">     time.Sleep(time.Second*1)</span><br><span class="line">     done&lt;-1</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> func main() &#123;</span><br><span class="line">     done :&#x3D; make(chan int, 1)</span><br><span class="line">     go work(done)</span><br><span class="line">     &#x2F;&#x2F; 等待任务结束</span><br><span class="line">     &lt;-done</span><br><span class="line">     fmt.Println(&quot;done&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h1><p>nil的channel读写，阻塞，close panic<br>closed的channel, 读0，写或close会panic<br>正常channel, 成功close, 读写阻塞或成功</p>
+<h1 id="defer-执行顺序"><a href="#defer-执行顺序" class="headerlink" title="defer 执行顺序"></a>defer 执行顺序</h1><p>与行数相反的执行顺序</p>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="用作锁"><a href="#用作锁" class="headerlink" title="用作锁"></a>用作锁</h2><ol>
+<li>var wg sync.WaitGroup</li>
+<li>wg.Add(2)</li>
+<li>go wg.Done()</li>
+<li>go wg.Done()</li>
+<li>wg.Wait()<br>类比：</li>
+<li>ch := make(chan int)</li>
+<li>count = 2</li>
+<li>go ch&lt;-1</li>
+<li>go ch&lt;-1</li>
+<li>for range ch {<br> count–<br> if count==0 {<pre><code> close(ch)</code></pre>
+ }<br>}</li>
+</ol>
+<h2 id="收发数据"><a href="#收发数据" class="headerlink" title="收发数据"></a>收发数据</h2><p>如果发送方有多个接收方，如何让接收方按顺序消费？<br>例如发送方发送1-10， 接收方为多个协程，如何让他们按顺序输出1-10？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    &#x2F;&#x2F; 没有使用chan buffer, 一个go, 顺序处理请求</span><br><span class="line">    way1()</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 没有使用chan buffer, 多个go, 无序处理请求 - 更快</span><br><span class="line">    way2()</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; way2() use sync instead of sleep</span><br><span class="line">    way2WithSync()</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 使用chan buffer, 多个go, 无序处理请求 - 更快</span><br><span class="line">    way3()</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 使用chan buffer, 多个go, 保证有序处理请求</span><br><span class="line">    way4()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func way1()&#123;</span><br><span class="line">    req :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    go receiveMsg(ch)</span><br><span class="line">    sendMsg(req, ch)</span><br><span class="line">    time.Sleep(time.Microsecond&#x2F;1000 * 2)  &#x2F;&#x2F; 等待 go receiveMsg() 执行完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func way2()&#123;</span><br><span class="line">    req :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    for i:&#x3D;0;i&lt;10;i++&#123;</span><br><span class="line">        go receiveMsg(ch)</span><br><span class="line">    &#125;</span><br><span class="line">    sendMsg(req, ch)</span><br><span class="line">    time.Sleep(time.Microsecond&#x2F;1000 * 2)  &#x2F;&#x2F; 等待 go receiveMsg() 执行完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func way2WithSync()&#123;</span><br><span class="line">    req :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    var wg sync.WaitGroup</span><br><span class="line">    for i:&#x3D;0;i&lt;len(req);i++&#123;</span><br><span class="line">        wg.Add(1)</span><br><span class="line">        &#x2F;&#x2F; 可以通过runtime.NumGoroutine()查看goroutine数量</span><br><span class="line">        fmt.Println(&quot;receive number of goroutines are: &quot;, runtime.NumGoroutine())</span><br><span class="line">        go receiveMsgWithSync(ch, &amp;wg)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Add(1)</span><br><span class="line">    fmt.Println(&quot;send number of goroutines are: &quot;, runtime.NumGoroutine())</span><br><span class="line">    go sendMsgWithSync(req, ch, &amp;wg)</span><br><span class="line">    &#x2F;&#x2F;fmt.Println(debug.Stack())</span><br><span class="line"></span><br><span class="line">    wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func way3()&#123;</span><br><span class="line">    req :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">    ch :&#x3D; make(chan int, len(req))</span><br><span class="line">    for i:&#x3D;0;i&lt;10;i++&#123;</span><br><span class="line">        go receiveMsg(ch)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;go receiveMsg(ch)</span><br><span class="line">    go sendMsg(req, ch)</span><br><span class="line">    time.Sleep(time.Millisecond)  &#x2F;&#x2F; 等待 go receiveMsg() 执行完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func way4()&#123;</span><br><span class="line">    &#x2F;&#x2F; 保证顺序的思路是：保证按顺序存储，go协程争相放数据进去(增加了并发性)，从头遍历</span><br><span class="line">    req :&#x3D; []int&#123;1,2,3,4,5,6,7,8,9,10&#125;</span><br><span class="line">    chs :&#x3D; make(chan chan int, len(req))</span><br><span class="line">    &#x2F;&#x2F;for i:&#x3D;0;i&lt;len(req);i++ &#123;</span><br><span class="line">    &#x2F;&#x2F;    ch :&#x3D; make(chan int)</span><br><span class="line">    &#x2F;&#x2F;    go func() &#123;</span><br><span class="line">    &#x2F;&#x2F;        fmt.Println(req[i])</span><br><span class="line">    &#x2F;&#x2F;        ch &lt;- req[i]</span><br><span class="line">    &#x2F;&#x2F;    &#125;()</span><br><span class="line">    &#x2F;&#x2F;    chs &lt;- ch</span><br><span class="line">    &#x2F;&#x2F;&#125;</span><br><span class="line">    &#x2F;*</span><br><span class="line">    can not do this, because you do not know which i in req[i],</span><br><span class="line">    i is very likely to be the last one it can be, in this case,</span><br><span class="line">    it must be 5, so index will out of range</span><br><span class="line"></span><br><span class="line">    so, we can think out a way to guarantee i can not change, like use the feature of parameter passing: pass by value</span><br><span class="line">    *&#x2F;</span><br><span class="line"></span><br><span class="line">    for _,v :&#x3D; range req &#123;</span><br><span class="line">        ch :&#x3D; handleValueOrder(v)</span><br><span class="line">        chs &lt;- ch</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    close(chs)</span><br><span class="line"></span><br><span class="line">    for v :&#x3D; range chs &#123;</span><br><span class="line">        fmt.Println(&lt;-v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func handleValueOrder(v int) chan int &#123;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    go func() &#123;</span><br><span class="line">        ch &lt;- v</span><br><span class="line">    &#125;()</span><br><span class="line">    return ch</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func sendMsg(req []int, ch chan int) &#123;</span><br><span class="line">    defer close(ch)</span><br><span class="line">    for _,v :&#x3D; range req &#123;</span><br><span class="line">        ch &lt;- v</span><br><span class="line">    &#125;</span><br><span class="line">    return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func receiveMsg(ch &lt;-chan int) &#123;</span><br><span class="line">    for &#123;</span><br><span class="line">        if v,ok :&#x3D; &lt;- ch; ok &#123;</span><br><span class="line">            fmt.Println(v)</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func sendMsgWithSync(req []int, ch chan int, wg *sync.WaitGroup) &#123;</span><br><span class="line">    &#x2F;&#x2F; go 的 defer 语句是用来延迟执行函数的，而且延迟发生在调用函数 return 之后</span><br><span class="line">    defer close(ch)</span><br><span class="line">    defer wg.Done()</span><br><span class="line">    &#x2F;&#x2F;defer fmt.Println(&quot;this is the last second one&quot;)  &#x2F;&#x2F; 后执行</span><br><span class="line">    &#x2F;&#x2F;defer fmt.Println(&quot;this is the last first one&quot;)   &#x2F;&#x2F; 先执行</span><br><span class="line">    for _,v :&#x3D; range req &#123;</span><br><span class="line">        ch &lt;- v</span><br><span class="line">    &#125;</span><br><span class="line">    return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func receiveMsgWithSync(ch &lt;-chan int, wg *sync.WaitGroup) &#123;</span><br><span class="line">    defer wg.Done()</span><br><span class="line">    for &#123;</span><br><span class="line">        if v,ok :&#x3D; &lt;- ch; ok &#123;</span><br><span class="line">            fmt.Println(v)</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用经验"><a href="#使用经验" class="headerlink" title="使用经验"></a>使用经验</h2><ol>
+<li>使用有buffer的channel来防止阻塞，提高并发性能。</li>
+<li>在发送消息之前，要判断channel是否已经关闭，如果已经关闭，再发送消息会panic，所以需要双方进行一个约定。</li>
+<li>for 循环中发送channel，需要用go，不然超出buffer会阻塞</li>
+<li>bool 类型是值复制，不能在各处共享, 可以使用[]bool</li>
+<li>for…range 里面不能用 go 取 v 的值，因为 v 的值会被覆盖</li>
+<li>for循环要比goroutine启动快一些，所以goroutine拿到的都是for循环最后一个值</li>
+<li>send,receive必须使用不同的go协程，然后receive一定要在send之后执行，因为go启动需要一些时间，所以慢执行的用go来也就是，receive用go来执行</li>
+<li>go func一定要写在前面，不然就要等主流程执行完，才会去启动go - 不符合预期</li>
+<li>channel本质上传递的是数据的拷贝，拷贝的数据越小传输效率越高，传递结构体指针，比传递结构体更高效</li>
+<li>写完channel一定记得关闭，不然读协程会panic/dead lock</li>
+<li>只能使用ticker1.Stop()来停止，因为ticker是一个单向接收的channel，只有发送者才可以停止</li>
+<li>stop := timer1.Stop()  如果计时器已经被使用过了，就返回false; 如果没有被使用过，就 “停止” 并返回true</li>
+<li>for range 对 channel 不提供多返回值，如果要确认channel正常再操作，就使用if条件句，但正常情况下，channel关闭后，for range会结束</li>
+<li>检测到有ch没有close且只有一个协程的时候，会dead lock; 如果想要看到阻塞的现象，可以加一个sleep的go协程</li>
+</ol>
+<h1 id="其他应用"><a href="#其他应用" class="headerlink" title="其他应用"></a>其他应用</h1><p><a target="_blank" rel="noopener" href="https://colobu.com/2016/04/14/Golang-Channels/">https://colobu.com/2016/04/14/Golang-Channels/</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000017958702">https://segmentfault.com/a/1190000017958702</a></p>
+<ol>
+<li>使用channel向其他协程(尤其是主协程)同步任务完成的信息</li>
+<li>使用channel的select功能，使用<code>case &lt;- time.After(time.Second * 1):  </code>的超时处理功能，可以支持无阻塞的读写等操作</li>
+</ol>
+<h1 id="阻塞问题"><a href="#阻塞问题" class="headerlink" title="阻塞问题"></a>阻塞问题</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/452931746">https://zhuanlan.zhihu.com/p/452931746</a></p>
+<h1 id="关闭问题（优雅关闭）"><a href="#关闭问题（优雅关闭）" class="headerlink" title="关闭问题（优雅关闭）"></a>关闭问题（优雅关闭）</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040740908">https://segmentfault.com/a/1190000040740908</a></p>
+<h1 id="使用两个协程交替打印奇偶数"><a href="#使用两个协程交替打印奇偶数" class="headerlink" title="使用两个协程交替打印奇偶数"></a>使用两个协程交替打印奇偶数</h1><p>注意⚠️：收发消息的位置和时机很重要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    go printEven(ch)</span><br><span class="line">    go printOdd(ch)</span><br><span class="line">    fmt.Scanln()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func printOdd(ch chan int) &#123;</span><br><span class="line">    for i:&#x3D;0;i&lt;&#x3D;10;i++ &#123;</span><br><span class="line">        ch&lt;-i</span><br><span class="line">        if i%2&#x3D;&#x3D;0 &#123;</span><br><span class="line">            fmt.Println(i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func printEven(ch chan int) &#123;</span><br><span class="line">    for i:&#x3D;0;i&lt;&#x3D;10;i++ &#123;</span><br><span class="line">        &lt;-ch</span><br><span class="line">        if i%2&#x3D;&#x3D;1 &#123;</span><br><span class="line">            fmt.Println(i)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="生产消费模型"><a href="#生产消费模型" class="headerlink" title="生产消费模型"></a>生产消费模型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    ch :&#x3D; make(chan int)</span><br><span class="line">    end :&#x3D; make(chan int)</span><br><span class="line">    go producer(ch)</span><br><span class="line">    go consumer(ch, end)</span><br><span class="line">    &lt;-end</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func producer(ch chan int) &#123;</span><br><span class="line">    for i:&#x3D;0;i&lt;10;i++ &#123;</span><br><span class="line">        ch&lt;-i</span><br><span class="line">    &#125;</span><br><span class="line">    close(ch)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func consumer(ch,end chan int) &#123;</span><br><span class="line">    for &#123;</span><br><span class="line">        v,ok :&#x3D; &lt;- ch</span><br><span class="line">        if ok &#123;</span><br><span class="line">            fmt.Println(v)</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            end &lt;- 1</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="channel的各种使用场景"><a href="#channel的各种使用场景" class="headerlink" title="channel的各种使用场景"></a>channel的各种使用场景</h1><p><a target="_blank" rel="noopener" href="https://studygolang.com/articles/11320">https://studygolang.com/articles/11320</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tobycnblogs/p/9935465.html">https://www.cnblogs.com/tobycnblogs/p/9935465.html</a></p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p><a target="_blank" rel="noopener" href="https://golang.google.cn/tour/concurrency">https://golang.google.cn/tour/concurrency</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%9B%9B-map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E5%9B%9B-map/" class="post-title-link" itemprop="url">go常用数据结构操作(四) - map</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:22:09" itemprop="dateCreated datePublished" datetime="2021-04-18T23:22:09+08:00">2021-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%89-slice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%B8%89-slice/" class="post-title-link" itemprop="url">go常用数据结构操作(三) - slice</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:21:58" itemprop="dateCreated datePublished" datetime="2021-04-18T23:21:58+08:00">2021-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%8C-array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/go%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%93%8D%E4%BD%9C-%E4%BA%8C-array/" class="post-title-link" itemprop="url">go常用数据结构操作(二) - array</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 23:21:31" itemprop="dateCreated datePublished" datetime="2021-04-18T23:21:31+08:00">2021-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-19 20:41:11" itemprop="dateModified" datetime="2021-04-19T20:41:11+08:00">2021-04-19</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="noted"><a href="#noted" class="headerlink" title="noted"></a>noted</h1><ol>
+<li>array的操作与slice有所不同，array是不可变的连续存储空间，所以增加和删除这种操作都是不被允许的，只能通过slice来操作</li>
+<li>但array和python中的tuple不同，只是空间不可变，某个空间上的元素还是可以直接被赋值的。</li>
+<li>实际上，array不需要自己实现的方法只有以下几种：len(), cap(), 遍历，根据索引获取元素值，根据索引改变元素值，指针运算，其中元素的指针运算</li>
+<li>需要注意的是：append()方法的入参是slice, 所以对array的增，删，插入等操作可以借助slice, 但是append会在第一个入参的slice的地址上进行操作，也就是会在array原有的地址空间进行操作，看起来就像覆盖写，会改变原有的array。</li>
+</ol>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>array定义后一定分配了内存，所以不用担心内存空间初始化的问题，只需要注意不要”out of index”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var arr [10]int</span><br><span class="line">var arr1 &#x3D; [...]int&#123;&#125; &#x2F;&#x2F; 类似于slice []</span><br><span class="line">var arr2 &#x3D; [1]int&#123;&#125;   &#x2F;&#x2F; 定义了大小就会分配空间并初始化为类型默认值0</span><br><span class="line">var arr3 &#x3D; [1]int&#123;1&#125;</span><br><span class="line">arr4 :&#x3D; [1]int&#123;1&#125;</span><br><span class="line">arr5 :&#x3D; new([1]int)  &#x2F;&#x2F; 这里返回的是一个指针</span><br><span class="line">arr6 :&#x3D; [3]string&#123;0:&quot;a&quot;, 2:&quot;c&quot;&#125;</span><br><span class="line">arr6[1] &#x3D; &quot;b&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 复合类型数组</span><br><span class="line">type User struct &#123;</span><br><span class="line">	Name string</span><br><span class="line">	Age int</span><br><span class="line">&#125;</span><br><span class="line">users :&#x3D; [...]User&#123;</span><br><span class="line">	&#123;”yuxin“， 18&#125;,</span><br><span class="line">	&#123;”yuhao“， 20&#125;, &#x2F;&#x2F; 如果写成这种一行一行的格式，最后一行也需要逗号，如果写成一行，则不需要</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><h2 id="正常操作"><a href="#正常操作" class="headerlink" title="正常操作"></a>正常操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr :&#x3D; [3]int&#123;1,2,3&#125;</span><br><span class="line">for i:&#x3D;0;i&lt;len(arr);i++&#123;</span><br><span class="line">	fmt.Print(arr[i]) &#x2F;&#x2F; 123</span><br><span class="line">&#125;</span><br><span class="line">for k,v :&#x3D; range arr &#123;</span><br><span class="line">	fmt.Print(k, v)   &#x2F;&#x2F; 0 11 22 3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常现象"><a href="#异常现象" class="headerlink" title="异常现象"></a>异常现象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ptrArr []*int</span><br><span class="line">for _,v :&#x3D; range arr &#123;</span><br><span class="line">	ptrArr &#x3D; append(ptrArr, &amp;v)</span><br><span class="line">&#125;</span><br><span class="line">for _,v :&#x3D; range ptrArr &#123;</span><br><span class="line">	fmt.Print(*v)     &#x2F;&#x2F; 333，原因见noted2, v会被覆盖写</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>noted:</p>
+<ol>
+<li>一旦开始，len(arr)就被记录下来了，不会再变化了</li>
+<li>同时遍历索引和元素(主要是元素)的 range 循环时，Go 语言会额外创建一个新的 v2 变量存储切片中的元素，循环中使用的这个变量 v2 会在每一次迭代被重新赋值而覆盖，赋值时也会触发拷贝</li>
+</ol>
+<h1 id="add-or-delete-or-insert-by-slice"><a href="#add-or-delete-or-insert-by-slice" class="headerlink" title="add or delete or insert by slice"></a>add or delete or insert by slice</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr :&#x3D; [...]int&#123;1,2,3,4,5,6&#125;</span><br><span class="line">arr2 :&#x3D; []int&#123;7,8,9&#125;</span><br><span class="line">&#x2F;&#x2F; 直接在原数组上进行了修改, 把后面的切片的值在前一个切片的存储空间中进行了拷贝</span><br><span class="line">arr1 :&#x3D; append(arr[:1], arr2...)</span><br><span class="line">fmt.Printf(&quot;%[1]v %[1]p\n&quot;, &amp;arr)  &#x2F;&#x2F; &amp;[1 7 8 9 5 6] 0xc0000180c0 - 被append()改变</span><br><span class="line">fmt.Printf(&quot;%[1]v %[1]p\n&quot;, arr1)  &#x2F;&#x2F; [1 7 8 9] 0xc0000180c0 - 指向arr的slice</span><br><span class="line">fmt.Printf(&quot;%[1]v %[1]p\n&quot;, arr2)  &#x2F;&#x2F; [7 8 9] 0xc000016160</span><br></pre></td></tr></table></figure>
+
+<h1 id="index"><a href="#index" class="headerlink" title="index"></a>index</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 寻址 index</span><br><span class="line"> 	target :&#x3D; 5</span><br><span class="line"> 	var find bool</span><br><span class="line"> 	arr :&#x3D; [...]int&#123;1,2,3&#125;</span><br><span class="line"> 	for k,v :&#x3D; range arr &#123;</span><br><span class="line"> 		if v &#x3D;&#x3D; target &#123;</span><br><span class="line"> 			find &#x3D; true</span><br><span class="line"> 			fmt.Println(k)</span><br><span class="line"> 			break</span><br><span class="line">		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line">	if !find &#123;</span><br><span class="line">		fmt.Println(-1)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>noted:</p>
+<ol>
+<li>传递参数的时候，除非明确大小，否则不要用array类型传参，因为没有办法指定形参的类型，interface{}不可range, […]int相当于slice所以不是一种类型</li>
+</ol>
+<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><p>noted：</p>
+<ol>
+<li>append 返回的也是 []int, 所以只能用slice操作，不能用array<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bmap :&#x3D; map[int]string&#123;1:&quot;3&quot;, 2:&quot;2&quot;&#125;</span><br><span class="line"> 	a,v :&#x3D; bmap[1]</span><br><span class="line"> 	fmt.Println(a,v)</span><br><span class="line"> 	arr :&#x3D; []int&#123;1,2,3,4,3,2,1,1,2&#125;</span><br><span class="line"> 	amap :&#x3D; make(map[int]bool)</span><br><span class="line"> 	for i:&#x3D;0; i&lt;len(arr); i++ &#123;</span><br><span class="line"> 		if k,ok :&#x3D; amap[arr[i]];ok &#123;</span><br><span class="line"> 			fmt.Println(k, ok) &#x2F;&#x2F; k 是arr[i]的值</span><br><span class="line"> 			arr &#x3D; append(arr[:i], arr[i+1:]...)</span><br><span class="line">			i--</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			fmt.Println(k, ok)</span><br><span class="line">			amap[arr[i]] &#x3D; true</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> 	fmt.Println(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>panic for not slice<br><a target="_blank" rel="noopener" href="https://golang.org/pkg/sort/#SearchStrings">https://golang.org/pkg/sort/#SearchStrings</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; []int&#123;1,1,3&#125;</span><br><span class="line">sort2.Slice(a, func(i,j int) bool &#123;return a[i] &lt; a[j]&#125;) &#x2F;&#x2F; unstabled sort</span><br><span class="line">fmt.Println(a)</span><br><span class="line">sort2.SliceStable(a, func(i,j int) bool &#123;return a[i] &gt; a[j]&#125;) &#x2F;&#x2F; stabled sort</span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+<p>方法一：<br>sort.Sort()<br>need to implement sort.Interface</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 排序有两种方法 sort.Sort(), sort.Slice()</span><br><span class="line"> &#x2F;&#x2F; sort.Sort(), 入参是interface, 所以需要实现一个interface&#123;&#125;</span><br><span class="line"> &#x2F;&#x2F; 这个interface需要实现：Len(),Swap(),Less()方法</span><br><span class="line"> p2 :&#x3D; []employee&#123;</span><br><span class="line">	&#123;&quot;yuhao&quot;, 2&#125;,</span><br><span class="line">	&#123;&quot;3&quot;, 3&#125;,</span><br><span class="line">	&#123;&quot;yuxin&quot;, 1&#125;,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">sort2.Sort(employees(p2))</span><br><span class="line">fmt.Println(p2)</span><br></pre></td></tr></table></figure>
+<p>方法二：<br>通过闭包实现 closure</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p2 :&#x3D; []employee&#123;</span><br><span class="line">		&#123;&quot;yuhao&quot;, 2&#125;,</span><br><span class="line">		&#123;&quot;3&quot;, 3&#125;,</span><br><span class="line">		&#123;&quot;yuxin&quot;, 1&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"> 	sort2.Slice(p2, func(i,j int) bool &#123;return p2[i].age &lt; p2[j].age&#125;)</span><br><span class="line"> 	fmt.Println(p2)</span><br></pre></td></tr></table></figure>
+
+<p>Next:</p>
+<ol>
+<li>sort</li>
+<li>regular expression - string的进阶操作</li>
+<li>closures</li>
+</ol>
 
       
     </div>
@@ -276,7 +1012,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -317,7 +1053,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

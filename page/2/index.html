@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/10/redis-HA/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/27/IELTS-Writing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,153 +218,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/10/redis-HA/" class="post-title-link" itemprop="url">redis HA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-11-10 00:02:23 / Modified: 00:04:50" itemprop="dateCreated datePublished" datetime="2021-11-10T00:02:23+08:00">2021-11-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h1><p> 持久化、主从复制、哨兵、集群</p>
-<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>rdb<br>aof<br>原理，优缺点</p>
-<h1 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h1><p>问题：内存/磁盘使用率较高<br>解决方案：</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/09/mysql-log/" class="post-title-link" itemprop="url">mysql log</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-11-09 22:44:40 / Modified: 23:27:09" itemprop="dateCreated datePublished" datetime="2021-11-09T22:44:40+08:00">2021-11-09</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>cd /usr/local/mysql/<br>index文件： mysql-bin.index<br>binlog文件：mysql-bin.000055<br>redolog文件：ib_logfile0<br>undolog文件：undo_001</p>
-<h1 id="查看binlog"><a href="#查看binlog" class="headerlink" title="查看binlog"></a>查看binlog</h1><p>../bin/mysqlbinlog –no-defaults mysql-bin.000055</p>
-<p>sql -&gt; show binlog events in ‘mysql-bin.000055’;<br>sql -&gt; show variables like ‘binlog_format’; // statement or row<br>sql -&gt; show variables like ‘log_%’;<br>sql -&gt; show master status\G;</p>
-<h2 id="查询-BINLOG-格式"><a href="#查询-BINLOG-格式" class="headerlink" title="查询 BINLOG 格式"></a>查询 BINLOG 格式</h2><p>show VARIABLES like ‘binlog_format’;</p>
-<h2 id="查询-BINLOG-位置"><a href="#查询-BINLOG-位置" class="headerlink" title="查询 BINLOG 位置"></a>查询 BINLOG 位置</h2><p>show VARIABLES like ‘datadir’;</p>
-<h2 id="查询当前数据库中-BINLOG-名称及大小"><a href="#查询当前数据库中-BINLOG-名称及大小" class="headerlink" title="查询当前数据库中 BINLOG 名称及大小"></a>查询当前数据库中 BINLOG 名称及大小</h2><p>show binary logs;</p>
-<h2 id="查看-master-正在写入的-BINLOG-信息"><a href="#查看-master-正在写入的-BINLOG-信息" class="headerlink" title="查看 master 正在写入的 BINLOG 信息"></a>查看 master 正在写入的 BINLOG 信息</h2><p>show master status\G;</p>
-<h2 id="通过-offset-查看-BINLOG-信息"><a href="#通过-offset-查看-BINLOG-信息" class="headerlink" title="通过 offset 查看 BINLOG 信息"></a>通过 offset 查看 BINLOG 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ limit 9000,  10;</p>
-<h2 id="通过-position-查看-binlog-信息"><a href="#通过-position-查看-binlog-信息" class="headerlink" title="通过 position 查看 binlog 信息"></a>通过 position 查看 binlog 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ from 1742635 limit 10;</p>
-<h2 id="查询-binlog"><a href="#查询-binlog" class="headerlink" title="查询 binlog"></a>查询 binlog</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055| less</p>
-<h2 id="导出-BINLOG"><a href="#导出-BINLOG" class="headerlink" title="导出 BINLOG"></a>导出 BINLOG</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055 &gt; binlog_raw.sql </p>
-<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="通过-BINLOG-进行恢复。"><a href="#通过-BINLOG-进行恢复。" class="headerlink" title="通过 BINLOG 进行恢复。"></a>通过 BINLOG 进行恢复。</h3><p>../bin/mysqlbinlog –no-defaults –start-position=482 –stop-position=1327 –database=testdb  mysql-bin.000055 | mysql -u username -p password</p>
-<h3 id="通过-BINLOG-导出的-sql-进行恢复。"><a href="#通过-BINLOG-导出的-sql-进行恢复。" class="headerlink" title="通过 BINLOG 导出的 sql 进行恢复。"></a>通过 BINLOG 导出的 sql 进行恢复。</h3><p>mysql -u username -p password &lt; binlog_raw.sql </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/06/https%E6%9C%8D%E5%8A%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/06/https%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">https服务</a>
+            <a href="/2022/10/27/IELTS-Writing/" class="post-title-link" itemprop="url">IELTS-Writing</a>
         </h2>
 
         <div class="post-meta-container">
@@ -375,14 +229,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-11-06 19:12:06" itemprop="dateCreated datePublished" datetime="2021-11-06T19:12:06+08:00">2021-11-06</time>
+      <time title="Created: 2022-10-27 20:51:59" itemprop="dateCreated datePublished" datetime="2022-10-27T20:51:59+08:00">2022-10-27</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-08 21:13:17" itemprop="dateModified" datetime="2021-11-08T21:13:17+08:00">2021-11-08</time>
+        <time title="Modified: 2022-10-28 19:30:42" itemprop="dateModified" datetime="2022-10-28T19:30:42+08:00">2022-10-28</time>
       </span>
 
   
@@ -395,37 +249,66 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>在tcp连接之外，增加了ssl/tls协议。<br>tls协议在tcp协议之后建立。</p>
-<h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>ssl: secure sockets layer 安全套接层<br>tls: transport layer security 传输层安全</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>tcp<br>client: syn<br>server: syn,ack<br>client: ack</p>
-<p>tlsv1.2<br>client: Client Hello<br>server: Server Hello, Certificate, Server Key Exchange, Server Hello Done<br>client: Client Key Exchange, Change Cipher Spec, Encrypted Handshake message<br>server: New Session Ticket, Change Cipher Spec, Encrypted Handshake message</p>
-<p>开始通信：<br>client: Application Data<br>server: Application Data</p>
-<h2 id="证书中包含的信息"><a href="#证书中包含的信息" class="headerlink" title="证书中包含的信息"></a>证书中包含的信息</h2><p>申请人信息<br>签名算法：带RSA加密的SHA-1<br>有效期<br>公共密钥信息</p>
-<ul>
-<li>算法：RSA</li>
-<li>公共密钥：256字节</li>
-<li>密钥大小：2048位<br>签名<br>密钥ID<br>指纹：SHA-256,SHA-1 (摘要-安全散列算法)</li>
-</ul>
-<h2 id="信任本地根证书"><a href="#信任本地根证书" class="headerlink" title="信任本地根证书"></a>信任本地根证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo security add-trusted-cert -d -r trustRoot -k &#x2F;Library&#x2F;Keychains&#x2F;System.keychain &#x2F;Users&#x2F;zhangyuxin&#x2F;language_learn&#x2F;entrytask_go&#x2F;cert.pem</span><br></pre></td></tr></table></figure>
-
-<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><p>高级 -&gt; thisisunsafe</p>
-<h1 id="go配置文件解析"><a href="#go配置文件解析" class="headerlink" title="go配置文件解析"></a>go配置文件解析</h1><h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><h2 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h2><h1 id="鉴权：Auth-Session-Token的鉴权机制"><a href="#鉴权：Auth-Session-Token的鉴权机制" class="headerlink" title="鉴权：Auth/Session Token的鉴权机制"></a>鉴权：Auth/Session Token的鉴权机制</h1><h2 id="四种方法"><a href="#四种方法" class="headerlink" title="四种方法"></a>四种方法</h2><p>http basic<br>session-cookie<br>token<br>oauth</p>
-<h2 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h2><ol>
-<li>请求授权码</li>
-<li>返回授权码</li>
-<li>请求令牌</li>
-<li>返回令牌</li>
+          <h1 id="分数"><a href="#分数" class="headerlink" title="分数"></a>分数</h1><p>5 -&gt; 7</p>
+<h1 id="待加强点"><a href="#待加强点" class="headerlink" title="待加强点"></a>待加强点</h1><p>先理解题目，想好结构和逻辑，充分扣题挖掘题目信息，给出适当的扩展</p>
+<h1 id="课程"><a href="#课程" class="headerlink" title="课程"></a>课程</h1><ol>
+<li>评分标准</li>
+<li>大作文 5种</li>
+<li>结构梳理</li>
+<li>小作文 4种</li>
 </ol>
-<h2 id="sso-single-sign-on"><a href="#sso-single-sign-on" class="headerlink" title="sso  single sign-on"></a>sso  single sign-on</h2><p>一个账号对应的token同一时间只有一个生效</p>
-<h2 id="JWT生成规则-json-web-token"><a href="#JWT生成规则-json-web-token" class="headerlink" title="JWT生成规则 (json web token)"></a>JWT生成规则 (json web token)</h2><h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><h2 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h2><p>“github.com/gomodule/redigo/redis”<br>“github.com/go-redis/redis/v8”</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
-<li>Golang创建最简单的HTTP和HTTPS服务 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/14947">https://studygolang.com/articles/14947</a></li>
-<li>详解TCP三次握手以及TLS-SSL握手 <a target="_blank" rel="noopener" href="https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/">https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/</a></li>
-<li>常见登录鉴权方案 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/271768645">https://zhuanlan.zhihu.com/p/271768645</a></li>
-<li>Go 鉴权 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/22040">https://studygolang.com/articles/22040</a></li>
-<li>单点登录（SSO）看这一篇就够了 <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/636281">https://developer.aliyun.com/article/636281</a></li>
-<li>在 GO 语言中创建你自己的 OAuth2 服务：客户端凭据授权流程 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903784498331661">https://juejin.cn/post/6844903784498331661</a></li>
-<li>理解OAuth 2.0 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></li>
+<h1 id="作文讲解"><a href="#作文讲解" class="headerlink" title="作文讲解"></a>作文讲解</h1><ol>
+<li>结构</li>
+<li>内容</li>
+<li>语言使用</li>
+</ol>
+<h1 id="评分标准"><a href="#评分标准" class="headerlink" title="评分标准"></a>评分标准</h1><ul>
+<li>task response 对任务的回应</li>
+</ul>
+<ol>
+<li>解决任务的所有问题：字数，回答问题（同意不同意）<br>同不同意在城市的商业区停车？同意，让空气变好了。X<br>原因围绕特定对象，有针对性的说。</li>
+<li>“完全发展”的立场。相关，充分延展，很好的支持<br>完全发展：同不同意在城市生活？不仅要说同意，还要拓展原因。1，2<br>相关：每一段都紧紧围绕一个观点说<br>充分延展：工作能力好，怎么好？语言水平高，怎么高？要具体量化<br>层层支持：便利的交通（线上高架，线下地铁，其他共享单车），好吃的。</li>
+</ol>
+<ul>
+<li>coherence and cohesion 连贯和链接</li>
+</ul>
+<ol>
+<li>逻辑的组织信息和想法；清晰的推进；主体句<br>逻辑：我刚刚才起床，等一下打电话给你。 X 不同句子拼在一起，要让人“很好”的懂，一环扣一环。<br>清晰的推进：不要说相同的话，要有递进</li>
+<li>用一系列连接词。连接词多样性。</li>
+<li>clear center topic.</li>
+</ol>
+<ul>
+<li>lexical resource 词汇</li>
+<li>Grammatical Range and Accuracy 语法</li>
+</ul>
+<ol>
+<li>准确</li>
+<li>多样性<br>不需要用虚拟，用倒装<br>用从句就行了，非谓语从句</li>
+</ol>
+<h1 id="大作文"><a href="#大作文" class="headerlink" title="大作文"></a>大作文</h1><p>agree/disagree类型<br>两种解决方案：</p>
+<ol>
+<li>strong opinion<br>一边倒<br>完全同意，完全不同意</li>
+<li>balanced opinion</li>
+</ol>
+<h2 id="strong-opinion-essay-structure"><a href="#strong-opinion-essay-structure" class="headerlink" title="strong opinion essay structure"></a>strong opinion essay structure</h2><p>introduction</p>
+<ol>
+<li>background<br>1） 完全介绍两种观点，再提出自己的想法。<br>2）介绍大众的看法，再引申出自己的想法。 多加连接词增加连贯, however, similarly<br>3）介绍一下关于这个topic的事实<br>4）介绍争论<br>tips: 不抄题目，写观点就好，简单两句，不用举例子。</li>
+</ol>
+<p>有用的词汇：<br>People are divided in their opinion regarding…<br>People generally get divided when they are asked whether…<br>There are different views on…<br>People hold different views…</p>
+<p>Many/some people claim/opine/believe/think/argue that…<br>other people think/believe that…<br>Many/some support the view that…<br>Many/some hold the opinion that…</p>
+<p>On the one hand…On the other hand…<br>While some poeple think that……, others……<br>Some people believe that…, However, others…</p>
+<ol start="2">
+<li>thesis<br>观点<br>strongly, completely, absolutely 强调完全<br>立场的原因要写出来，越细越好。<br>不要写没有用的套话。</li>
+</ol>
+<p>2 body parapgraphs</p>
+<ol>
+<li>topic sentence(argument)</li>
+<li>supporting details</li>
+<li>concluding sentence</li>
+</ol>
+<p>conclusion</p>
+<ol>
+<li>briefly restate the main arguments</li>
 </ol>
 
       
@@ -453,7 +336,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/26/al-data-structure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -467,7 +350,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/06/wrk-http-parser/" class="post-title-link" itemprop="url">wrk http.parser</a>
+            <a href="/2022/10/26/al-data-structure/" class="post-title-link" itemprop="url">al - data structure</a>
         </h2>
 
         <div class="post-meta-container">
@@ -477,10 +360,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-10-06 17:14:25 / Modified: 17:15:30" itemprop="dateCreated datePublished" datetime="2021-10-06T17:14:25+08:00">2021-10-06</time>
+      <time title="Created: 2022-10-26 22:56:32" itemprop="dateCreated datePublished" datetime="2022-10-26T22:56:32+08:00">2022-10-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-11-14 09:47:59" itemprop="dateModified" datetime="2022-11-14T09:47:59+08:00">2022-11-14</time>
+      </span>
 
   
 </div>
@@ -492,71 +381,139 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>http request response parser for c</p>
-<p>HTTP Parser<br>这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。</p>
-<p>Features:</p>
-<p>No dependencies<br>处理持久流(keep-alive)。<br>解码分块编码。<br>Upgrade support<br>防御缓冲区溢出攻击。<br>解析器从HTTP消息中提取以下信息：</p>
-<p>标题字段和值<br>Content-Length<br>Request method<br>响应状态代码<br>Transfer-Encoding<br>HTTP version<br>Request URL<br>Message body<br>Usage<br>每个TCP连接使用一个http_parser对象。使用http_parser_init()初始化结构并设置回调。对于请求解析器，这可能类似于：</p>
-<p>http_parser_settings settings;<br>settings.on_url = my_url_callback;<br>settings.on_header_field = my_header_field_callback;<br>/* … */</p>
-<p>http_parser *parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST);<br>parser-&gt;data = my_socket;<br>当在套接字上接收到数据时，执行解析器并检查错误。</p>
-<p>size_t len = 80*1024, nparsed;<br>char buf[len];<br>ssize_t recved;</p>
-<p>recved = recv(fd, buf, len, 0);</p>
-<p>if (recved &lt; 0) {<br>  /* Handle error. */<br>}</p>
-<p>/* Start up / continue the parser.</p>
-<ul>
-<li>Note we pass recved==0 to signal that EOF has been received.</li>
-<li>/<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</li>
+          <ol start="448">
+<li>找到所有数组中消失的数字 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/">https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/</a></li>
+<li>旋转图像 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotate-image/">https://leetcode.cn/problems/rotate-image/</a></li>
+<li>搜索二维矩阵 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-a-2d-matrix-ii/">https://leetcode.cn/problems/search-a-2d-matrix-ii/</a></li>
+<li>最多能完成排序的块 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-chunks-to-make-sorted/">https://leetcode.cn/problems/max-chunks-to-make-sorted/</a></li>
+<li>用栈实现队列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-queue-using-stacks/">https://leetcode.cn/problems/implement-queue-using-stacks/</a></li>
+<li>最小栈 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-stack/">https://leetcode.cn/problems/min-stack/</a></li>
+<li>有效的括号 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">https://leetcode.cn/problems/valid-parentheses/</a></li>
+<li>每日温度 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/daily-temperatures/">https://leetcode.cn/problems/daily-temperatures/</a></li>
+<li>合并K个升序链表 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-k-sorted-lists/">https://leetcode.cn/problems/merge-k-sorted-lists/</a> (可以用分治，也可以用堆)</li>
+<li>天际线问题 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/the-skyline-problem/">https://leetcode.cn/problems/the-skyline-problem/</a> （线+优先队列，没有思路，加强理解）</li>
+<li>滑动窗口最大值 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sliding-window-maximum/">https://leetcode.cn/problems/sliding-window-maximum/</a> (堆/优先队列，加强理解)</li>
+<li>两数之和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">https://leetcode.cn/problems/two-sum/</a></li>
+<li>最长连续序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-consecutive-sequence/">https://leetcode.cn/problems/longest-consecutive-sequence/</a></li>
+<li>直线上最多的点数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-points-on-a-line/">https://leetcode.cn/problems/max-points-on-a-line/</a></li>
+<li>重新安排行程 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reconstruct-itinerary/submissions/">https://leetcode.cn/problems/reconstruct-itinerary/submissions/</a> (联系拓扑排序，出度为0和入度为0)</li>
+<li>区域和检索 - 数组不可变 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-sum-query-immutable/">https://leetcode.cn/problems/range-sum-query-immutable/</a></li>
+<li>二维区域和检索 - 矩阵不可变 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-sum-query-2d-immutable/">https://leetcode.cn/problems/range-sum-query-2d-immutable/</a></li>
+<li>和为 K 的子数组 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/">https://leetcode.cn/problems/subarray-sum-equals-k/</a> (前缀和)</li>
+<li>重塑矩阵 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reshape-the-matrix/">https://leetcode.cn/problems/reshape-the-matrix/</a></li>
+<li>用队列实现栈 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-stack-using-queues/">https://leetcode.cn/problems/implement-stack-using-queues/</a> (跟我一开始的思路有些不同)</li>
+<li>下一个更大元素 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/next-greater-element-ii/">https://leetcode.cn/problems/next-greater-element-ii/</a></li>
+<li>存在重复元素 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/contains-duplicate/">https://leetcode.cn/problems/contains-duplicate/</a></li>
+<li>数组的度 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/degree-of-an-array/">https://leetcode.cn/problems/degree-of-an-array/</a></li>
+<li>最长和谐子序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-harmonious-subsequence/">https://leetcode.cn/problems/longest-harmonious-subsequence/</a></li>
+<li>寻找重复数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-duplicate-number/">https://leetcode.cn/problems/find-the-duplicate-number/</a></li>
+<li>超级丑数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/super-ugly-number/">https://leetcode.cn/problems/super-ugly-number/</a></li>
+<li>优势洗牌 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/advantage-shuffle/">https://leetcode.cn/problems/advantage-shuffle/</a> (学习索引排序思想)</li>
+<li>区域和检索 - 数组可修改 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-sum-query-mutable/%EF%BC%88%E5%8D%95%E7%82%B9%E4%BF%AE%E6%94%B9%EF%BC%8C%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2%EF%BC%8C%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%8C%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%EF%BC%89">https://leetcode.cn/problems/range-sum-query-mutable/（单点修改，区间查询，线段树，树状数组）</a></li>
+<li>冗余连接 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/redundant-connection/">https://leetcode.cn/problems/redundant-connection/</a></li>
+<li>LRU 缓存 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lru-cache/">https://leetcode.cn/problems/lru-cache/</a></li>
+<li>最低成本联通所有城市 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/connecting-cities-with-minimum-cost/">https://leetcode.cn/problems/connecting-cities-with-minimum-cost/</a></li>
+<li>O(1) 时间插入、删除和获取随机元素 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-delete-getrandom-o1/">https://leetcode.cn/problems/insert-delete-getrandom-o1/</a></li>
+<li>全 O(1) 的数据结构 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/all-oone-data-structure/">https://leetcode.cn/problems/all-oone-data-structure/</a></li>
+<li>最大栈 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-stack/">https://leetcode.cn/problems/max-stack/</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/24/IELTS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/24/IELTS/" class="post-title-link" itemprop="url">IELTS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-24 12:22:46" itemprop="dateCreated datePublished" datetime="2022-10-24T12:22:46+08:00">2022-10-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-31 19:34:18" itemprop="dateModified" datetime="2022-10-31T19:34:18+08:00">2022-10-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>大部分院校的申请目标分是6.5</p>
+<h1 id="模考"><a href="#模考" class="headerlink" title="模考"></a>模考</h1><h2 id="成绩"><a href="#成绩" class="headerlink" title="成绩"></a>成绩</h2><p>听力-7，阅读-7.5，写作-5，口语-5，综合得分6</p>
+<h2 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h2><ul>
+<li>写作</li>
 </ul>
-<p>if (parser-&gt;upgrade) {<br>  /* handle new protocol <em>/<br>} else if (nparsed != recved) {<br>  /</em> Handle error. Usually just close the connection. */<br>}<br>http_parser需要知道流的结尾在哪里。例如，有时服务器发送响应时不使用Content-Length，并期望客户端在EOF之前使用输入（对于主体）。要告诉http_parser关于EOF，将0作为http_parser_execute()的第四个参数。在EOF期间仍然会遇到回调和错误，因此必须准备好接收它们。</p>
-<p>标量值消息信息，如status_code、method和HTTP版本存储在解析器结构中。此数据只临时存储在http_parser中，并在每个新消息上重置。如果以后需要此信息，请在headers_complete回调期间将其从结构中复制出来。</p>
-<p>解析器对请求和响应的transfer-encoding进行透明解码。也就是说，分块编码在被发送到on_body回调之前被解码。</p>
-<p>升级的特殊问题<br>http_parser支持将连接升级到其他协议。一个越来越常见的例子是WebSocket协议，它发送一个请求</p>
-<pre><code>GET /demo HTTP/1.1
-Upgrade: WebSocket
-Connection: Upgrade
-Host: example.com
-Origin: http://example.com
-WebSocket-Protocol: sample</code></pre>
-<p>后跟non-HTTP数据。</p>
-<p>（有关WebSocketprotocol.的更多信息，请参阅RFC6455）</p>
-<p>为了支持这一点，解析器将把它视为没有正文的普通HTTP消息，同时发出on_headers_complete和on_message_complete回调。但是http_parser_execute(）将在头的末尾停止解析并返回。</p>
-<p>用户应该在http_parser_execute()返回后检查parser-&gt;upgrade是否已设置为1。Non-HTTP数据从缓冲区提供的偏移量开始，偏移量由http_parser_execute()返回。</p>
-<p>Callbacks<br>在http_parser_execute()调用期间，http_parser_settings中设置的回调将被执行。解析器维护状态，从不向后看，因此不需要缓冲数据。如果需要保存某些数据以备以后使用，可以从回调中执行此操作。</p>
-<p>有两种类型的回调：</p>
-<p>notification typedef int (<em>http_cb) (http_parser</em>); Callbacks: on_message_begin, on_headers_complete, on_message_complete.<br>data typedef int (<em>http_data_cb) (http_parser</em>, const char *at, size_t length); Callbacks: (requests only) on_url, (common) on_header_field, on_header_value, on_body;<br>成功时回调必须返回0。返回non-zero值将向解析器指示错误，使其立即退出。</p>
-<p>对于需要在回调中传递本地信息的情况，可以使用http_parser对象的data字段。这种情况的一个例子是使用线程处理套接字连接、解析请求，然后通过该套接字给出响应。通过实例化包含相关数据的thread-local结构（例如接受的套接字、为回调写入的分配内存等），解析器的回调能够以线程安全的方式在线程范围和回调范围之间通信数据。这允许http_parser在multi-threaded上下文中使用。</p>
-<p>Example:</p>
-<p>typedef struct {<br>  socket_t sock;<br>  void* buffer;<br>  int buf_len;<br> } custom_data_t;</p>
-<p>int my_url_callback(http_parser* parser, const char <em>at, size_t length) {<br>  /</em> access to thread local custom_data_t struct.<br>Use this access save parsed data for later use into thread local<br>buffer, or communicate over socket<br>*/<br>  parser-&gt;data;<br>  …<br>  return 0;<br>}</p>
-<p>…</p>
-<p>void http_parser_thread(socket_t sock) {<br> int nparsed = 0;<br> /* allocate memory for user data */<br> custom_data_t *my_data = malloc(sizeof(custom_data_t));</p>
-<p> /* some information for use by callbacks.</p>
+<ol>
+<li>大作文：1）结构不清，2）没有完全解决题目，3）有地方没有充分延展，4）有跑题的现象，5）逻辑有些问题，6）但是语法和词汇表达还是不错的小作文：1）有些地方信息没有写清楚</li>
+</ol>
 <ul>
-<li><p>achieves thread -&gt; callback information flow */<br>my_data-&gt;sock = sock;</p>
-<p>/* instantiate a thread-local parser */<br>http_parser <em>parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST); /</em> initialise parser <em>/<br>/</em> this custom data reference is accessible through the reference to the<br>parser supplied to callback functions */<br>parser-&gt;data = my_data;</p>
-<p>http_parser_settings settings; /* set up callbacks */<br>settings.on_url = my_url_callback;</p>
-<p>/* execute parser */<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</p>
-<p>…<br>/* parsed information copied from callback.<br>can now perform action on data copied into thread-local memory from callbacks.<br>achieves callback -&gt; thread information flow */<br>my_data-&gt;buffer;<br>…<br>}<br>如果您分块解析HTTP消息（即来自socket的read()请求行、parse、read half headers、parse等），那么您的数据回调可能会被多次调用。http_parser保证数据指针只在回调的生存期内有效。如果适合您的应用程序，您还可以将read()放入堆分配的缓冲区中，以避免复制内存。</p>
+<li>口语</li>
+</ul>
+<ol>
+<li>总评：考生充分表现出交流的意愿 基本能维持语流</li>
+<li>Part2 回答时间未达到要求</li>
+<li>个别题目未给出相应拓展</li>
+<li>连接词使用需要更加丰富</li>
+<li>缺少改述 </li>
+<li>有个别表达错误但不影响理解 </li>
+<li>个别发音问题 需要注意 例如：weak, organ, style, kind, vital, courtesy, sincerity, remind</li>
+</ol>
+<h2 id="待加强点"><a href="#待加强点" class="headerlink" title="待加强点"></a>待加强点</h2><ul>
+<li><p>作文：<br>先理解题目，想好结构和逻辑，充分扣题挖掘题目信息，给出适当的扩展</p>
+</li>
+<li><p>口语：<br>内容需要丰富·拓展·和概述，注意正确的英语表达和发音，连接词需要更加丰富</p>
 </li>
 </ul>
-<p>如果您部分地读取/解析报头，那么读取报头可能是一项棘手的任务。基本上，您需要记住上一次头回调是字段还是值，并应用以下逻辑：</p>
-<p>(on_header_field and on_header_value shortened to on_h_*)</p>
-<hr>
-<p>| State (prev. callback) | Callback   | Description/action                         |</p>
-<hr>
-<p>| nothing (first call)   | on_h_field | Allocate new buffer and copy callback data |<br>|                        |            | into it                                    |</p>
-<hr>
-<p>| value                  | on_h_field | New header started.                        |<br>|                        |            | Copy current name,value buffers to headers |<br>|                        |            | list and allocate new buffer for new name  |</p>
-<hr>
-<p>| field                  | on_h_field | Previous name continues. Reallocate name   |<br>|                        |            | buffer and append callback data to it      |</p>
-<hr>
-<p>| field                  | on_h_value | Value for current header started. Allocate |<br>|                        |            | new buffer and copy callback data to it    |</p>
-<hr>
-<p>| value                  | on_h_value | Value continues. Reallocate value buffer   |<br>|                        |            | and append callback data to it             |</p>
-<hr>
-<p>Parsing URLs<br>一个简单的zero-copyURL解析器作为http_parser_parse_url()提供。这个库的用户可能希望使用它来解析由连续的on_url回调构造的url。</p>
-<p>请参阅标题中的阅读示例：</p>
-<p>C语言中的部分示例<br>从http-parser测试中<br>从Javascript中的节点库</p>
 
       
     </div>
@@ -583,7 +540,7 @@ WebSocket-Protocol: sample</code></pre>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/language-types/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/24/english-class-topics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -597,7 +554,7 @@ WebSocket-Protocol: sample</code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/04/language-types/" class="post-title-link" itemprop="url">language types</a>
+            <a href="/2022/10/24/english-class-topics/" class="post-title-link" itemprop="url">english class - topics</a>
         </h2>
 
         <div class="post-meta-container">
@@ -609,7 +566,7 @@ WebSocket-Protocol: sample</code></pre>
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-10-04 17:18:14 / Modified: 17:19:53" itemprop="dateCreated datePublished" datetime="2021-10-04T17:18:14+08:00">2021-10-04</time>
+      <time title="Created: 2022-10-24 09:49:03 / Modified: 16:45:13" itemprop="dateCreated datePublished" datetime="2022-10-24T09:49:03+08:00">2022-10-24</time>
     </span>
 
   
@@ -622,7 +579,10 @@ WebSocket-Protocol: sample</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>动态/静态类型，强/弱类型<br><img src="https://github.com/Melody-Zhang/imgs/blob/master/types.png?raw=true" alt="image"></p>
+          <h1 id="改掉坏习惯"><a href="#改掉坏习惯" class="headerlink" title="改掉坏习惯"></a>改掉坏习惯</h1><h1 id="怎样选择一个适合自己的职位"><a href="#怎样选择一个适合自己的职位" class="headerlink" title="怎样选择一个适合自己的职位"></a>怎样选择一个适合自己的职位</h1><p>breaststroke 蛙泳<br>backstroke 仰泳<br>front crawl 自由泳<br>wing chun 咏春<br>boxing 拳击<br>a long break 一个长假<br>the 8 great cuisines of china 中国的八大菜系<br>instant noodles 泡面<br>stir-fried tomato and scrambled eggs 西红柿炒鸡蛋<br>mobile telecom dynamic 移动通信动态<br>commute to work 通勤去上班<br>evaluation n.评价，评估<br>have a great week ahead! 提前祝你有一个美好的一周！（一般在周一说）</p>
+<h1 id="成长型思维模式"><a href="#成长型思维模式" class="headerlink" title="成长型思维模式"></a>成长型思维模式</h1><p>the road less traveled<br>neuroplasticity 神经可塑性<br>trepidation: fear and nervousness 惊恐<br>explicit 明确的<br>psychiatrist 心理医生</p>
+<h1 id="开一家咖啡厅"><a href="#开一家咖啡厅" class="headerlink" title="开一家咖啡厅"></a>开一家咖啡厅</h1><p>decaffein coffee 低咖咖啡<br>bakery 面包房<br>lemon tea<br>mint tea<br>sandwiched<br>croatia 克罗地亚<br>ronnefeldt 德国著名tea shop<br>seasoning 调料<br>inventory 库存的详细目录<br>coriander 香菜<br>basil 罗勒叶<br>oregano  leaves 牛至叶<br>parsley 欧芹<br>almost same 大致相同<br>narghile 水烟筒<br>lock down 封城<br>agence 中介，代理<br>theme 主题<br>sober 清醒的，（使）清醒<br>strong 强的<br>espresso 意式浓缩咖啡<br>americano 美式咖啡<br>iced americano 冰美式<br>flat white 馥芮白  Espresso+steamed milk<br>Macchiato 玛奇朵 Espresso+foam<br>latte 拿铁 Espresso+steamed milk+milk foam<br>cappuccino 卡布奇诺 比拿铁牛奶少一点儿，奶泡多一点儿<br>mocha 摩卡 Espresso+hot chocolate+steamed milk+milk foam</p>
+<h1 id="什么是人格"><a href="#什么是人格" class="headerlink" title="什么是人格"></a>什么是人格</h1><p>personality<br>stay positive<br>cautious 谨慎的<br>contradictory 相互矛盾的<br>a little bit more time<br>thorough 彻底的，工作周到缜密的<br>thoroughly 极度认真地，从头跟到尾地，极其细节地<br>spirit n.精神，心灵，勇气，意志<br>spiritual a.精神的，心灵的，不为物欲所动的<br>spirituality 灵性，精神性<br>religious a.宗教的<br>traits n.特质，特性，性格<br>nature n. 自然，本质<br>nurture n.v.培育，养育<br>aggressive a. 积极进取的，好斗的<br>compete v.竞争<br>competition n.竞争<br>competitive a.竞争激烈的，有竞争力的</p>
 
       
     </div>
@@ -649,7 +609,7 @@ WebSocket-Protocol: sample</code></pre>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/16/al-dfs-bfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -663,82 +623,7 @@ WebSocket-Protocol: sample</code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/04/tutorial-how-to-create-a-new-blog/" class="post-title-link" itemprop="url">tutorial: how to create a new blog</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-10-04 15:49:08 / Modified: 16:10:02" itemprop="dateCreated datePublished" datetime="2021-10-04T15:49:08+08:00">2021-10-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。</p>
-<h1 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹</span><br><span class="line">hexo new &quot;&#123;title here&#125;&quot; &#x2F;&#x2F; 新建新文件</span><br><span class="line">vi source&#x2F;_posts&#x2F;&#123;new doc&#125;.md &#x2F;&#x2F; 在文件中编写内容</span><br><span class="line">hexo g -d &#x2F;&#x2F; 上传到git，一段时间后即可在https:&#x2F;&#x2F;melody-zhang.github.io&#x2F;看到更新的文章（这里之所以要等一段时间，是因为资源上传需要时间，静态资源的有缓存，更新也需要时间，所以如果一段时间后打开发现刚上传的文件依旧不存在，可尝试多次刷新页面并等待...）</span><br></pre></td></tr></table></figure>
-
-<h1 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h1><p>如果在文章中需要插入一些图片资源，需要将图片资源上传到<a href="https://github.com/Melody-Zhang/imgs/blob/master/">https://github.com/Melody-Zhang/imgs/blob/master/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j imgs &#x2F;&#x2F; git图片资源仓库</span><br></pre></td></tr></table></figure>
-<p>之后复制图片链接url，在.md文件相应位置插入以下模版：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![image](https:&#x2F;&#x2F;github.com&#x2F;Melody-Zhang&#x2F;imgs&#x2F;blob&#x2F;master&#x2F;mem2.jpeg?raw&#x3D;true)</span><br></pre></td></tr></table></figure>
-<p>注意：图片链接url之后一定要加参数 <code>raw=true</code>， 参数的存在是为了确保你链接到的图片会被原样呈现。 这意味着只有图片会被链接到，而不是该文件的整个GitHub 界面。</p>
-<h1 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h1><p>画图： sketch<br>选色：<a target="_blank" rel="noopener" href="https://coolors.co/">https://coolors.co/</a></p>
-<h1 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h1><p>other questions pls refer to:<br>技术文章配图指南 <a target="_blank" rel="noopener" href="https://draveness.me/sketch-and-sketch/">https://draveness.me/sketch-and-sketch/</a><br>hexo官网文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">https://hexo.io/zh-cn/docs/commands</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/wrk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/04/wrk/" class="post-title-link" itemprop="url">wrk</a>
+            <a href="/2022/10/16/al-dfs-bfs/" class="post-title-link" itemprop="url">al - dfs+bfs</a>
         </h2>
 
         <div class="post-meta-container">
@@ -749,14 +634,14 @@ WebSocket-Protocol: sample</code></pre>
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-10-04 15:39:08" itemprop="dateCreated datePublished" datetime="2021-10-04T15:39:08+08:00">2021-10-04</time>
+      <time title="Created: 2022-10-16 11:29:48" itemprop="dateCreated datePublished" datetime="2022-10-16T11:29:48+08:00">2022-10-16</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-06 17:07:14" itemprop="dateModified" datetime="2021-10-06T17:07:14+08:00">2021-10-06</time>
+        <time title="Modified: 2022-10-25 21:39:52" itemprop="dateModified" datetime="2022-10-25T21:39:52+08:00">2022-10-25</time>
       </span>
 
   
@@ -769,93 +654,157 @@ WebSocket-Protocol: sample</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>wrk是团队开发的压测平台所使用的压测引擎，在使用上支持对固定域名服务的不同接口进行高并发压测，相较于其他压测工具，使用了同redis一样的AE事件驱动器, 通过I/O多路复用技术，使得一个线程可以无阻塞处理多个socket连接，从而达到使用更少的资源（thread）产生更大的并发（socket）的效果。</p>
-<p>wrk对外提供一些回调函数，支持使用lua脚本，对请求前、请求中、请求后进行一些处理。这使得wrk不仅可以压测固定的url, 相同域名下的所有url都可以在一次压测中进行，达到全链路压测的效果。</p>
-<p>但问题是，对于某些收购的项目，全链路压测中的需要压测到的接口，涉及了多个域名，并且多个域名的url请求之间还有数据传递，所以需要研究并修改wrk源码，使得在request回调里，能修改域名变量，以方便对域名+path的url做处理。</p>
-<h1 id="知识结构"><a href="#知识结构" class="headerlink" title="知识结构"></a>知识结构</h1><ol>
-<li>IO模型和基于事件驱动的IO多路复用模式</li>
-<li>redis AE实现</li>
-<li>socket &amp; fd &amp; inode</li>
-<li>ssl</li>
-<li>c语言与lua脚本的交互</li>
+          <p>深度优先遍历在工程上更应该使用栈来实现，因为1）便于理解；2）不易出现递归栈满的情况<br>可以时常复习排列组合的问题，体会其中的思想 （46，77，40，47）</p>
+<ol start="695">
+<li>岛屿的最大面积 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-area-of-island/">https://leetcode.cn/problems/max-area-of-island/</a></li>
+<li>省份数量 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-provinces/">https://leetcode.cn/problems/number-of-provinces/</a> (dfs为O(n^2) 并查集为ElogV)</li>
+<li>太平洋大西洋水流问题 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/pacific-atlantic-water-flow/">https://leetcode.cn/problems/pacific-atlantic-water-flow/</a> (这道题用动态规划不行)(但凡要遍历4个方向的就可以考虑广度优先遍历)</li>
 </ol>
-<h1 id="wrk流程图"><a href="#wrk流程图" class="headerlink" title="wrk流程图"></a>wrk流程图</h1><p><img src="https://github.com/Melody-Zhang/imgs/blob/master/wrk.png?raw=true" alt="image"></p>
-<h1 id="修改思路"><a href="#修改思路" class="headerlink" title="修改思路"></a>修改思路</h1><h2 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h2><ul>
-<li>cfg.host</li>
-<li>addr</li>
-</ul>
-<h2 id="建立连接的过程"><a href="#建立连接的过程" class="headerlink" title="建立连接的过程"></a>建立连接的过程</h2><h3 id="aeEventLoop角度"><a href="#aeEventLoop角度" class="headerlink" title="aeEventLoop角度"></a>aeEventLoop角度</h3><p>每个线程创建了一个独立的 aeEventLoop</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br></pre></td></tr></table></figure>
-<p>每个线程注册定时器（aeCreateTimeEvent），每 100ms 执行一次统计请求和响应结果<br>线程内创建若干 connection（socket），并为每个 socket 句柄注册事件（aeCreateFileEvent），包括：AE_READABLE，AE_WRITABLE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void *thread_main(void *arg) &#123;</span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br><span class="line">aeEventLoop *loop &#x3D; thread-&gt;loop;</span><br><span class="line">aeCreateTimeEvent(loop, RECORD_INTERVAL_MS, record_rate, thread, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int connect_socket(thread *thread, connection *c) &#123;</span><br><span class="line">    ...</span><br><span class="line">    flags &#x3D; AE_READABLE | AE_WRITABLE;</span><br><span class="line">    if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>–以下为没有做过的<br>46. 全排列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations/">https://leetcode.cn/problems/permutations/</a> （利用交换的思想，省空间）<br>77. 组合 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combinations/">https://leetcode.cn/problems/combinations/</a>  (用自己的想法做出来就好)<br>79. 单词搜索 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/word-search/">https://leetcode.cn/problems/word-search/</a> (直接写逻辑肯定比循环要快，但是代码量更多)<br>934. 最短的桥 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-bridge/">https://leetcode.cn/problems/shortest-bridge/</a> （用广度优先遍历复杂度低很多，因为是按层次遍历的，找到时一定是最短，故碰到最短路径问题，可以考虑用广度优先遍历）<br>130. 被围绕的区域 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/surrounded-regions/">https://leetcode.cn/problems/surrounded-regions/</a><br>257. 二叉树的所有路径 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-paths/">https://leetcode.cn/problems/binary-tree-paths/</a><br>47. 全排列 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations-ii/">https://leetcode.cn/problems/permutations-ii/</a> (做题先做出来再看能不能优化，先按最稳妥的方式做，一定要想的特别清楚)<br>40. 组合总和 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/">https://leetcode.cn/problems/combination-sum-ii/</a><br>310. 最小高度树 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-height-trees/">https://leetcode.cn/problems/minimum-height-trees/</a> （自底向上的思想很有趣）<br>51. N 皇后 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-queens/">https://leetcode.cn/problems/n-queens/</a><br>37. 解数独 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sudoku-solver/">https://leetcode.cn/problems/sudoku-solver/</a><br>126. 单词接龙 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/word-ladder-ii/">https://leetcode.cn/problems/word-ladder-ii/</a></p>
 
-<h3 id="host角度"><a href="#host角度" class="headerlink" title="host角度"></a>host角度</h3><p>main()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lua_State *L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">if (!script_resolve(L, host, service)) &#123;</span><br><span class="line">        char *msg &#x3D; strerror(errno);</span><br><span class="line">        fprintf(stderr, &quot;unable to connect to %s:%s %s\n&quot;, host, service, msg);</span><br><span class="line">        exit(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">cfg.host &#x3D; host;</span><br><span class="line"></span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br><span class="line"></span><br><span class="line">        t-&gt;L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">        script_init(L, t, argc - optind, &amp;argv[optind]);</span><br><span class="line"></span><br><span class="line">        if (i &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            cfg.pipeline &#x3D; script_verify_request(t-&gt;L);</span><br><span class="line">            cfg.dynamic  &#x3D; !script_is_static(t-&gt;L);</span><br><span class="line">            cfg.delay    &#x3D; script_has_delay(t-&gt;L);</span><br><span class="line">            if (script_want_response(t-&gt;L)) &#123;</span><br><span class="line">                parser_settings.on_header_field &#x3D; header_field;</span><br><span class="line">                parser_settings.on_header_value &#x3D; header_value;</span><br><span class="line">                parser_settings.on_body         &#x3D; response_body;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>全局创建一个lua_State， 每一个线程也创建一个lua_State<br>使用全局创建的 L, 初始化线程的 t.L</p>
-<h4 id="script-create-做了什么"><a href="#script-create-做了什么" class="headerlink" title="script_create 做了什么"></a>script_create 做了什么</h4><h4 id="script-init-做了什么"><a href="#script-init-做了什么" class="headerlink" title="script_init 做了什么"></a>script_init 做了什么</h4><p>做完以上两步, thread结构体中的数据就已经出初始化完了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br></pre></td></tr></table></figure>
-<p>这里比较重要的就是 <code>*addr</code> 这个参数，之后会用于socket链接</p>
-<p>创建的每个线程都会去执行 <code>thread_main</code> 函数，在此函数做的工作主要为：</p>
-<ol>
-<li>通过 <code>script_request</code> 接受lua脚本中request函数对请求进行的修改<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function request()</span><br><span class="line">	return wrk.format(method, path, headers, body)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></li>
-<li>为每一个线程建立若干个socket链接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">thread-&gt;cs &#x3D; zcalloc(thread-&gt;connections * sizeof(connection));</span><br><span class="line">    connection *c &#x3D; thread-&gt;cs;</span><br><span class="line"></span><br><span class="line">    for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-所以实际上 <code>connect_socket</code> 是最后建立链接并发请求的地方。<br>看看 <code>connect_socket</code> 做了什么。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd &#x3D; socket(addr-&gt;ai_family, addr-&gt;ai_socktype, addr-&gt;ai_protocol);</span><br><span class="line"></span><br><span class="line">if (connect(fd, addr-&gt;ai_addr, addr-&gt;ai_addrlen) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">    if (errno !&#x3D; EINPROGRESS) goto error;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<code>aeCreateFileEvent</code>的作用是添加监听的客户端连接<br>要监听一个客户端连接的状态变化，需要调用 <code>aeCreateFileEvent()</code> 函数把客户端连接添加到事件驱动对象中进行监听， <code>aeCreateFileEvent() </code>函数原型如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask, aeFileProc *proc, void *clientData);</span><br></pre></td></tr></table></figure>
-参数含义：<br><code>eventLoop</code>：由 aeCreateEventLoop() 函数创建的事件驱动对象。<br><code>fd</code>：客户端连接socket句柄。<br><code>mask</code>：监听客户端连接的事件，有 <code>AE_READABLE</code>（读） 和 <code>AE_WRITABLE</code>（写） 两种事件。<br><code>proc</code>：事件发生时的处理函数。<br><code>clientData</code>：proc 函数的参数</li>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/15/al-prefix-sum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/15/al-prefix-sum/" class="post-title-link" itemprop="url">al - prefix sum</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-15 22:40:22" itemprop="dateCreated datePublished" datetime="2022-10-15T22:40:22+08:00">2022-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-16 10:33:40" itemprop="dateModified" datetime="2022-10-16T10:33:40+08:00">2022-10-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一维前缀和，二维积分图，预存，加速计算。<br>303. 区域和检索 - 数组不可变 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-sum-query-immutable/">https://leetcode.cn/problems/range-sum-query-immutable/</a><br>304. 二维区域和检索 - 矩阵不可变 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-sum-query-2d-immutable/">https://leetcode.cn/problems/range-sum-query-2d-immutable/</a><br>560. 和为 K 的子数组 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/">https://leetcode.cn/problems/subarray-sum-equals-k/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/15/al-arr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/15/al-arr/" class="post-title-link" itemprop="url">al - arr</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-15 14:44:40 / Modified: 14:45:21" itemprop="dateCreated datePublished" datetime="2022-10-15T14:44:40+08:00">2022-10-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol start="448">
+<li>找到所有数组中消失的数字  <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/">https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/</a></li>
+<li>旋转图像 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotate-image/">https://leetcode.cn/problems/rotate-image/</a> (注意转移方程)</li>
+<li>搜索二维矩阵 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-a-2d-matrix-ii/">https://leetcode.cn/problems/search-a-2d-matrix-ii/</a></li>
+<li>最多能完成排序的块 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-chunks-to-make-sorted/">https://leetcode.cn/problems/max-chunks-to-make-sorted/</a> (更简洁的方法)</li>
 </ol>
-<p>从 <code>aeCreateFileEvent</code> 的用法可以看出，<br><code>aeCreateFileEvent(loop, fd, flags, socket_connected, c)</code>的含义是：监听 loop 中的这个 fd 的读/写事件，如果事件发生，就执行<code>socket_connected(c)</code>。</p>
-<p>所以我们再来看看 <code>socket_connected</code> 做了什么工作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">connection *c &#x3D; data;</span><br><span class="line"></span><br><span class="line">switch (sock.connect(c, cfg.host)) &#123;</span><br><span class="line">    case OK:    break;</span><br><span class="line">    case ERROR: goto error;</span><br><span class="line">    case RETRY: return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct sock sock &#x3D; &#123;</span><br><span class="line">    .connect  &#x3D; sock_connect,</span><br><span class="line">    .close    &#x3D; sock_close,</span><br><span class="line">    .read     &#x3D; sock_read,</span><br><span class="line">    .write    &#x3D; sock_write,</span><br><span class="line">    .readable &#x3D; sock_readable</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>sock 是一个对象，实际上 <code>sock.connect(c, cfg.host)</code> always return “OK”。 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">status sock_connect(connection *c, char *host) &#123;</span><br><span class="line">    return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>==》由以上分析得出结论，看一下 <code>script_create</code> <code>script_init</code> 是如何赋值 <code>t.addr</code> 的，尝试可不可以通过 lua 脚本传参改变 <code>t.addr</code> 的值。</p>
-<p>看起来 <code>script_wrk_lookup</code> <code>script_wrk_connect</code> <code>script_thread_index</code> 在其中起了不小的作用。<br>为了搞清楚他们到底做了些什么，要先学习下 c 语言是如何与 lua 脚本交互的。</p>
-<h1 id="c-amp-lua"><a href="#c-amp-lua" class="headerlink" title="c &amp; lua"></a>c &amp; lua</h1><p>lua与C的交互只能通过栈来执行。其交互形式也分两种，lua调用c函数，c解释执行lua代码。</p>
-<p>Lua 使用一个 虚拟栈 来和 C 互传值。 栈上的的每个元素都是一个 Lua 值 （nil，数字，字符串，等等）。</p>
-<p>无论何时 Lua 调用 C，被调用的函数都得到一个新的栈， 这个栈独立于 C 函数本身的栈，也独立于之前的 Lua 栈。 它里面包含了 Lua 传递给 C 函数的所有参数， 而 C 函数则把要返回的结果放入这个栈以返回给调用者 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lua_State *lua_newstate (lua_Alloc f, void *ud);</span><br><span class="line">创建一个运行在新的独立的状态机中的线程。 如果无法创建线程或状态机（由于内存有限）则返回 NULL。 参数 f 是一个分配器函数； Lua 将通过这个函数做状态机内所有的内存分配操作。 第二个参数 ud ，这个指针将在每次调用分配器时被转入。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>script_request 返回一个 addr<br>方法：根据 script_wrk_lookup 中的方法，传入 host， service， 调用 getaddrinfo 生成一个 addr 对象</p>
-<h1 id="c语言语法"><a href="#c语言语法" class="headerlink" title="c语言语法"></a>c语言语法</h1><p>宏定义#ifndef……#define……#endif主要是为了避免头文件重复引用</p>
-<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用，这个时候，在重复引用的头文件中使用#ifndef……#define……#endif是非常有必要的。</p>
-<p>首先，源代码在编译之前需要进行预处理（也就是预编译），预编译干什么呢？我所知道的就是进行头文件展开、宏定义替换等操作。</p>
-<p>b.cpp包含a.h头文件的时候，就已经把A_H和C_H这两个宏添加到自己本文件的作用域内了，说明宏的作用范围只属于它的本身文件，所以b.cpp文件不能直接就对A_H和C_H宏进行判断。</p>
-<p>编译指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test2.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -ldl -lm</span><br></pre></td></tr></table></figure>
-
-<p>-I指定头文件的目录，-L指定库文件的目录，LIBS告诉链接器要链接哪些库文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LDFLAGS&#x3D;&quot;-L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib&quot;</span><br><span class="line">export CFLAGS&#x3D;&quot;-I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1&quot;</span><br><span class="line">export LIBS&#x3D;&quot;-lluajit-5.1 -ldl -lm&quot;</span><br></pre></td></tr></table></figure>
-
-<p>生成lua可以调用的函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c -I&#x2F;usr&#x2F;local&#x2F;include test.c    &#x2F;&#x2F;编译不连接</span><br><span class="line">gcc -bundle -undefined dynamic_lookup -o mytestlib.so test.o  &#x2F;&#x2F;连接生成动态库</span><br></pre></td></tr></table></figure>
-
-<p>可能遇到的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld: symbol(s) not found for architecture x86_64</span><br></pre></td></tr></table></figure>
-
-<p>在C语言中调用lua脚本，并传递接收参数的实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;lua.h&gt;</span><br><span class="line">#include&lt;lualib.h&gt;</span><br><span class="line">#include&lt;lauxlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;创建一个Lua的解释器</span><br><span class="line">    lua_State *L &#x3D; luaL_newstate();</span><br><span class="line">    &#x2F;&#x2F;载入Lua的库文件</span><br><span class="line">    luaL_openlibs(L);</span><br><span class="line">    &#x2F;&#x2F;利用这个&quot;L&quot;解释器，执行test.lua文件</span><br><span class="line">    printf(&quot;stack hight &#x3D; %d\n&quot;, lua_gettop(L));</span><br><span class="line">    luaL_dofile(L,&quot;test.lua&quot;);</span><br><span class="line">    &#x2F;&#x2F; 接收函数返回值</span><br><span class="line">    int a &#x3D; lua_tonumber(L, -1); </span><br><span class="line">&#x2F;&#x2F;关闭资源</span><br><span class="line">    lua_close(L);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在lua中调用C语言中定义的函数</p>
-<p>编译指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc mylib.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -fPIC -shared -o mylib.so -Wall </span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -c -o mylib.o mylib.c</span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -shared -o mylib.so mylib.o -llua5.1</span><br></pre></td></tr></table></figure>
-<p>目前在mac上会发生 bus error 或者 Segmentation fault<br><a target="_blank" rel="noopener" href="http://lua-users.org/lists/lua-l/2011-09/msg00442.html">http://lua-users.org/lists/lua-l/2011-09/msg00442.html</a></p>
-<h1 id="在-Lua-中管理-C-对象的生存期"><a href="#在-Lua-中管理-C-对象的生存期" class="headerlink" title="在 Lua 中管理 C 对象的生存期"></a>在 Lua 中管理 C 对象的生存期</h1><p><a target="_blank" rel="noopener" href="https://blog.codingnow.com/cloud/LuaReferObject">https://blog.codingnow.com/cloud/LuaReferObject</a></p>
-<h1 id="从-lua-数据结构看设计思想"><a href="#从-lua-数据结构看设计思想" class="headerlink" title="从 lua 数据结构看设计思想"></a>从 lua 数据结构看设计思想</h1><h1 id="改动"><a href="#改动" class="headerlink" title="改动"></a>改动</h1><p>wrk.lua: request 返回两个参数 host,body</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function wrk.format(host, method, path, headers, body)</span><br><span class="line">   local host    &#x3D; host  or wrk.host</span><br><span class="line">   local method  &#x3D; method  or wrk.method</span><br><span class="line">   local path    &#x3D; path    or wrk.path</span><br><span class="line">   local headers &#x3D; headers or wrk.headers</span><br><span class="line">   local body    &#x3D; body    or wrk.body</span><br><span class="line">   local s       &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">   if host then</span><br><span class="line">      wrk.headers[&quot;Host&quot;] &#x3D; host</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   if not headers[&quot;Host&quot;] then</span><br><span class="line">      headers[&quot;Host&quot;] &#x3D; wrk.headers[&quot;Host&quot;]</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   headers[&quot;Content-Length&quot;] &#x3D; body and string.len(body)</span><br><span class="line"></span><br><span class="line">   s[1] &#x3D; string.format(&quot;%s %s HTTP&#x2F;1.1&quot;, method, path)</span><br><span class="line">   for name, value in pairs(headers) do</span><br><span class="line">      s[#s+1] &#x3D; string.format(&quot;%s: %s&quot;, name, value)</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   s[#s+1] &#x3D; &quot;&quot;</span><br><span class="line">   s[#s+1] &#x3D; body or &quot;&quot;</span><br><span class="line"></span><br><span class="line">   return host, table.concat(s, &quot;\r\n&quot;)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>script.c</p>
-<h1 id="从-lua-看状态机"><a href="#从-lua-看状态机" class="headerlink" title="从 lua 看状态机"></a>从 lua 看状态机</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/47434856">https://zhuanlan.zhihu.com/p/47434856</a></p>
-<h1 id="几个比较重要的数据结构"><a href="#几个比较重要的数据结构" class="headerlink" title="几个比较重要的数据结构"></a>几个比较重要的数据结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">struct http_parser_settings &#123;</span><br><span class="line">  http_cb      on_message_begin;</span><br><span class="line">  http_data_cb on_url;</span><br><span class="line">  http_data_cb on_status;</span><br><span class="line">  http_data_cb on_header_field;</span><br><span class="line">  http_data_cb on_header_value;</span><br><span class="line">  http_cb      on_headers_complete;</span><br><span class="line">  http_data_cb on_body;</span><br><span class="line">  http_cb      on_message_complete;</span><br><span class="line">  &#x2F;* When on_chunk_header is called, the current chunk length is stored</span><br><span class="line">   * in parser-&gt;content_length.</span><br><span class="line">   *&#x2F;</span><br><span class="line">  http_cb      on_chunk_header;</span><br><span class="line">  http_cb      on_chunk_complete;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br><span class="line"></span><br><span class="line">typedef struct connection &#123;</span><br><span class="line">    thread *thread;</span><br><span class="line">    http_parser parser;</span><br><span class="line">    enum &#123;</span><br><span class="line">        FIELD, VALUE</span><br><span class="line">    &#125; state;</span><br><span class="line">    int fd;</span><br><span class="line">    SSL *ssl;</span><br><span class="line">    bool delayed;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    char *request;</span><br><span class="line">    size_t length;</span><br><span class="line">    size_t written;</span><br><span class="line">    uint64_t pending;</span><br><span class="line">    buffer headers;</span><br><span class="line">    buffer body;</span><br><span class="line">    char buf[RECVBUF];</span><br><span class="line">&#125; connection;</span><br></pre></td></tr></table></figure>
-<p>response_complete 是<br>http_parser_execute</p>
-<p>CALLBACK_NOTIFY(message_complete);</p>
-<p>通过对比成功和失败的日志可以看出，连接建立成功了，也有写，但是在第一次读的时候，http_parser_execute 失败，执行了response_complete回调函数，返回了响应错误码，读错误加一，并重新建立socket连接。</p>
-<p>再通过实验，如果request中的host与全局host一致，是不会有问题的，所以猜测是socket连接没有指向localhost。再次进行验证。</p>
-<h1 id="成功的修改了host"><a href="#成功的修改了host" class="headerlink" title="成功的修改了host"></a>成功的修改了host</h1><h1 id="最后一步学习如何打包镜像"><a href="#最后一步学习如何打包镜像" class="headerlink" title="最后一步学习如何打包镜像"></a>最后一步学习如何打包镜像</h1>
       
     </div>
 
@@ -881,7 +830,7 @@ WebSocket-Protocol: sample</code></pre>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/24/go-for-range/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/14/al-stack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -895,7 +844,7 @@ WebSocket-Protocol: sample</code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/24/go-for-range/" class="post-title-link" itemprop="url">go - for...range</a>
+            <a href="/2022/10/14/al-stack/" class="post-title-link" itemprop="url">al - stack</a>
         </h2>
 
         <div class="post-meta-container">
@@ -906,8 +855,15 @@ WebSocket-Protocol: sample</code></pre>
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-24 15:35:19" itemprop="dateCreated datePublished" datetime="2021-04-24T15:35:19+08:00">2021-04-24</time>
+      <time title="Created: 2022-10-14 07:02:43" itemprop="dateCreated datePublished" datetime="2022-10-14T07:02:43+08:00">2022-10-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-15 22:38:32" itemprop="dateModified" datetime="2022-10-15T22:38:32+08:00">2022-10-15</time>
+      </span>
 
   
 </div>
@@ -919,7 +875,13 @@ WebSocket-Protocol: sample</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <ol start="232">
+<li>用栈实现队列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-queue-using-stacks/">https://leetcode.cn/problems/implement-queue-using-stacks/</a></li>
+<li>最小栈 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-stack/">https://leetcode.cn/problems/min-stack/</a></li>
+<li>有效的括号 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">https://leetcode.cn/problems/valid-parentheses/</a></li>
+</ol>
+<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><p>O(n)时间内解决大小比较问题<br>739. 每日温度 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/daily-temperatures/">https://leetcode.cn/problems/daily-temperatures/</a></p>
+
       
     </div>
 
@@ -945,7 +907,7 @@ WebSocket-Protocol: sample</code></pre>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/24/go-%E6%A0%88/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/10/13/al-dp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -959,7 +921,7 @@ WebSocket-Protocol: sample</code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/24/go-%E6%A0%88/" class="post-title-link" itemprop="url">go - 栈</a>
+            <a href="/2022/10/13/al-dp/" class="post-title-link" itemprop="url">al - dp</a>
         </h2>
 
         <div class="post-meta-container">
@@ -970,8 +932,15 @@ WebSocket-Protocol: sample</code></pre>
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-24 15:35:08" itemprop="dateCreated datePublished" datetime="2021-04-24T15:35:08+08:00">2021-04-24</time>
+      <time title="Created: 2022-10-13 11:01:00" itemprop="dateCreated datePublished" datetime="2022-10-13T11:01:00+08:00">2022-10-13</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-20 22:15:08" itemprop="dateModified" datetime="2022-10-20T22:15:08+08:00">2022-10-20</time>
+      </span>
 
   
 </div>
@@ -983,7 +952,38 @@ WebSocket-Protocol: sample</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <p>思考这样一个问题，如果n-1的结果已经知道了，n的结果是什么？<br>先用dp的方式写出来，再看看可不可以进行空间优化<br>跟大小有关系的，可以考虑用排序+栈+二分查找</p>
+<ol start="542">
+<li>01 矩阵 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/01-matrix/">https://leetcode.cn/problems/01-matrix/</a> （dfs时间复杂度太高，只能用动态规划，这个第一眼看到没有想到动态规划的解决方案）</li>
+<li>最长递增子序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-increasing-subsequence/%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%8D%95%E8%B0%83%E6%A0%88%EF%BC%89">https://leetcode.cn/problems/longest-increasing-subsequence/（可以用动态规划，可以用单调栈）</a></li>
+<li>只有两个键的键盘 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/2-keys-keyboard/(%E4%BB%8E%E5%B0%8F%E5%88%B0%E5%A4%A7%E5%B0%9D%E8%AF%95%E4%BC%9A%E6%AF%94%E8%BE%83%E5%BF%AB)">https://leetcode.cn/problems/2-keys-keyboard/(从小到大尝试会比较快)</a></li>
+<li>正则表达式匹配 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/regular-expression-matching/">https://leetcode.cn/problems/regular-expression-matching/</a> （*的场景比较复杂，需要考虑4种情况）</li>
+<li>买卖股票的最佳时机 IV <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/">https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/</a> (体会压缩的思想)</li>
+<li>整数拆分 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/integer-break/">https://leetcode.cn/problems/integer-break/</a> (初始值设置和条件判定)</li>
+<li>最长数对链 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-length-of-pair-chain/">https://leetcode.cn/problems/maximum-length-of-pair-chain/</a> (这道题一定要先排序，有三种解法，我写出来了，但是写的比较复杂，所以还是按题解思路比较好) (和435 无重叠区间相似)</li>
+<li>摆动序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/wiggle-subsequence/">https://leetcode.cn/problems/wiggle-subsequence/</a> (还是动态规划)<br>=== === ===</li>
+<li>爬楼梯 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs/">https://leetcode.cn/problems/climbing-stairs/</a></li>
+<li>打家劫舍 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber/">https://leetcode.cn/problems/house-robber/</a></li>
+<li>等差数列划分 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/arithmetic-slices/">https://leetcode.cn/problems/arithmetic-slices/</a></li>
+<li>最小路径和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-path-sum/">https://leetcode.cn/problems/minimum-path-sum/</a></li>
+<li>最大的正方形 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximal-square/">https://leetcode.cn/problems/maximal-square/</a></li>
+<li>完全平方数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/perfect-squares/">https://leetcode.cn/problems/perfect-squares/</a></li>
+<li>解码方法 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/decode-ways/">https://leetcode.cn/problems/decode-ways/</a></li>
+<li>单词拆分 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/word-break/">https://leetcode.cn/problems/word-break/</a></li>
+<li>最长公共子序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-subsequence/">https://leetcode.cn/problems/longest-common-subsequence/</a></li>
+<li>分割等和子集 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-equal-subset-sum/">https://leetcode.cn/problems/partition-equal-subset-sum/</a></li>
+<li>一和零 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ones-and-zeroes/">https://leetcode.cn/problems/ones-and-zeroes/</a></li>
+<li>零钱兑换 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change/">https://leetcode.cn/problems/coin-change/</a></li>
+<li>编辑距离 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/">https://leetcode.cn/problems/edit-distance/</a></li>
+<li>买卖股票的最佳时机 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/</a></li>
+<li>最佳买卖股票时机含冷冻期 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/">https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/</a></li>
+<li>打家劫舍 II <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber-ii/">https://leetcode.cn/problems/house-robber-ii/</a></li>
+<li>最大子数组和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray/">https://leetcode.cn/problems/maximum-subarray/</a></li>
+<li>两个字符串的删除操作 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-operation-for-two-strings/">https://leetcode.cn/problems/delete-operation-for-two-strings/</a> </li>
+<li>目标和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/target-sum/">https://leetcode.cn/problems/target-sum/</a></li>
+<li>买卖股票的最佳时机含手续费 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/</a></li>
+</ol>
+
       
     </div>
 
@@ -1009,7 +1009,7 @@ WebSocket-Protocol: sample</code></pre>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/09/29/English-class-solving-problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1023,7 +1023,7 @@ WebSocket-Protocol: sample</code></pre>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/20/go-%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">go - 迭代器</a>
+            <a href="/2022/09/29/English-class-solving-problem/" class="post-title-link" itemprop="url">English class - solving problem</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1033,8 +1033,9 @@ WebSocket-Protocol: sample</code></pre>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-04-20 21:06:41" itemprop="dateCreated datePublished" datetime="2021-04-20T21:06:41+08:00">2021-04-20</time>
+      <time title="Created: 2022-09-29 10:28:03 / Modified: 10:29:10" itemprop="dateCreated datePublished" datetime="2022-09-29T10:28:03+08:00">2022-09-29</time>
     </span>
 
   
@@ -1047,7 +1048,8 @@ WebSocket-Protocol: sample</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <p>pay effort to do sth<br>basis stuff<br>social media<br>google culture: Don’t be evil</p>
+
       
     </div>
 
@@ -1068,7 +1070,7 @@ WebSocket-Protocol: sample</code></pre>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1109,7 +1111,7 @@ WebSocket-Protocol: sample</code></pre>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

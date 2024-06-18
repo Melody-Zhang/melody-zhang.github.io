@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="LRU缓存: map+双向链表最近最少使用功能：  以 “容量” 初始化缓存 get(key)如果key在缓存中，返回关键字的值，否则-1， O(1) put(key,value)如果在，更新，如果不在，插入，如果插入时没有容量剩余，删除最久没有使用的，O(1)  对数据结构的要求：  fifo 队列 (不行，删除节点不能满足O(1)), 需要用双向链表 O(1)查找 - map[key1:nod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="al - data structure design">
+<meta property="og:url" content="https://github.com/Melody-Zhang/2022/11/15/al-data-structure-design/index.html">
+<meta property="og:site_name" content="yuxin&#39;s blog">
+<meta property="og:description" content="LRU缓存: map+双向链表最近最少使用功能：  以 “容量” 初始化缓存 get(key)如果key在缓存中，返回关键字的值，否则-1， O(1) put(key,value)如果在，更新，如果不在，插入，如果插入时没有容量剩余，删除最久没有使用的，O(1)  对数据结构的要求：  fifo 队列 (不行，删除节点不能满足O(1)), 需要用双向链表 O(1)查找 - map[key1:nod">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-15T08:20:30.000Z">
+<meta property="article:modified_time" content="2022-11-16T02:44:50.546Z">
+<meta property="article:author" content="yuxin.zhang">
+<meta property="article:tag" content="data structure">
+<meta property="article:tag" content="system design">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/Melody-Zhang/2022/11/15/al-data-structure-design/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>al - data structure design | yuxin's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">yuxin's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LRU%E7%BC%93%E5%AD%98-map-%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">LRU缓存: map+双向链表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FRU%E7%BC%93%E5%AD%98-%E5%A0%86"><span class="nav-number">1.1.</span> <span class="nav-text">FRU缓存 - 堆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#O-1-%E6%97%B6%E9%97%B4%E6%8F%92%E5%85%A5%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E8%8E%B7%E5%8F%96%E9%9A%8F%E6%9C%BA%E5%85%83%E7%B4%A0-%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84-map"><span class="nav-number">2.</span> <span class="nav-text">O(1) 时间插入、删除和获取随机元素: 变长数组+map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8-O-1-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">全 O(1) 的数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%A0%88"><span class="nav-number">4.</span> <span class="nav-text">最大栈</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuxin.zhang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/11/15/al-data-structure-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          al - data structure design
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-15 16:20:30" itemprop="dateCreated datePublished" datetime="2022-11-15T16:20:30+08:00">2022-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-11-16 10:44:50" itemprop="dateModified" datetime="2022-11-16T10:44:50+08:00">2022-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="LRU缓存-map-双向链表"><a href="#LRU缓存-map-双向链表" class="headerlink" title="LRU缓存: map+双向链表"></a>LRU缓存: map+双向链表</h1><p>最近最少使用<br>功能：</p>
+<ol>
+<li>以 “容量” 初始化缓存</li>
+<li>get(key)如果key在缓存中，返回关键字的值，否则-1， O(1)</li>
+<li>put(key,value)如果在，更新，如果不在，插入，如果插入时没有容量剩余，删除最久没有使用的，O(1)</li>
+</ol>
+<p>对数据结构的要求：</p>
+<ol>
+<li>fifo 队列 (不行，删除节点不能满足O(1)), 需要用双向链表</li>
+<li>O(1)查找 - map<br>[key1:node1, key2:node2, key3:node3]<br>node2-&gt;node1-&gt;node3</li>
+</ol>
+<p>函数：<br>查找：哈希查找<br>新增：在开头新增，哈希增加<br>删除：删除某个节点，节点删除，哈希删除<br>put: 如果在，删除已有节点，size–；如果size==capicity，删除末尾节点，size–；新增</p>
+<h2 id="FRU缓存-堆"><a href="#FRU缓存-堆" class="headerlink" title="FRU缓存 - 堆"></a>FRU缓存 - 堆</h2><h1 id="O-1-时间插入、删除和获取随机元素-变长数组-map"><a href="#O-1-时间插入、删除和获取随机元素-变长数组-map" class="headerlink" title="O(1) 时间插入、删除和获取随机元素: 变长数组+map"></a>O(1) 时间插入、删除和获取随机元素: 变长数组+map</h1><p>功能：<br>insert(val) 如果不存在，插入 - map<br>remove(val) 如果存在，删除 - map<br>getRandom() 概率相等的返回随机元素  - 列表</p>
+<p>难点：</p>
+<ol>
+<li>如何O(1)在数组中删除一个元素，并不改变其他元素的下标<br>答案：要删除元素与最后一个元素做交换即可</li>
+<li>如何实现随机<br>答案：rand.Intn(size)</li>
+</ol>
+<h1 id="全-O-1-的数据结构"><a href="#全-O-1-的数据结构" class="headerlink" title="全 O(1) 的数据结构"></a>全 O(1) 的数据结构</h1><p>inc(string) 字符串计数+1，存在+1，不存在插入记为1 - map<br>dec(string) 字符串计数-1，减后为0，删除 - map<br>getMaxKey() 返回计数最大的，没有“” - 最大栈，因为涉及O(1)删除任意值，所以用双向列表<br>getMinKey() 返回计数最小的，没有“” - 最小栈</p>
+<p>官方题解给的思路：<br>构造一个递增的双向链表尾<br>inc: 如果+1的后一个节点有，加入后一个节点；如果没有或尾，新增一个<br>dec: 如果-1的前一个节点有，加入；如果没有且不是头，新增；如果是头，删除<br>getMaxKey(): 返回尾<br>getMinKey(): 返回头</p>
+<h1 id="最大栈"><a href="#最大栈" class="headerlink" title="最大栈"></a>最大栈</h1><p>MaxStack() 初始化栈对象<br>void push(int x) 将元素 x 压入栈中。<br>int pop() 移除栈顶元素并返回这个元素。<br>int top() 返回栈顶元素，无需移除。<br>int peekMax() 检索并返回栈中最大元素，无需移除。<br>int popMax() 检索并返回栈中最大元素，并将其移除。如果有多个最大元素，只要移除 最靠近栈顶 的那个。</p>
+<p>思路：</p>
+<ol>
+<li>用两个栈，最大栈元素为值和索引，popMax时，将索引之后的重新入栈</li>
+<li>用一个最大栈链表</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%20%7C%7C%20tags/data-structure/" rel="tag"># data structure</a>
+              <a href="/tags/%20%7C%7C%20tags/system-design/" rel="tag"># system design</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/14/system-design/" rel="prev" title="system design">
+                  <i class="fa fa-chevron-left"></i> system design
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/06/%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF/" rel="next" title="笛卡尔积">
+                  笛卡尔积 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuxin.zhang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

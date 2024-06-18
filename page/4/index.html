@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/13/go-%E5%85%B3%E4%BA%8E%E5%8F%96%E5%9C%B0%E5%9D%80%E5%92%8C%E6%94%B9%E5%8F%98%E5%8F%98%E9%87%8F%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E5%80%BC/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +218,85 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/13/go-%E5%85%B3%E4%BA%8E%E5%8F%96%E5%9C%B0%E5%9D%80%E5%92%8C%E6%94%B9%E5%8F%98%E5%8F%98%E9%87%8F%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E5%80%BC/" class="post-title-link" itemprop="url">go - 关于取地址和改变变量中元素的值</a>
+            <a href="/2021/11/09/mysql-log/" class="post-title-link" itemprop="url">mysql log</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-09 22:44:40 / Modified: 23:27:09" itemprop="dateCreated datePublished" datetime="2021-11-09T22:44:40+08:00">2021-11-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>cd /usr/local/mysql/<br>index文件： mysql-bin.index<br>binlog文件：mysql-bin.000055<br>redolog文件：ib_logfile0<br>undolog文件：undo_001</p>
+<h1 id="查看binlog"><a href="#查看binlog" class="headerlink" title="查看binlog"></a>查看binlog</h1><p>../bin/mysqlbinlog –no-defaults mysql-bin.000055</p>
+<p>sql -&gt; show binlog events in ‘mysql-bin.000055’;<br>sql -&gt; show variables like ‘binlog_format’; // statement or row<br>sql -&gt; show variables like ‘log_%’;<br>sql -&gt; show master status\G;</p>
+<h2 id="查询-BINLOG-格式"><a href="#查询-BINLOG-格式" class="headerlink" title="查询 BINLOG 格式"></a>查询 BINLOG 格式</h2><p>show VARIABLES like ‘binlog_format’;</p>
+<h2 id="查询-BINLOG-位置"><a href="#查询-BINLOG-位置" class="headerlink" title="查询 BINLOG 位置"></a>查询 BINLOG 位置</h2><p>show VARIABLES like ‘datadir’;</p>
+<h2 id="查询当前数据库中-BINLOG-名称及大小"><a href="#查询当前数据库中-BINLOG-名称及大小" class="headerlink" title="查询当前数据库中 BINLOG 名称及大小"></a>查询当前数据库中 BINLOG 名称及大小</h2><p>show binary logs;</p>
+<h2 id="查看-master-正在写入的-BINLOG-信息"><a href="#查看-master-正在写入的-BINLOG-信息" class="headerlink" title="查看 master 正在写入的 BINLOG 信息"></a>查看 master 正在写入的 BINLOG 信息</h2><p>show master status\G;</p>
+<h2 id="通过-offset-查看-BINLOG-信息"><a href="#通过-offset-查看-BINLOG-信息" class="headerlink" title="通过 offset 查看 BINLOG 信息"></a>通过 offset 查看 BINLOG 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ limit 9000,  10;</p>
+<h2 id="通过-position-查看-binlog-信息"><a href="#通过-position-查看-binlog-信息" class="headerlink" title="通过 position 查看 binlog 信息"></a>通过 position 查看 binlog 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ from 1742635 limit 10;</p>
+<h2 id="查询-binlog"><a href="#查询-binlog" class="headerlink" title="查询 binlog"></a>查询 binlog</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055| less</p>
+<h2 id="导出-BINLOG"><a href="#导出-BINLOG" class="headerlink" title="导出 BINLOG"></a>导出 BINLOG</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055 &gt; binlog_raw.sql </p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="通过-BINLOG-进行恢复。"><a href="#通过-BINLOG-进行恢复。" class="headerlink" title="通过 BINLOG 进行恢复。"></a>通过 BINLOG 进行恢复。</h3><p>../bin/mysqlbinlog –no-defaults –start-position=482 –stop-position=1327 –database=testdb  mysql-bin.000055 | mysql -u username -p password</p>
+<h3 id="通过-BINLOG-导出的-sql-进行恢复。"><a href="#通过-BINLOG-导出的-sql-进行恢复。" class="headerlink" title="通过 BINLOG 导出的 sql 进行恢复。"></a>通过 BINLOG 导出的 sql 进行恢复。</h3><p>mysql -u username -p password &lt; binlog_raw.sql </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/06/https%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/06/https%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">https服务</a>
         </h2>
 
         <div class="post-meta-container">
@@ -229,14 +307,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-13 21:29:19" itemprop="dateCreated datePublished" datetime="2021-04-13T21:29:19+08:00">2021-04-13</time>
+      <time title="Created: 2021-11-06 19:12:06" itemprop="dateCreated datePublished" datetime="2021-11-06T19:12:06+08:00">2021-11-06</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:31:43" itemprop="dateModified" datetime="2021-04-18T20:31:43+08:00">2021-04-18</time>
+        <time title="Modified: 2021-11-08 21:13:17" itemprop="dateModified" datetime="2021-11-08T21:13:17+08:00">2021-11-08</time>
       </span>
 
   
@@ -249,60 +327,38 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="go语言中有没有元素可以取地址的变量"><a href="#go语言中有没有元素可以取地址的变量" class="headerlink" title="go语言中有没有元素可以取地址的变量"></a>go语言中有没有元素可以取地址的变量</h1><ol>
-<li>array, slice, struct 中的元素都是可以寻址的，map 因为是动态分配内存所以不可寻址， string中元素不能取地址</li>
-<li>array 和 struct 与其他数据结构相比，不能取到其本身所在的内存地址，而struct中的元素是否可以寻址，如：int就不可以寻址，[]int{}就可以</li>
-<li>slice,map, &amp;struct,func, interface 都是有一个指针变量来存放实际内存的位置的，可以通过println(&amp;)来获取</li>
-<li>nil 的地址0x0</li>
-<li>func 实际存放地址与其他不太一样，在较低的位置， 并且通过print和fmt.Printf打印出来不太一致</li>
-</ol>
-<h2 id="string-16bytes"><a href="#string-16bytes" class="headerlink" title="string - 16bytes"></a>string - 16bytes</h2><h2 id="array-8bytes-元素-可以取元素地址"><a href="#array-8bytes-元素-可以取元素地址" class="headerlink" title="array - 8bytes/元素 - 可以取元素地址"></a>array - 8bytes/元素 - 可以取元素地址</h2><p>print(<em>)无法执行<br>print(&amp;</em>)可以打印出首元素地址<br>因为不是引用类型，本身就是一个结构体&amp;[1 2 3]，并没有指针变量，可以取到本身存储的内存地址</p>
-<h3 id="不可行"><a href="#不可行" class="headerlink" title="不可行"></a>不可行</h3><p>a1 := […]int{1,2,3}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(a1)</span><br><span class="line">fmt.Printf(&quot;%p&quot;, a1)</span><br></pre></td></tr></table></figure>
-
-<h3 id="可行"><a href="#可行" class="headerlink" title="可行"></a>可行</h3><p>input:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(&amp;a1)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;a1)</span><br><span class="line">fmt.Println(a1)</span><br><span class="line">fmt.Println(&amp;a1)</span><br><span class="line">fmt.Println(&amp;a1[0])</span><br><span class="line">fmt.Println(&amp;a1[1])</span><br><span class="line">fmt.Println(&amp;a1[2])</span><br></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">0xc0000b6000</span><br><span class="line">0xc0000b6000</span><br><span class="line">[1 2 3]</span><br><span class="line">&amp;[1 2 3]</span><br><span class="line">0xc0000b6000</span><br><span class="line">0xc0000b6008</span><br><span class="line">0xc0000b6010</span><br></pre></td></tr></table></figure>
-
-<h2 id="slice-可以-8bytes"><a href="#slice-可以-8bytes" class="headerlink" title="slice - 可以 8bytes"></a>slice - 可以 8bytes</h2><h3 id="可行-1"><a href="#可行-1" class="headerlink" title="可行"></a>可行</h3><p>input:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">print(a1)</span><br><span class="line">print(&amp;a1)</span><br><span class="line"></span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, a1)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;a1)</span><br><span class="line">fmt.Println(a1)</span><br><span class="line">fmt.Println(&amp;a1)</span><br><span class="line">fmt.Println(&amp;a1[0])</span><br><span class="line">fmt.Println(&amp;a1[1])</span><br><span class="line">fmt.Println(&amp;a1[2])</span><br></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[3&#x2F;3]0xc000016160</span><br><span class="line">0xc00000c060 - 这个地址中存的是[3&#x2F;3]0xc000016160</span><br><span class="line"></span><br><span class="line">0xc000016160</span><br><span class="line">0xc00000c060</span><br><span class="line">[1 2 3]</span><br><span class="line">&amp;[1 2 3]</span><br><span class="line">0xc000016160</span><br><span class="line">0xc000016168</span><br><span class="line">0xc000016170</span><br></pre></td></tr></table></figure>
-
-<h2 id="map-不可以"><a href="#map-不可以" class="headerlink" title="map - 不可以"></a>map - 不可以</h2><p>cannot take the address of m[2]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">m :&#x3D; map[int]string&#123;1:&quot;a&quot;, 2:&quot;b&quot;&#125;</span><br><span class="line">println(m)</span><br><span class="line">println(&amp;m)</span><br><span class="line">fmt.Println(m)</span><br><span class="line">fmt.Println(&amp;m)</span><br><span class="line">fmt.Println(&amp;m[2])</span><br></pre></td></tr></table></figure>
-
-<h2 id="struct-可以-16bytes"><a href="#struct-可以-16bytes" class="headerlink" title="struct 可以 - 16bytes"></a>struct 可以 - 16bytes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type people struct &#123;</span><br><span class="line">		name string</span><br><span class="line">		age int</span><br><span class="line">	&#125;</span><br><span class="line">	p :&#x3D; &amp;people&#123;&quot;a&quot;, 1&#125;</span><br><span class="line">	println(p)</span><br><span class="line">	println(&amp;p)</span><br><span class="line">	fmt.Println(p)</span><br><span class="line">	fmt.Println(&amp;p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, &amp;p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, p.name)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, &amp;p.name)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&amp;&#123;a 1&#125;</span><br><span class="line">0xc00000e028</span><br><span class="line">0xc00000c080</span><br><span class="line">0xc00000e028</span><br><span class="line">0xc00000c080</span><br><span class="line">0xc00000e028</span><br><span class="line">%!p(string&#x3D;a)</span><br><span class="line">0xc00000c080</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">type people struct &#123;</span><br><span class="line">		name string</span><br><span class="line">		age int</span><br><span class="line">	&#125;</span><br><span class="line">	p :&#x3D; people&#123;&quot;a&quot;, 1&#125;</span><br><span class="line">	&#x2F;&#x2F;println(p)</span><br><span class="line">	println(&amp;p)</span><br><span class="line">	fmt.Println(p)</span><br><span class="line">	fmt.Println(&amp;p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, &amp;p)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, p.name)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, &amp;p.name)</span><br><span class="line">	fmt.Printf(&quot;%p\n&quot;, &amp;p.age)</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; illegal types for operand: print</span><br><span class="line">0xc00011c020</span><br><span class="line">&#123;a 1&#125;</span><br><span class="line">&amp;&#123;a 1&#125;</span><br><span class="line">%!p(main.people&#x3D;&#123;a 1&#125;)</span><br><span class="line">0xc00011c020</span><br><span class="line">%!p(string&#x3D;a)</span><br><span class="line">0xc00011c020</span><br><span class="line">0xc00011c030</span><br></pre></td></tr></table></figure>
-
-<h2 id="func"><a href="#func" class="headerlink" title="func"></a>func</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a :&#x3D; func ()&#123;&#125;</span><br><span class="line">println(a)</span><br><span class="line">println(a)</span><br><span class="line">println(&amp;a)</span><br><span class="line">fmt.Println(a)</span><br><span class="line">fmt.Println(&amp;a)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, a)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;a)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">0x10d5f88</span><br><span class="line">0x10d5f88</span><br><span class="line">0xc0000ae018</span><br><span class="line">0x109eda0</span><br><span class="line">0xc0000ae018</span><br><span class="line">0x109eda0</span><br><span class="line">0xc0000ae018</span><br></pre></td></tr></table></figure>
-
-<h2 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var i interface&#123;&#125;</span><br><span class="line"></span><br><span class="line">println(i)</span><br><span class="line">println(&amp;i)</span><br><span class="line">fmt.Println(i)</span><br><span class="line">fmt.Println(&amp;i)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, i)</span><br><span class="line">fmt.Printf(&quot;%p\n&quot;, &amp;i)</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;nil&gt;</span><br><span class="line">0xc000010060</span><br><span class="line">%!p(&lt;nil&gt;)</span><br><span class="line">0xc000010060</span><br><span class="line">(0x0,0x0)</span><br><span class="line">0xc000010060</span><br></pre></td></tr></table></figure>
-
-<h1 id="go语言中可以直接改变其中元素值的变量"><a href="#go语言中可以直接改变其中元素值的变量" class="headerlink" title="go语言中可以直接改变其中元素值的变量"></a>go语言中可以直接改变其中元素值的变量</h1><h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><p>cannot assign to s[1]</p>
-<h2 id="array-no-make"><a href="#array-no-make" class="headerlink" title="array - no make"></a>array - no make</h2><p>均可以 - 因为已经分配了内存</p>
-<h2 id="slice-make"><a href="#slice-make" class="headerlink" title="slice - make"></a>slice - make</h2><p>已定义，可以<br>否则不可以，panic: runtime error: index out of range [0] with length 0</p>
-<h2 id="map-make"><a href="#map-make" class="headerlink" title="map - make"></a>map - make</h2><p>已定义，初始化数据，可以</p>
+          <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>在tcp连接之外，增加了ssl/tls协议。<br>tls协议在tcp协议之后建立。</p>
+<h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>ssl: secure sockets layer 安全套接层<br>tls: transport layer security 传输层安全</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>tcp<br>client: syn<br>server: syn,ack<br>client: ack</p>
+<p>tlsv1.2<br>client: Client Hello<br>server: Server Hello, Certificate, Server Key Exchange, Server Hello Done<br>client: Client Key Exchange, Change Cipher Spec, Encrypted Handshake message<br>server: New Session Ticket, Change Cipher Spec, Encrypted Handshake message</p>
+<p>开始通信：<br>client: Application Data<br>server: Application Data</p>
+<h2 id="证书中包含的信息"><a href="#证书中包含的信息" class="headerlink" title="证书中包含的信息"></a>证书中包含的信息</h2><p>申请人信息<br>签名算法：带RSA加密的SHA-1<br>有效期<br>公共密钥信息</p>
 <ul>
-<li>:=</li>
-<li>make<br>否则不可 panic: assignment to entry in nil map</li>
-<li>var</li>
-<li>new</li>
+<li>算法：RSA</li>
+<li>公共密钥：256字节</li>
+<li>密钥大小：2048位<br>签名<br>密钥ID<br>指纹：SHA-256,SHA-1 (摘要-安全散列算法)</li>
 </ul>
-<h2 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h2><p>可以</p>
+<h2 id="信任本地根证书"><a href="#信任本地根证书" class="headerlink" title="信任本地根证书"></a>信任本地根证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo security add-trusted-cert -d -r trustRoot -k &#x2F;Library&#x2F;Keychains&#x2F;System.keychain &#x2F;Users&#x2F;zhangyuxin&#x2F;language_learn&#x2F;entrytask_go&#x2F;cert.pem</span><br></pre></td></tr></table></figure>
+
+<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><p>高级 -&gt; thisisunsafe</p>
+<h1 id="go配置文件解析"><a href="#go配置文件解析" class="headerlink" title="go配置文件解析"></a>go配置文件解析</h1><h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><h2 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h2><h1 id="鉴权：Auth-Session-Token的鉴权机制"><a href="#鉴权：Auth-Session-Token的鉴权机制" class="headerlink" title="鉴权：Auth/Session Token的鉴权机制"></a>鉴权：Auth/Session Token的鉴权机制</h1><h2 id="四种方法"><a href="#四种方法" class="headerlink" title="四种方法"></a>四种方法</h2><p>http basic<br>session-cookie<br>token<br>oauth</p>
+<h2 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h2><ol>
+<li>请求授权码</li>
+<li>返回授权码</li>
+<li>请求令牌</li>
+<li>返回令牌</li>
+</ol>
+<h2 id="sso-single-sign-on"><a href="#sso-single-sign-on" class="headerlink" title="sso  single sign-on"></a>sso  single sign-on</h2><p>一个账号对应的token同一时间只有一个生效</p>
+<h2 id="JWT生成规则-json-web-token"><a href="#JWT生成规则-json-web-token" class="headerlink" title="JWT生成规则 (json web token)"></a>JWT生成规则 (json web token)</h2><h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><h2 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h2><p>“github.com/gomodule/redigo/redis”<br>“github.com/go-redis/redis/v8”</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li>Golang创建最简单的HTTP和HTTPS服务 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/14947">https://studygolang.com/articles/14947</a></li>
+<li>详解TCP三次握手以及TLS-SSL握手 <a target="_blank" rel="noopener" href="https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/">https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/</a></li>
+<li>常见登录鉴权方案 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/271768645">https://zhuanlan.zhihu.com/p/271768645</a></li>
+<li>Go 鉴权 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/22040">https://studygolang.com/articles/22040</a></li>
+<li>单点登录（SSO）看这一篇就够了 <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/636281">https://developer.aliyun.com/article/636281</a></li>
+<li>在 GO 语言中创建你自己的 OAuth2 服务：客户端凭据授权流程 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903784498331661">https://juejin.cn/post/6844903784498331661</a></li>
+<li>理解OAuth 2.0 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></li>
+</ol>
 
       
     </div>
@@ -329,7 +385,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/11/go-%E4%B8%A4%E4%B8%AA%E5%8D%8F%E7%A8%8B%E6%8E%A5%E6%9B%BF%E6%89%93%E5%8D%B0%E5%9F%BA%E6%95%B0%E5%92%8C%E5%81%B6%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/06/wrk-http-parser/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -343,7 +399,278 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/11/go-%E4%B8%A4%E4%B8%AA%E5%8D%8F%E7%A8%8B%E6%8E%A5%E6%9B%BF%E6%89%93%E5%8D%B0%E5%9F%BA%E6%95%B0%E5%92%8C%E5%81%B6%E6%95%B0/" class="post-title-link" itemprop="url">go - 两个协程接替打印基数和偶数</a>
+            <a href="/2021/10/06/wrk-http-parser/" class="post-title-link" itemprop="url">wrk http.parser</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-06 17:14:25 / Modified: 17:15:30" itemprop="dateCreated datePublished" datetime="2021-10-06T17:14:25+08:00">2021-10-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>http request response parser for c</p>
+<p>HTTP Parser<br>这是一个用C编写的HTTP消息的解析器，它同时解析请求和响应。解析器设计用于性能HTTP应用程序。它不进行任何系统调用或分配，也不缓冲数据，可以随时中断。根据您的体系结构，每个消息流只需要大约40字节的数据（在每个连接的web服务器中）。</p>
+<p>Features:</p>
+<p>No dependencies<br>处理持久流(keep-alive)。<br>解码分块编码。<br>Upgrade support<br>防御缓冲区溢出攻击。<br>解析器从HTTP消息中提取以下信息：</p>
+<p>标题字段和值<br>Content-Length<br>Request method<br>响应状态代码<br>Transfer-Encoding<br>HTTP version<br>Request URL<br>Message body<br>Usage<br>每个TCP连接使用一个http_parser对象。使用http_parser_init()初始化结构并设置回调。对于请求解析器，这可能类似于：</p>
+<p>http_parser_settings settings;<br>settings.on_url = my_url_callback;<br>settings.on_header_field = my_header_field_callback;<br>/* … */</p>
+<p>http_parser *parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST);<br>parser-&gt;data = my_socket;<br>当在套接字上接收到数据时，执行解析器并检查错误。</p>
+<p>size_t len = 80*1024, nparsed;<br>char buf[len];<br>ssize_t recved;</p>
+<p>recved = recv(fd, buf, len, 0);</p>
+<p>if (recved &lt; 0) {<br>  /* Handle error. */<br>}</p>
+<p>/* Start up / continue the parser.</p>
+<ul>
+<li>Note we pass recved==0 to signal that EOF has been received.</li>
+<li>/<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</li>
+</ul>
+<p>if (parser-&gt;upgrade) {<br>  /* handle new protocol <em>/<br>} else if (nparsed != recved) {<br>  /</em> Handle error. Usually just close the connection. */<br>}<br>http_parser需要知道流的结尾在哪里。例如，有时服务器发送响应时不使用Content-Length，并期望客户端在EOF之前使用输入（对于主体）。要告诉http_parser关于EOF，将0作为http_parser_execute()的第四个参数。在EOF期间仍然会遇到回调和错误，因此必须准备好接收它们。</p>
+<p>标量值消息信息，如status_code、method和HTTP版本存储在解析器结构中。此数据只临时存储在http_parser中，并在每个新消息上重置。如果以后需要此信息，请在headers_complete回调期间将其从结构中复制出来。</p>
+<p>解析器对请求和响应的transfer-encoding进行透明解码。也就是说，分块编码在被发送到on_body回调之前被解码。</p>
+<p>升级的特殊问题<br>http_parser支持将连接升级到其他协议。一个越来越常见的例子是WebSocket协议，它发送一个请求</p>
+<pre><code>GET /demo HTTP/1.1
+Upgrade: WebSocket
+Connection: Upgrade
+Host: example.com
+Origin: http://example.com
+WebSocket-Protocol: sample</code></pre>
+<p>后跟non-HTTP数据。</p>
+<p>（有关WebSocketprotocol.的更多信息，请参阅RFC6455）</p>
+<p>为了支持这一点，解析器将把它视为没有正文的普通HTTP消息，同时发出on_headers_complete和on_message_complete回调。但是http_parser_execute(）将在头的末尾停止解析并返回。</p>
+<p>用户应该在http_parser_execute()返回后检查parser-&gt;upgrade是否已设置为1。Non-HTTP数据从缓冲区提供的偏移量开始，偏移量由http_parser_execute()返回。</p>
+<p>Callbacks<br>在http_parser_execute()调用期间，http_parser_settings中设置的回调将被执行。解析器维护状态，从不向后看，因此不需要缓冲数据。如果需要保存某些数据以备以后使用，可以从回调中执行此操作。</p>
+<p>有两种类型的回调：</p>
+<p>notification typedef int (<em>http_cb) (http_parser</em>); Callbacks: on_message_begin, on_headers_complete, on_message_complete.<br>data typedef int (<em>http_data_cb) (http_parser</em>, const char *at, size_t length); Callbacks: (requests only) on_url, (common) on_header_field, on_header_value, on_body;<br>成功时回调必须返回0。返回non-zero值将向解析器指示错误，使其立即退出。</p>
+<p>对于需要在回调中传递本地信息的情况，可以使用http_parser对象的data字段。这种情况的一个例子是使用线程处理套接字连接、解析请求，然后通过该套接字给出响应。通过实例化包含相关数据的thread-local结构（例如接受的套接字、为回调写入的分配内存等），解析器的回调能够以线程安全的方式在线程范围和回调范围之间通信数据。这允许http_parser在multi-threaded上下文中使用。</p>
+<p>Example:</p>
+<p>typedef struct {<br>  socket_t sock;<br>  void* buffer;<br>  int buf_len;<br> } custom_data_t;</p>
+<p>int my_url_callback(http_parser* parser, const char <em>at, size_t length) {<br>  /</em> access to thread local custom_data_t struct.<br>Use this access save parsed data for later use into thread local<br>buffer, or communicate over socket<br>*/<br>  parser-&gt;data;<br>  …<br>  return 0;<br>}</p>
+<p>…</p>
+<p>void http_parser_thread(socket_t sock) {<br> int nparsed = 0;<br> /* allocate memory for user data */<br> custom_data_t *my_data = malloc(sizeof(custom_data_t));</p>
+<p> /* some information for use by callbacks.</p>
+<ul>
+<li><p>achieves thread -&gt; callback information flow */<br>my_data-&gt;sock = sock;</p>
+<p>/* instantiate a thread-local parser */<br>http_parser <em>parser = malloc(sizeof(http_parser));<br>http_parser_init(parser, HTTP_REQUEST); /</em> initialise parser <em>/<br>/</em> this custom data reference is accessible through the reference to the<br>parser supplied to callback functions */<br>parser-&gt;data = my_data;</p>
+<p>http_parser_settings settings; /* set up callbacks */<br>settings.on_url = my_url_callback;</p>
+<p>/* execute parser */<br>nparsed = http_parser_execute(parser, &amp;settings, buf, recved);</p>
+<p>…<br>/* parsed information copied from callback.<br>can now perform action on data copied into thread-local memory from callbacks.<br>achieves callback -&gt; thread information flow */<br>my_data-&gt;buffer;<br>…<br>}<br>如果您分块解析HTTP消息（即来自socket的read()请求行、parse、read half headers、parse等），那么您的数据回调可能会被多次调用。http_parser保证数据指针只在回调的生存期内有效。如果适合您的应用程序，您还可以将read()放入堆分配的缓冲区中，以避免复制内存。</p>
+</li>
+</ul>
+<p>如果您部分地读取/解析报头，那么读取报头可能是一项棘手的任务。基本上，您需要记住上一次头回调是字段还是值，并应用以下逻辑：</p>
+<p>(on_header_field and on_header_value shortened to on_h_*)</p>
+<hr>
+<p>| State (prev. callback) | Callback   | Description/action                         |</p>
+<hr>
+<p>| nothing (first call)   | on_h_field | Allocate new buffer and copy callback data |<br>|                        |            | into it                                    |</p>
+<hr>
+<p>| value                  | on_h_field | New header started.                        |<br>|                        |            | Copy current name,value buffers to headers |<br>|                        |            | list and allocate new buffer for new name  |</p>
+<hr>
+<p>| field                  | on_h_field | Previous name continues. Reallocate name   |<br>|                        |            | buffer and append callback data to it      |</p>
+<hr>
+<p>| field                  | on_h_value | Value for current header started. Allocate |<br>|                        |            | new buffer and copy callback data to it    |</p>
+<hr>
+<p>| value                  | on_h_value | Value continues. Reallocate value buffer   |<br>|                        |            | and append callback data to it             |</p>
+<hr>
+<p>Parsing URLs<br>一个简单的zero-copyURL解析器作为http_parser_parse_url()提供。这个库的用户可能希望使用它来解析由连续的on_url回调构造的url。</p>
+<p>请参阅标题中的阅读示例：</p>
+<p>C语言中的部分示例<br>从http-parser测试中<br>从Javascript中的节点库</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/language-types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/language-types/" class="post-title-link" itemprop="url">language types</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-04 17:18:14 / Modified: 17:19:53" itemprop="dateCreated datePublished" datetime="2021-10-04T17:18:14+08:00">2021-10-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>动态/静态类型，强/弱类型<br><img src="https://github.com/Melody-Zhang/imgs/blob/master/types.png?raw=true" alt="image"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/tutorial-how-to-create-a-new-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/tutorial-how-to-create-a-new-blog/" class="post-title-link" itemprop="url">tutorial: how to create a new blog</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-10-04 15:49:08 / Modified: 16:10:02" itemprop="dateCreated datePublished" datetime="2021-10-04T15:49:08+08:00">2021-10-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在这篇文章中，我会介绍我是如何创作一篇blog的，主要目的是为了记录、归纳和总结。</p>
+<h1 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j yuxin_blog &#x2F;&#x2F; 进入blog所在文件夹</span><br><span class="line">hexo new &quot;&#123;title here&#125;&quot; &#x2F;&#x2F; 新建新文件</span><br><span class="line">vi source&#x2F;_posts&#x2F;&#123;new doc&#125;.md &#x2F;&#x2F; 在文件中编写内容</span><br><span class="line">hexo g -d &#x2F;&#x2F; 上传到git，一段时间后即可在https:&#x2F;&#x2F;melody-zhang.github.io&#x2F;看到更新的文章（这里之所以要等一段时间，是因为资源上传需要时间，静态资源的有缓存，更新也需要时间，所以如果一段时间后打开发现刚上传的文件依旧不存在，可尝试多次刷新页面并等待...）</span><br></pre></td></tr></table></figure>
+
+<h1 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h1><p>如果在文章中需要插入一些图片资源，需要将图片资源上传到<a href="https://github.com/Melody-Zhang/imgs/blob/master/">https://github.com/Melody-Zhang/imgs/blob/master/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j imgs &#x2F;&#x2F; git图片资源仓库</span><br></pre></td></tr></table></figure>
+<p>之后复制图片链接url，在.md文件相应位置插入以下模版：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![image](https:&#x2F;&#x2F;github.com&#x2F;Melody-Zhang&#x2F;imgs&#x2F;blob&#x2F;master&#x2F;mem2.jpeg?raw&#x3D;true)</span><br></pre></td></tr></table></figure>
+<p>注意：图片链接url之后一定要加参数 <code>raw=true</code>， 参数的存在是为了确保你链接到的图片会被原样呈现。 这意味着只有图片会被链接到，而不是该文件的整个GitHub 界面。</p>
+<h1 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h1><p>画图： sketch<br>选色：<a target="_blank" rel="noopener" href="https://coolors.co/">https://coolors.co/</a></p>
+<h1 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h1><p>other questions pls refer to:<br>技术文章配图指南 <a target="_blank" rel="noopener" href="https://draveness.me/sketch-and-sketch/">https://draveness.me/sketch-and-sketch/</a><br>hexo官网文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">https://hexo.io/zh-cn/docs/commands</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/10/04/wrk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/04/wrk/" class="post-title-link" itemprop="url">wrk</a>
         </h2>
 
         <div class="post-meta-container">
@@ -354,14 +681,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-11 23:44:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:44:32+08:00">2021-04-11</time>
+      <time title="Created: 2021-10-04 15:39:08" itemprop="dateCreated datePublished" datetime="2021-10-04T15:39:08+08:00">2021-10-04</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 22:22:11" itemprop="dateModified" datetime="2021-04-18T22:22:11+08:00">2021-04-18</time>
+        <time title="Modified: 2021-10-06 17:07:14" itemprop="dateModified" datetime="2021-10-06T17:07:14+08:00">2021-10-06</time>
       </span>
 
   
@@ -374,19 +701,177 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="go"><a href="#go" class="headerlink" title="go"></a>go</h1><p>使用 sync.WaitGroup 和 channel </p>
-<h2 id="what-is-sync-WaitGroup-for？"><a href="#what-is-sync-WaitGroup-for？" class="headerlink" title="what is sync.WaitGroup for？"></a>what is sync.WaitGroup for？</h2><p>首先，它是thread-safe;<br>其次，它等待所有goroutines结束。<br>call Add(): 主goroutine添加需要等待的goroutine数;<br>call Wait(): 阻塞主goroutine直到所有的goroutine都结束;<br>call Done(): 每个goroutine结束的时候调用。</p>
-<p>noted:<br>add不能设置为负数，否则panic<br>waitGroup有一个队列，队列有一个counter计数, add计数加1，done计数减1，wait block until counter=0，退出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s :&#x3D; sync.WaitGroup</span><br><span class="line">s.Add()</span><br><span class="line">s.Wait()</span><br><span class="line">s.Done()</span><br></pre></td></tr></table></figure>
-<p>需要注意，如果不写defer s.Done()会导致<br>fatal error: deadlock!</p>
-<h2 id="what-is-channel-for"><a href="#what-is-channel-for" class="headerlink" title="what is channel for?"></a>what is channel for?</h2><p>使用没有buffer的channel的“消息没有接收成功就阻塞”的作用<br>使得两个打印函数的自增id:i保持一致。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;sync&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const num &#x3D; 10</span><br><span class="line"></span><br><span class="line">&#x2F;*</span><br><span class="line">1，2，3 都是很重要的步骤</span><br><span class="line"> *&#x2F;</span><br><span class="line"></span><br><span class="line">func printOdd(msg chan int, s *sync.WaitGroup)&#123;</span><br><span class="line">	defer s.Done()</span><br><span class="line">	for i:&#x3D;1; i&lt;&#x3D;num; i++ &#123;</span><br><span class="line">		msg &lt;- i</span><br><span class="line">		if i%2 &#x3D;&#x3D; 1 &#123;</span><br><span class="line">			fmt.Println(&quot;odd&quot;, i)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func printEven(msg chan int, s *sync.WaitGroup)&#123;</span><br><span class="line">	&#x2F;&#x2F; 1</span><br><span class="line">	defer s.Done()</span><br><span class="line">	for i:&#x3D;1; i&lt;&#x3D;num; i++ &#123;</span><br><span class="line">		&#x2F;&#x2F; 2</span><br><span class="line">		&lt;-msg</span><br><span class="line">		&#x2F;&#x2F; 3</span><br><span class="line">		if i%2 &#x3D;&#x3D; 0 &#123;</span><br><span class="line">			fmt.Println(&quot;even&quot;, i)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	msg :&#x3D; make(chan int)</span><br><span class="line">	var s sync.WaitGroup</span><br><span class="line">	s.Add(2)</span><br><span class="line">	go printOdd(msg, &amp;s)</span><br><span class="line">	go printEven(msg, &amp;s)</span><br><span class="line">	s.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>wrk是团队开发的压测平台所使用的压测引擎，在使用上支持对固定域名服务的不同接口进行高并发压测，相较于其他压测工具，使用了同redis一样的AE事件驱动器, 通过I/O多路复用技术，使得一个线程可以无阻塞处理多个socket连接，从而达到使用更少的资源（thread）产生更大的并发（socket）的效果。</p>
+<p>wrk对外提供一些回调函数，支持使用lua脚本，对请求前、请求中、请求后进行一些处理。这使得wrk不仅可以压测固定的url, 相同域名下的所有url都可以在一次压测中进行，达到全链路压测的效果。</p>
+<p>但问题是，对于某些收购的项目，全链路压测中的需要压测到的接口，涉及了多个域名，并且多个域名的url请求之间还有数据传递，所以需要研究并修改wrk源码，使得在request回调里，能修改域名变量，以方便对域名+path的url做处理。</p>
+<h1 id="知识结构"><a href="#知识结构" class="headerlink" title="知识结构"></a>知识结构</h1><ol>
+<li>IO模型和基于事件驱动的IO多路复用模式</li>
+<li>redis AE实现</li>
+<li>socket &amp; fd &amp; inode</li>
+<li>ssl</li>
+<li>c语言与lua脚本的交互</li>
+</ol>
+<h1 id="wrk流程图"><a href="#wrk流程图" class="headerlink" title="wrk流程图"></a>wrk流程图</h1><p><img src="https://github.com/Melody-Zhang/imgs/blob/master/wrk.png?raw=true" alt="image"></p>
+<h1 id="修改思路"><a href="#修改思路" class="headerlink" title="修改思路"></a>修改思路</h1><h2 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h2><ul>
+<li>cfg.host</li>
+<li>addr</li>
+</ul>
+<h2 id="建立连接的过程"><a href="#建立连接的过程" class="headerlink" title="建立连接的过程"></a>建立连接的过程</h2><h3 id="aeEventLoop角度"><a href="#aeEventLoop角度" class="headerlink" title="aeEventLoop角度"></a>aeEventLoop角度</h3><p>每个线程创建了一个独立的 aeEventLoop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br></pre></td></tr></table></figure>
+<p>每个线程注册定时器（aeCreateTimeEvent），每 100ms 执行一次统计请求和响应结果<br>线程内创建若干 connection（socket），并为每个 socket 句柄注册事件（aeCreateFileEvent），包括：AE_READABLE，AE_WRITABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void *thread_main(void *arg) &#123;</span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br><span class="line">aeEventLoop *loop &#x3D; thread-&gt;loop;</span><br><span class="line">aeCreateTimeEvent(loop, RECORD_INTERVAL_MS, record_rate, thread, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int connect_socket(thread *thread, connection *c) &#123;</span><br><span class="line">    ...</span><br><span class="line">    flags &#x3D; AE_READABLE | AE_WRITABLE;</span><br><span class="line">    if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="host角度"><a href="#host角度" class="headerlink" title="host角度"></a>host角度</h3><p>main()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lua_State *L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">if (!script_resolve(L, host, service)) &#123;</span><br><span class="line">        char *msg &#x3D; strerror(errno);</span><br><span class="line">        fprintf(stderr, &quot;unable to connect to %s:%s %s\n&quot;, host, service, msg);</span><br><span class="line">        exit(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">cfg.host &#x3D; host;</span><br><span class="line"></span><br><span class="line">for (uint64_t i &#x3D; 0; i &lt; cfg.threads; i++) &#123;</span><br><span class="line">        thread *t      &#x3D; &amp;threads[i];</span><br><span class="line">        t-&gt;loop        &#x3D; aeCreateEventLoop(10 + cfg.connections * 3);</span><br><span class="line">        t-&gt;connections &#x3D; cfg.connections &#x2F; cfg.threads;</span><br><span class="line"></span><br><span class="line">        t-&gt;L &#x3D; script_create(cfg.script, url, headers);</span><br><span class="line">        script_init(L, t, argc - optind, &amp;argv[optind]);</span><br><span class="line"></span><br><span class="line">        if (i &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            cfg.pipeline &#x3D; script_verify_request(t-&gt;L);</span><br><span class="line">            cfg.dynamic  &#x3D; !script_is_static(t-&gt;L);</span><br><span class="line">            cfg.delay    &#x3D; script_has_delay(t-&gt;L);</span><br><span class="line">            if (script_want_response(t-&gt;L)) &#123;</span><br><span class="line">                parser_settings.on_header_field &#x3D; header_field;</span><br><span class="line">                parser_settings.on_header_value &#x3D; header_value;</span><br><span class="line">                parser_settings.on_body         &#x3D; response_body;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>全局创建一个lua_State， 每一个线程也创建一个lua_State<br>使用全局创建的 L, 初始化线程的 t.L</p>
+<h4 id="script-create-做了什么"><a href="#script-create-做了什么" class="headerlink" title="script_create 做了什么"></a>script_create 做了什么</h4><h4 id="script-init-做了什么"><a href="#script-init-做了什么" class="headerlink" title="script_init 做了什么"></a>script_init 做了什么</h4><p>做完以上两步, thread结构体中的数据就已经出初始化完了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br></pre></td></tr></table></figure>
+<p>这里比较重要的就是 <code>*addr</code> 这个参数，之后会用于socket链接</p>
+<p>创建的每个线程都会去执行 <code>thread_main</code> 函数，在此函数做的工作主要为：</p>
+<ol>
+<li>通过 <code>script_request</code> 接受lua脚本中request函数对请求进行的修改<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function request()</span><br><span class="line">	return wrk.format(method, path, headers, body)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></li>
+<li>为每一个线程建立若干个socket链接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">thread-&gt;cs &#x3D; zcalloc(thread-&gt;connections * sizeof(connection));</span><br><span class="line">    connection *c &#x3D; thread-&gt;cs;</span><br><span class="line"></span><br><span class="line">    for (uint64_t i &#x3D; 0; i &lt; thread-&gt;connections; i++, c++) &#123;</span><br><span class="line">        c-&gt;thread &#x3D; thread;</span><br><span class="line">        c-&gt;ssl     &#x3D; cfg.ctx ? SSL_new(cfg.ctx) : NULL;</span><br><span class="line">        c-&gt;request &#x3D; request;</span><br><span class="line">        c-&gt;length  &#x3D; length;</span><br><span class="line">        c-&gt;delayed &#x3D; cfg.delay;</span><br><span class="line">        connect_socket(thread, c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+所以实际上 <code>connect_socket</code> 是最后建立链接并发请求的地方。<br>看看 <code>connect_socket</code> 做了什么。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fd &#x3D; socket(addr-&gt;ai_family, addr-&gt;ai_socktype, addr-&gt;ai_protocol);</span><br><span class="line"></span><br><span class="line">if (connect(fd, addr-&gt;ai_addr, addr-&gt;ai_addrlen) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">    if (errno !&#x3D; EINPROGRESS) goto error;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (aeCreateFileEvent(loop, fd, flags, socket_connected, c) &#x3D;&#x3D; AE_OK) &#123;</span><br><span class="line">        c-&gt;parser.data &#x3D; c;</span><br><span class="line">        c-&gt;fd &#x3D; fd;</span><br><span class="line">        return fd;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<code>aeCreateFileEvent</code>的作用是添加监听的客户端连接<br>要监听一个客户端连接的状态变化，需要调用 <code>aeCreateFileEvent()</code> 函数把客户端连接添加到事件驱动对象中进行监听， <code>aeCreateFileEvent() </code>函数原型如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask, aeFileProc *proc, void *clientData);</span><br></pre></td></tr></table></figure>
+参数含义：<br><code>eventLoop</code>：由 aeCreateEventLoop() 函数创建的事件驱动对象。<br><code>fd</code>：客户端连接socket句柄。<br><code>mask</code>：监听客户端连接的事件，有 <code>AE_READABLE</code>（读） 和 <code>AE_WRITABLE</code>（写） 两种事件。<br><code>proc</code>：事件发生时的处理函数。<br><code>clientData</code>：proc 函数的参数</li>
+</ol>
+<p>从 <code>aeCreateFileEvent</code> 的用法可以看出，<br><code>aeCreateFileEvent(loop, fd, flags, socket_connected, c)</code>的含义是：监听 loop 中的这个 fd 的读/写事件，如果事件发生，就执行<code>socket_connected(c)</code>。</p>
+<p>所以我们再来看看 <code>socket_connected</code> 做了什么工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">connection *c &#x3D; data;</span><br><span class="line"></span><br><span class="line">switch (sock.connect(c, cfg.host)) &#123;</span><br><span class="line">    case OK:    break;</span><br><span class="line">    case ERROR: goto error;</span><br><span class="line">    case RETRY: return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct sock sock &#x3D; &#123;</span><br><span class="line">    .connect  &#x3D; sock_connect,</span><br><span class="line">    .close    &#x3D; sock_close,</span><br><span class="line">    .read     &#x3D; sock_read,</span><br><span class="line">    .write    &#x3D; sock_write,</span><br><span class="line">    .readable &#x3D; sock_readable</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>sock 是一个对象，实际上 <code>sock.connect(c, cfg.host)</code> always return “OK”。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">status sock_connect(connection *c, char *host) &#123;</span><br><span class="line">    return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>==》由以上分析得出结论，看一下 <code>script_create</code> <code>script_init</code> 是如何赋值 <code>t.addr</code> 的，尝试可不可以通过 lua 脚本传参改变 <code>t.addr</code> 的值。</p>
+<p>看起来 <code>script_wrk_lookup</code> <code>script_wrk_connect</code> <code>script_thread_index</code> 在其中起了不小的作用。<br>为了搞清楚他们到底做了些什么，要先学习下 c 语言是如何与 lua 脚本交互的。</p>
+<h1 id="c-amp-lua"><a href="#c-amp-lua" class="headerlink" title="c &amp; lua"></a>c &amp; lua</h1><p>lua与C的交互只能通过栈来执行。其交互形式也分两种，lua调用c函数，c解释执行lua代码。</p>
+<p>Lua 使用一个 虚拟栈 来和 C 互传值。 栈上的的每个元素都是一个 Lua 值 （nil，数字，字符串，等等）。</p>
+<p>无论何时 Lua 调用 C，被调用的函数都得到一个新的栈， 这个栈独立于 C 函数本身的栈，也独立于之前的 Lua 栈。 它里面包含了 Lua 传递给 C 函数的所有参数， 而 C 函数则把要返回的结果放入这个栈以返回给调用者 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lua_State *lua_newstate (lua_Alloc f, void *ud);</span><br><span class="line">创建一个运行在新的独立的状态机中的线程。 如果无法创建线程或状态机（由于内存有限）则返回 NULL。 参数 f 是一个分配器函数； Lua 将通过这个函数做状态机内所有的内存分配操作。 第二个参数 ud ，这个指针将在每次调用分配器时被转入。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>script_request 返回一个 addr<br>方法：根据 script_wrk_lookup 中的方法，传入 host， service， 调用 getaddrinfo 生成一个 addr 对象</p>
+<h1 id="c语言语法"><a href="#c语言语法" class="headerlink" title="c语言语法"></a>c语言语法</h1><p>宏定义#ifndef……#define……#endif主要是为了避免头文件重复引用</p>
+<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用，这个时候，在重复引用的头文件中使用#ifndef……#define……#endif是非常有必要的。</p>
+<p>首先，源代码在编译之前需要进行预处理（也就是预编译），预编译干什么呢？我所知道的就是进行头文件展开、宏定义替换等操作。</p>
+<p>b.cpp包含a.h头文件的时候，就已经把A_H和C_H这两个宏添加到自己本文件的作用域内了，说明宏的作用范围只属于它的本身文件，所以b.cpp文件不能直接就对A_H和C_H宏进行判断。</p>
+<p>编译指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test2.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -ldl -lm</span><br></pre></td></tr></table></figure>
+
+<p>-I指定头文件的目录，-L指定库文件的目录，LIBS告诉链接器要链接哪些库文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LDFLAGS&#x3D;&quot;-L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib&quot;</span><br><span class="line">export CFLAGS&#x3D;&quot;-I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1&quot;</span><br><span class="line">export LIBS&#x3D;&quot;-lluajit-5.1 -ldl -lm&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成lua可以调用的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c -I&#x2F;usr&#x2F;local&#x2F;include test.c    &#x2F;&#x2F;编译不连接</span><br><span class="line">gcc -bundle -undefined dynamic_lookup -o mytestlib.so test.o  &#x2F;&#x2F;连接生成动态库</span><br></pre></td></tr></table></figure>
+
+<p>可能遇到的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld: symbol(s) not found for architecture x86_64</span><br></pre></td></tr></table></figure>
+
+<p>在C语言中调用lua脚本，并传递接收参数的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;lua.h&gt;</span><br><span class="line">#include&lt;lualib.h&gt;</span><br><span class="line">#include&lt;lauxlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;创建一个Lua的解释器</span><br><span class="line">    lua_State *L &#x3D; luaL_newstate();</span><br><span class="line">    &#x2F;&#x2F;载入Lua的库文件</span><br><span class="line">    luaL_openlibs(L);</span><br><span class="line">    &#x2F;&#x2F;利用这个&quot;L&quot;解释器，执行test.lua文件</span><br><span class="line">    printf(&quot;stack hight &#x3D; %d\n&quot;, lua_gettop(L));</span><br><span class="line">    luaL_dofile(L,&quot;test.lua&quot;);</span><br><span class="line">    &#x2F;&#x2F; 接收函数返回值</span><br><span class="line">    int a &#x3D; lua_tonumber(L, -1); </span><br><span class="line">&#x2F;&#x2F;关闭资源</span><br><span class="line">    lua_close(L);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在lua中调用C语言中定义的函数</p>
+<p>编译指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc mylib.c -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -fPIC -shared -o mylib.so -Wall </span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -I&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;include&#x2F;luajit-2.1 -c -o mylib.o mylib.c</span><br><span class="line"></span><br><span class="line">gcc -O2 -Wall -fPIC -W -Waggregate-return -Wcast-align -Wmissing-prototypes -Wnested-externs -Wshadow -Wwrite-strings -pedantic -L&#x2F;Users&#x2F;zhangyuxin&#x2F;wrk&#x2F;obj&#x2F;lib -lluajit-5.1 -shared -o mylib.so mylib.o -llua5.1</span><br></pre></td></tr></table></figure>
+<p>目前在mac上会发生 bus error 或者 Segmentation fault<br><a target="_blank" rel="noopener" href="http://lua-users.org/lists/lua-l/2011-09/msg00442.html">http://lua-users.org/lists/lua-l/2011-09/msg00442.html</a></p>
+<h1 id="在-Lua-中管理-C-对象的生存期"><a href="#在-Lua-中管理-C-对象的生存期" class="headerlink" title="在 Lua 中管理 C 对象的生存期"></a>在 Lua 中管理 C 对象的生存期</h1><p><a target="_blank" rel="noopener" href="https://blog.codingnow.com/cloud/LuaReferObject">https://blog.codingnow.com/cloud/LuaReferObject</a></p>
+<h1 id="从-lua-数据结构看设计思想"><a href="#从-lua-数据结构看设计思想" class="headerlink" title="从 lua 数据结构看设计思想"></a>从 lua 数据结构看设计思想</h1><h1 id="改动"><a href="#改动" class="headerlink" title="改动"></a>改动</h1><p>wrk.lua: request 返回两个参数 host,body</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function wrk.format(host, method, path, headers, body)</span><br><span class="line">   local host    &#x3D; host  or wrk.host</span><br><span class="line">   local method  &#x3D; method  or wrk.method</span><br><span class="line">   local path    &#x3D; path    or wrk.path</span><br><span class="line">   local headers &#x3D; headers or wrk.headers</span><br><span class="line">   local body    &#x3D; body    or wrk.body</span><br><span class="line">   local s       &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">   if host then</span><br><span class="line">      wrk.headers[&quot;Host&quot;] &#x3D; host</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   if not headers[&quot;Host&quot;] then</span><br><span class="line">      headers[&quot;Host&quot;] &#x3D; wrk.headers[&quot;Host&quot;]</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   headers[&quot;Content-Length&quot;] &#x3D; body and string.len(body)</span><br><span class="line"></span><br><span class="line">   s[1] &#x3D; string.format(&quot;%s %s HTTP&#x2F;1.1&quot;, method, path)</span><br><span class="line">   for name, value in pairs(headers) do</span><br><span class="line">      s[#s+1] &#x3D; string.format(&quot;%s: %s&quot;, name, value)</span><br><span class="line">   end</span><br><span class="line"></span><br><span class="line">   s[#s+1] &#x3D; &quot;&quot;</span><br><span class="line">   s[#s+1] &#x3D; body or &quot;&quot;</span><br><span class="line"></span><br><span class="line">   return host, table.concat(s, &quot;\r\n&quot;)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>script.c</p>
+<h1 id="从-lua-看状态机"><a href="#从-lua-看状态机" class="headerlink" title="从 lua 看状态机"></a>从 lua 看状态机</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/47434856">https://zhuanlan.zhihu.com/p/47434856</a></p>
+<h1 id="几个比较重要的数据结构"><a href="#几个比较重要的数据结构" class="headerlink" title="几个比较重要的数据结构"></a>几个比较重要的数据结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">struct http_parser_settings &#123;</span><br><span class="line">  http_cb      on_message_begin;</span><br><span class="line">  http_data_cb on_url;</span><br><span class="line">  http_data_cb on_status;</span><br><span class="line">  http_data_cb on_header_field;</span><br><span class="line">  http_data_cb on_header_value;</span><br><span class="line">  http_cb      on_headers_complete;</span><br><span class="line">  http_data_cb on_body;</span><br><span class="line">  http_cb      on_message_complete;</span><br><span class="line">  &#x2F;* When on_chunk_header is called, the current chunk length is stored</span><br><span class="line">   * in parser-&gt;content_length.</span><br><span class="line">   *&#x2F;</span><br><span class="line">  http_cb      on_chunk_header;</span><br><span class="line">  http_cb      on_chunk_complete;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    pthread_t thread;</span><br><span class="line">    aeEventLoop *loop;</span><br><span class="line">    struct addrinfo *addr;</span><br><span class="line">    uint64_t connections;</span><br><span class="line">    uint64_t complete;</span><br><span class="line">    uint64_t requests;</span><br><span class="line">    uint64_t bytes;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    lua_State *L;</span><br><span class="line">    errors errors;</span><br><span class="line">    struct connection *cs;</span><br><span class="line">&#125; thread;</span><br><span class="line"></span><br><span class="line">typedef struct connection &#123;</span><br><span class="line">    thread *thread;</span><br><span class="line">    http_parser parser;</span><br><span class="line">    enum &#123;</span><br><span class="line">        FIELD, VALUE</span><br><span class="line">    &#125; state;</span><br><span class="line">    int fd;</span><br><span class="line">    SSL *ssl;</span><br><span class="line">    bool delayed;</span><br><span class="line">    uint64_t start;</span><br><span class="line">    char *request;</span><br><span class="line">    size_t length;</span><br><span class="line">    size_t written;</span><br><span class="line">    uint64_t pending;</span><br><span class="line">    buffer headers;</span><br><span class="line">    buffer body;</span><br><span class="line">    char buf[RECVBUF];</span><br><span class="line">&#125; connection;</span><br></pre></td></tr></table></figure>
+<p>response_complete 是<br>http_parser_execute</p>
+<p>CALLBACK_NOTIFY(message_complete);</p>
+<p>通过对比成功和失败的日志可以看出，连接建立成功了，也有写，但是在第一次读的时候，http_parser_execute 失败，执行了response_complete回调函数，返回了响应错误码，读错误加一，并重新建立socket连接。</p>
+<p>再通过实验，如果request中的host与全局host一致，是不会有问题的，所以猜测是socket连接没有指向localhost。再次进行验证。</p>
+<h1 id="成功的修改了host"><a href="#成功的修改了host" class="headerlink" title="成功的修改了host"></a>成功的修改了host</h1><h1 id="最后一步学习如何打包镜像"><a href="#最后一步学习如何打包镜像" class="headerlink" title="最后一步学习如何打包镜像"></a>最后一步学习如何打包镜像</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
 
-<h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><p>使用 threading.Thread 和 threading.Lock</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 两个线程交替打印，一个奇数，一个偶数，顺序</span><br><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def print_odd():</span><br><span class="line">  num &#x3D; 1</span><br><span class="line">  while num &lt; 10:</span><br><span class="line">    lock_even.acquire()</span><br><span class="line">    print(&quot;even 获得了锁&quot;)</span><br><span class="line">    print(num)</span><br><span class="line">    num +&#x3D; 2</span><br><span class="line">    lock_odd.release()</span><br><span class="line">    time.sleep(0.5)</span><br><span class="line"></span><br><span class="line">def print_even():</span><br><span class="line">  num &#x3D; 2</span><br><span class="line">  while num &lt;&#x3D; 10:</span><br><span class="line">    lock_odd.acquire()</span><br><span class="line">    print(&quot;odd 获得了锁&quot;)</span><br><span class="line">    print(num)</span><br><span class="line">    num +&#x3D; 2</span><br><span class="line">    lock_even.release()</span><br><span class="line">    time.sleep(0.5)</span><br><span class="line"></span><br><span class="line"># 一旦一个线程获得一个锁，会阻塞随后尝试获得锁的线程</span><br><span class="line">lock_odd &#x3D; threading.Lock()</span><br><span class="line">lock_even &#x3D; threading.Lock()</span><br><span class="line"></span><br><span class="line">thread_odd &#x3D; threading.Thread(None, print_odd)</span><br><span class="line">thread_even &#x3D; threading.Thread(None, print_even)</span><br><span class="line"></span><br><span class="line">lock_odd.acquire()</span><br><span class="line">thread_odd.start()</span><br><span class="line">thread_even.start()</span><br><span class="line">thread_odd.join()</span><br><span class="line">thread_even.join()</span><br></pre></td></tr></table></figure>
 
-<p>Next: go - 常用数据结构的常用操作</p>
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/07/09/speech/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/09/speech/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-09 12:27:00 / Modified: 18:59:41" itemprop="dateCreated datePublished" datetime="2021-07-09T12:27:00+08:00">2021-07-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li>自我介绍</li>
+<li>话题介绍</li>
+<li>正文</li>
+<li>结束语</li>
+</ol>
+<p>No.5 Technology</p>
+<ul>
+<li>describe a product</li>
+<li>compare products</li>
+<li>new products to help people</li>
+<li>describe life changes</li>
+</ul>
+<p>Q&amp;A:</p>
+<ul>
+<li>what old technology do you know?</li>
+<li>what new technology do you know?</li>
+<li>think of a gadget you own. what adjectivies would you use?</li>
+</ul>
+<p>Microsoft HoloLens<br><a target="_blank" rel="noopener" href="https://www.sohu.com/a/66949670_162522">https://www.sohu.com/a/66949670_162522</a></p>
 
       
     </div>
@@ -413,7 +898,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/11/go-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B8%B8%E9%A9%BB%E5%86%85%E5%AD%98%E5%A2%9E%E9%95%BF/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/07/09/workout/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -427,7 +912,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/11/go-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B8%B8%E9%A9%BB%E5%86%85%E5%AD%98%E5%A2%9E%E9%95%BF/" class="post-title-link" itemprop="url">go - 记一次常驻内存增长</a>
+            <a href="/2021/07/09/workout/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta-container">
@@ -438,14 +923,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-11 17:40:03" itemprop="dateCreated datePublished" datetime="2021-04-11T17:40:03+08:00">2021-04-11</time>
+      <time title="Created: 2021-07-09 12:27:00" itemprop="dateCreated datePublished" datetime="2021-07-09T12:27:00+08:00">2021-07-09</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-13 21:35:50" itemprop="dateModified" datetime="2021-04-13T21:35:50+08:00">2021-04-13</time>
+        <time title="Modified: 2022-11-14 15:35:44" itemprop="dateModified" datetime="2022-11-14T15:35:44+08:00">2022-11-14</time>
       </span>
 
   
@@ -458,364 +943,38 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="业务场景监控"><a href="#业务场景监控" class="headerlink" title="业务场景监控"></a>业务场景监控</h1><p><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem1.jpeg?raw=true" alt="image"><br><img src="https://github.com/Melody-Zhang/imgs/blob/master/mem2.jpeg?raw=true" alt="image"></p>
-<h1 id="go-的内存分配"><a href="#go-的内存分配" class="headerlink" title="go 的内存分配"></a>go 的内存分配</h1><h1 id="go-的常驻内存是如何产生的"><a href="#go-的常驻内存是如何产生的" class="headerlink" title="go 的常驻内存是如何产生的"></a>go 的常驻内存是如何产生的</h1><h1 id="gc-回收的是哪部分内存"><a href="#gc-回收的是哪部分内存" class="headerlink" title="gc 回收的是哪部分内存"></a>gc 回收的是哪部分内存</h1><h1 id="go-内存问题的定位方法-pprof-的使用"><a href="#go-内存问题的定位方法-pprof-的使用" class="headerlink" title="go 内存问题的定位方法 - pprof 的使用"></a>go 内存问题的定位方法 - pprof 的使用</h1><h1 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h1><h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>go compile -m<br>go compile -S<br>go build<br>size</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/go-knowledge/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/05/go-knowledge/" class="post-title-link" itemprop="url">go - knowledge</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-05 22:41:47" itemprop="dateCreated datePublished" datetime="2021-04-05T22:41:47+08:00">2021-04-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-11 23:43:43" itemprop="dateModified" datetime="2021-04-11T23:43:43+08:00">2021-04-11</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="go-语言的独特之处"><a href="#go-语言的独特之处" class="headerlink" title="go 语言的独特之处"></a>go 语言的独特之处</h1><ol>
-<li>go 对类型非常苛刻，不允许强制的类型转换，不能隐式的类型转换(即使是原有类型和别名)，可以显式的类型转换</li>
-<li>go 没有前置++</li>
-<li>与 c,c++ 相比，go 的string 默认值是””, 而不是nil</li>
-<li>不支持指针运算</li>
-<li>不同长度数组之间不可用 “==” 进行比较</li>
-<li>数组对应位置元素也要相等，才是true</li>
+          <p>这篇文章是记录我在健身房跟私教练习的部位和相应的动作。</p>
+<h1 id="背"><a href="#背" class="headerlink" title="背"></a>背</h1><ol>
+<li>站姿正手下拉：从斜向上拉向锁骨 - 上背中部发力</li>
+<li>坐姿下拉：从上往下拉直锁骨 - 上背发力</li>
+<li>反手坐姿划船：直直的往后拉 - 下背发力</li>
+<li>山羊挺身：手臂伸直，身体-头-手呈一条直线，手指向远端延伸，背带动手指画弧线 - 竖直肌和下背部</li>
+<li>直臂下压：</li>
+<li>坐姿划船：</li>
+<li>正手宽距下拉：</li>
+<li>反手窄距下拉：</li>
 </ol>
-<h1 id="main"><a href="#main" class="headerlink" title="main"></a>main</h1><ul>
-<li>应用程序入口 cli.go - 不必须是 main.go</li>
-<li>package main - must</li>
-<li>func main(){} - must, and no args、no returns</li>
-<li>args 通过 os.Args or flag</li>
-<li>return 通过 os.Exit(0) 正常退出，os.Exit(non-zero) 异常退出，其中的数字即为应用程序的退出状态，或者main函数返回值</li>
-<li>可以通过build cli.go, echo $? 进行查看</li>
-</ul>
-<h1 id="panic-和-os-Exit"><a href="#panic-和-os-Exit" class="headerlink" title="panic 和 os.Exit()"></a>panic 和 os.Exit()</h1><p>panic - defer &amp; stack info<br>os.Exit - no defer &amp; no stack info</p>
-<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><p>包名可以小写<br>通过大小写控制访问权限</p>
-<ul>
-<li>大写: 外部可访问</li>
-<li>小写：外部不可访问<br>结构体中的字段名</li>
-<li>如果字段名，首字母小写, 该字段无法被外部包访问和解析，如json.Marshal()等</li>
-<li>结构体本身的命名，首字母小写，没有关系<br>所以结构体中的字段名最好大写，即使是内部包访问</li>
-</ul>
-<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>花括号</p>
-<h1 id="比较的是内容还是地址"><a href="#比较的是内容还是地址" class="headerlink" title="== 比较的是内容还是地址"></a>== 比较的是内容还是地址</h1><p>according to what kind of type you compare</p>
-<ol>
-<li>基础类型：int, bool, string - 直接比较值</li>
-<li>复合类型：数组和结构体 - 逐字段比较，长度位置数据都要一致</li>
-<li>引用类型：slice, map, channel, ptr, 除了slice 其他都比较引用</li>
-<li>接口类型：interface，比较类型以及值</li>
-<li>slice: 不可以比较</li>
+<h1 id="胸"><a href="#胸" class="headerlink" title="胸"></a>胸</h1><ol>
+<li>史密斯夹胸：整个胸往里夹</li>
+<li>史密斯推胸：肩膀内三角区</li>
+<li>上斜杠铃卧推：肩膀内三角区</li>
+<li>平板杠铃卧推：上胸</li>
+<li>器械飞鸟</li>
+<li>绳索十字夹胸</li>
+<li>上斜俯卧撑（罗马椅）</li>
 </ol>
-<h1 id="为什么-slice-不可比较"><a href="#为什么-slice-不可比较" class="headerlink" title="为什么 slice 不可比较"></a>为什么 slice 不可比较</h1><ol>
-<li>因为slice可以引用自己，实现难度大</li>
-<li>slice如果跟array行为不一致，会使人感到混淆</li>
-<li>slice can only be compared to nil<h1 id="自增计数-iota"><a href="#自增计数-iota" class="headerlink" title="自增计数 - iota"></a>自增计数 - iota</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> 1 package main</span><br><span class="line"> 2</span><br><span class="line"> 3 import &quot;fmt&quot;</span><br><span class="line"> 4</span><br><span class="line"> 5 const (</span><br><span class="line"> 6     a &#x3D; iota</span><br><span class="line"> 7     b</span><br><span class="line"> 8     c</span><br><span class="line"> 9     d &#x3D; 0</span><br><span class="line">10     e &#x3D; 0</span><br><span class="line">11     f          &#x2F;&#x2F; 跟随上一个值</span><br><span class="line">12     g &#x3D; iota   &#x2F;&#x2F; 持续计数</span><br><span class="line">13</span><br><span class="line">14     h &#x3D; 1 &lt;&lt; iota</span><br><span class="line">15 )</span><br><span class="line">16</span><br><span class="line">17 func main()&#123;</span><br><span class="line">18     &#x2F;&#x2F; 0 1 2 0 0 0 6 128</span><br><span class="line">19     fmt.Println(a,b,c,d,e,f,g,h)</span><br><span class="line">20 &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<h1 id="腿"><a href="#腿" class="headerlink" title="腿"></a>腿</h1><ol>
+<li>窄距正向深蹲：整个脚抓地，有个力从头顶揪着，臀带动身体向上，感受脚-大腿内侧-臀的发力</li>
+<li>相扑深蹲</li>
+<li>坐姿髋外展</li>
+<li>坐姿髋内收</li>
+<li>单腿哑铃硬拉</li>
 </ol>
-<p>Next: go实现两个协程接替打印1~100中的基数和偶数</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/go-data-structure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/05/go-data-structure/" class="post-title-link" itemprop="url">go - data structure</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-05 20:34:51" itemprop="dateCreated datePublished" datetime="2021-04-05T20:34:51+08:00">2021-04-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-13 21:28:18" itemprop="dateModified" datetime="2021-04-13T21:28:18+08:00">2021-04-13</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h1><p>数据类型的出现，是为了把数据分成所需内存大小不同的数据进行存储。</p>
-<h1 id="go-的几个关键数字"><a href="#go-的几个关键数字" class="headerlink" title="go 的几个关键数字"></a>go 的几个关键数字</h1><p>25 个关键字<br>3 个基本数据类型</p>
-<ul>
-<li>bool(false), num(0), string(“”)<br>8 个复合数据类型(除了struct, default: nil)</li>
-<li>pointer, array, slice, map, channel, struct, func, interface</li>
-</ul>
-<h2 id="值类型"><a href="#值类型" class="headerlink" title="值类型"></a>值类型</h2><p>基本数据类型，int,float,bool,string, 以及数组和 struct 特点：变量直接存储值，内存通常在栈中分配，栈在函数调用完会被释放</p>
-<h2 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h2><p>slice, map, channel, pointer, func, interface<br>是一种结构体+元素指针的混合类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type slice struct &#123;</span><br><span class="line">	array unsafe.Pointer</span><br><span class="line">	len   int</span><br><span class="line">	cap   int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><p>bool, num, string<br>num:</p>
-<ul>
-<li>int, int8, int16, int32, int64</li>
-<li>uint, uint8, uint16, uint32, unit64, uintptr</li>
-<li>byte // uint8</li>
-<li>rune // int32 for unicode</li>
-<li>float32, float64</li>
-<li>complex64, complex32</li>
-</ul>
-<h2 id="int"><a href="#int" class="headerlink" title="int"></a>int</h2><p>go 中的 int 是 int 64</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func printBytes(n int)&#123;</span><br><span class="line">	fmt.Println(&amp;n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var a int</span><br><span class="line">	a &#x3D; 1</span><br><span class="line">	fmt.Println(&amp;a)</span><br><span class="line">	printBytes(a)</span><br><span class="line">	fmt.Println(&amp;a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">0xc000136008</span><br><span class="line">0xc000136020</span><br><span class="line">0xc000136008</span><br></pre></td></tr></table></figure>
-<p>由上，因为a是int64，所以不同存储空间间隔8bytes=64bits<br>不仅如此还可以证明，在go语言中，参数传递，传递的是“值”，而不是引用。<br>“值” 意思是传递一个拷贝，一个副本。<br>对于非引用类型：int、string、struct 地址变化，值不可改<br>对于引用类型：map、slice、chan、func, pointer 指针地址变化，但是值地址不变，可通过指针改</p>
-<h2 id="string-byte-rune"><a href="#string-byte-rune" class="headerlink" title="string, byte, rune"></a>string, byte, rune</h2><h3 id="utf8-unicode"><a href="#utf8-unicode" class="headerlink" title="utf8, unicode"></a>utf8, unicode</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23374078">https://www.zhihu.com/question/23374078</a></p>
-<p>unicode 是字符集，16进制范围 0000-FFFF, 0～65536<br>utf-8是一种编码方式，一种转换规则，将字符集变成计算机可以理解的二进制序列, 顾名思义，是一套以8位为一个编码单位的可变长编码。</p>
-<p>每一个16进制数，表示成一个四位的二进制数<br>16^4 = 2^4^4 = 2^16<br>unicode 用16位二进制代表一个符号</p>
-<p>问题：<br>英文只有8bit, 所以所有字符都用16bit存放浪费空间<br>所以一些编码规则出现，为了更合理高效的利用内存</p>
-<p>规则为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UTF-8是这样做的：1. 单字节的字符，字节的第一位设为0，对于英语文本，UTF-8码只占用一个字节，和ASCII码完全相同；2. n个字节的字符(n&gt;1)，第一个字节的前n位设为1，第n+1位设为0，后面字节的前两位都设为10，这n个字节的其余空位填充该字符unicode码，高位用0补足。这样就形成了如下的UTF-8标记位：</span><br><span class="line">0xxxxxxx</span><br><span class="line">110xxxxx 10xxxxxx</span><br><span class="line">1110xxxx 10xxxxxx 10xxxxxx - 3byte</span><br><span class="line">11110xxx 10xxxxxx 10xxxxxx 10xxxxxx - 4byte rune</span><br></pre></td></tr></table></figure>
-
-
-<p>string是一个字节 []uint8 , rune是4个字节 []int32 (正好对应最大的utf8)<br>所以rune可以直接将[]byte解析成对应的unicode字符</p>
-<p>中文的特殊性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type byte &#x3D; uint8</span><br><span class="line">type rune &#x3D; int32</span><br></pre></td></tr></table></figure>
-
-<p>内存地址是最小单位是 1byte, 也就是打印出来的16进制指针的单位是byte<br>string 底层实现是 byte 数组，所以长度是字节长度<br>1byte 是 8bit, 每一个string是一个unit8, 也就是 1byte<br>但是</p>
-<p>go 为每一个 string 类型分配 16byte 内存</p>
-<h3 id="地址访问"><a href="#地址访问" class="headerlink" title="地址访问"></a>地址访问</h3><p>可以访问string类型的地址<br>==但是不能通过索引访问其中某个元素的地址==</p>
-<h3 id="但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素"><a href="#但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素" class="headerlink" title="但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素"></a>但可以通过索引遍历string中的元素，也就是访问byte数组中的每一个元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印出str中的每一个byte的10进制值</span><br><span class="line">for i:&#x3D;0; i&lt;len(str); i++ &#123;</span><br><span class="line">		fmt.Println(str[i])</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#x2F;&#x2F; 如果想看到真实的值，需要用格式化输出 %q</span><br><span class="line">&#x2F;&#x2F; %q 对应go语法字符字面值，必要时会采取安全的转义</span><br><span class="line">&#x2F;&#x2F; %s 直接输出字符串或者[]byte</span><br><span class="line">&#x2F;&#x2F; 使用反射获取变量类型，或使用%s</span><br><span class="line">func main() &#123;</span><br><span class="line">	a :&#x3D; &quot;a张宇鑫&quot;</span><br><span class="line">	fmt.Println(&quot;*** print uint8 ***&quot;)</span><br><span class="line">	for i:&#x3D;0; i&lt;len(a); i++ &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(a[i]))</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, a[i])</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(&quot;*** print rune(int32) ***&quot;)</span><br><span class="line">	for k,v :&#x3D; range a &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(v))</span><br><span class="line">		fmt.Println(&quot;k,v: &quot;)</span><br><span class="line">		fmt.Println(k,v)</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, v)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(&quot;*** change str to rune ***&quot;)</span><br><span class="line">	b :&#x3D; []rune(a)</span><br><span class="line">	for i:&#x3D;0; i&lt;len(b); i++ &#123;</span><br><span class="line">		fmt.Println(&quot;type: &quot;)</span><br><span class="line">		fmt.Println(reflect.TypeOf(b[i]))</span><br><span class="line">		fmt.Println(&quot;format print: &quot;)</span><br><span class="line">		fmt.Printf(&quot;%[1]s, %[1]q\n&quot;, b[i])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">*** print uint8 ***</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;229), &#39;å&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;188), &#39;¼&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;160), &#39;\u00a0&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;229), &#39;å&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;174), &#39;®&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;135), &#39;\u0087&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;233), &#39;é&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;145), &#39;\u0091&#39;</span><br><span class="line">type: </span><br><span class="line">uint8</span><br><span class="line">format print: </span><br><span class="line">%!s(uint8&#x3D;171), &#39;«&#39;</span><br><span class="line">*** print rune(int32) ***</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">0 97</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">1 24352</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;24352), &#39;张&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">4 23431</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;23431), &#39;宇&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">k,v: </span><br><span class="line">7 37995</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;37995), &#39;鑫&#39;</span><br><span class="line">*** change str to rune ***</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;97), &#39;a&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;24352), &#39;张&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;23431), &#39;宇&#39;</span><br><span class="line">type: </span><br><span class="line">int32</span><br><span class="line">format print: </span><br><span class="line">%!s(int32&#x3D;37995), &#39;鑫&#39;</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取字符串真实长度的方法"><a href="#获取字符串真实长度的方法" class="headerlink" title="获取字符串真实长度的方法"></a>获取字符串真实长度的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;golang中的unicode&#x2F;utf8包提供了用utf-8获取长度的方法</span><br><span class="line">    fmt.Println(&quot;RuneCountInString:&quot;, utf8.RuneCountInString(str))</span><br></pre></td></tr></table></figure>
-
-<h2 id="slice-array"><a href="#slice-array" class="headerlink" title="slice, array"></a>slice, array</h2><h3 id="从表现形式上来看"><a href="#从表现形式上来看" class="headerlink" title="从表现形式上来看"></a>从表现形式上来看</h3><ol>
-<li><p>类型不同<br>array是值类型，可类比于有序的struct，传递的是整个数组的拷贝<br>slice是引用类型，又被称为动态的数组，传递的是一个的指向数组切片的指针</p>
-</li>
-<li><p>定义方式不同<br>array需要在定义时指定长度[10]int, […]int，长度本身也是数据结构的一部分<br>slice不需要指定长度，可变长的数组，在容量不足时可以自动扩容</p>
-</li>
-<li><p>底层实现不同<br>array跟其他语言的实现都是一样的：一段连续的内存空间，每个元素有唯一索引来访问，由于内存连续，cpu可以很快的计算索引，快速迭代数组里面的所有元素<br>但是使用方式不一样，例如与c语言相比，C语言的数组变量是指向第一个数组元素的指针，而go的数组变量是一个值，不可分割。 – 那应该是不能像c语言那样通过指针++来访问其中的元素的吧<br>slice是对数组的抽象，它的数据结构中有一个是指向 array 的指针</p>
-</li>
-</ol>
-<h3 id="从底层实现上来看"><a href="#从底层实现上来看" class="headerlink" title="从底层实现上来看"></a>从底层实现上来看</h3><h4 id="编译期间"><a href="#编译期间" class="headerlink" title="编译期间"></a>编译期间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Array contains Type fields specific to array types.</span><br><span class="line">type Array struct &#123;</span><br><span class="line">	Elem  *Type &#x2F;&#x2F; element type</span><br><span class="line">	Bound int64 &#x2F;&#x2F; number of elements; &lt;0 if unknown yet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Slice contains Type fields specific to slice types.</span><br><span class="line">type Slice struct &#123;</span><br><span class="line">	Elem *Type &#x2F;&#x2F; element type</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; NewArray returns a new fixed-length array Type.</span><br><span class="line">func NewArray(elem *Type, bound int64) *Type &#123;</span><br><span class="line">	if bound &lt; 0 &#123;</span><br><span class="line">		base.Fatalf(&quot;NewArray: invalid bound %v&quot;, bound)</span><br><span class="line">	&#125;</span><br><span class="line">	t :&#x3D; New(TARRAY)</span><br><span class="line">	t.Extra &#x3D; &amp;Array&#123;Elem: elem, Bound: bound&#125;</span><br><span class="line">	t.SetNotInHeap(elem.NotInHeap())</span><br><span class="line">	if elem.HasTParam() &#123;</span><br><span class="line">		t.SetHasTParam(true)</span><br><span class="line">	&#125;</span><br><span class="line">	return t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; NewSlice returns the slice Type with element type elem.</span><br><span class="line">func NewSlice(elem *Type) *Type &#123;</span><br><span class="line">	if t :&#x3D; elem.cache.slice; t !&#x3D; nil &#123;</span><br><span class="line">		if t.Elem() !&#x3D; elem &#123;</span><br><span class="line">			base.Fatalf(&quot;elem mismatch&quot;)</span><br><span class="line">		&#125;</span><br><span class="line">		return t</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	t :&#x3D; New(TSLICE)</span><br><span class="line">	t.Extra &#x3D; Slice&#123;Elem: elem&#125;</span><br><span class="line">	elem.cache.slice &#x3D; t</span><br><span class="line">	if elem.HasTParam() &#123;</span><br><span class="line">		t.SetHasTParam(true)</span><br><span class="line">	&#125;</span><br><span class="line">	return t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="运行期间"><a href="#运行期间" class="headerlink" title="运行期间"></a>运行期间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type SliceHeader struct &#123;</span><br><span class="line">	Data uintptr</span><br><span class="line">	Len  int</span><br><span class="line">	Cap  int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var identifier type</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第一种，定义且不初始化, 为default value</span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	a int</span><br><span class="line">	b bool</span><br><span class="line">	c string</span><br><span class="line">	d uintptr</span><br><span class="line">	e [1]int</span><br><span class="line">	f []int</span><br><span class="line">	g map[string]int</span><br><span class="line">	h chan int</span><br><span class="line">	i func(string)int</span><br><span class="line">	j error</span><br><span class="line">	k interface&#123;&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type l struct&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var (</span><br><span class="line">		m int</span><br><span class="line">		n int</span><br><span class="line">	)</span><br><span class="line">	fmt.Println( a, b, c, d, e, f, g, h, i, j, k, &amp;l&#123;&#125;)</span><br><span class="line">	fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">0 false  0 [0] [] map[] &lt;nil&gt; &lt;nil&gt; &lt;nil&gt; &lt;nil&gt; &amp;&#123;&#125;</span><br><span class="line">0 0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第二种，定义的时候初始化</span><br><span class="line">var a,b int &#x3D; 1,2</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	var a int &#x3D; 1</span><br><span class="line">	var b bool &#x3D; true</span><br><span class="line">	var c string &#x3D; &quot;s&quot;</span><br><span class="line">	var d uintptr &#x3D; 1</span><br><span class="line">	var e [1]int &#x3D; [1]int&#123;1&#125;</span><br><span class="line">	var f []int &#x3D; []int&#123;1,2&#125;</span><br><span class="line">	var g map[string]int &#x3D; map[string]int&#123;&quot;name&quot;:1, &quot;age&quot;:2&#125;</span><br><span class="line">	var h chan int</span><br><span class="line">	h &#x3D; make(chan int)</span><br><span class="line">	var i func(string)int &#x3D; func(string)int&#123;return 1&#125;</span><br><span class="line">	var j error &#x3D; errors.New(&quot;error&quot;)</span><br><span class="line">	type k interface &#123;</span><br><span class="line">		say()</span><br><span class="line">	&#125;</span><br><span class="line">	var k1 &#x3D; new(k)</span><br><span class="line"></span><br><span class="line">	type l struct &#123;</span><br><span class="line">		name string</span><br><span class="line">		sex string</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var l1 &#x3D; &amp;l&#123;&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println( a, b, c, d, e, f, g, h, i(&quot;a&quot;), j, k1, l1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">output:</span><br><span class="line">1 true s 1 [1] [1 2] map[age:2 name:1] 0xc00008c060 1 error 0xc00008e1f0 &amp;&#123; &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第三种，定义时不指定类型，自动推断</span><br><span class="line">var t &#x3D; true</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第四种，使用声明语句，自动推断类型, 左边至少有一个新的变量 - 只能用于函数中，不能用于全局声明</span><br><span class="line">a :&#x3D; 1</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第五种，使用make, 仅适用于&quot;slice, map, channel&quot;</span><br><span class="line">slice :&#x3D; make([]int, 0, 100)</span><br><span class="line">hash :&#x3D; make(map[int]bool, 10)</span><br><span class="line">ch :&#x3D; make(chan int, 5)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第六种，使用new, 适用于所有数据类型，返回一个指针</span><br><span class="line">i :&#x3D; new(int)</span><br></pre></td></tr></table></figure>
-
-<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>花括号</p>
-<h1 id="byte-unitptr-unsafe-Pointer-reflect"><a href="#byte-unitptr-unsafe-Pointer-reflect" class="headerlink" title="byte, unitptr, unsafe.Pointer, reflect"></a>byte, unitptr, unsafe.Pointer, reflect</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunsky303/p/11820500.html">https://www.cnblogs.com/sunsky303/p/11820500.html</a></p>
-<h1 id="new-make"><a href="#new-make" class="headerlink" title="new, make"></a>new, make</h1><p>都是用来分配内存的内建函数，分配在堆上，通过GC回收</p>
-<ul>
-<li>make, 即分配，也初始化数据结构</li>
-<li>new, 分配内存，返回指向内存的指针<br><a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/part2-foundation/ch05-keyword/golang-make-and-new/">https://draveness.me/golang/docs/part2-foundation/ch05-keyword/golang-make-and-new/</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018967149#:~:text=make%E5%92%8Cnew%E9%83%BD%E6%98%AF,%E6%98%AF%E6%8C%87%E5%90%91%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88%E3%80%82">https://segmentfault.com/a/1190000018967149#:~:text=make%E5%92%8Cnew%E9%83%BD%E6%98%AF,%E6%98%AF%E6%8C%87%E5%90%91%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88%E3%80%82</a></li>
-</ul>
-<p>对于一个已经存在变量，可对其指针进行赋值<br>如果不是已经存在的变量会如何呢？能对其直接赋值吗？ </p>
-<ul>
-<li>不能<br>panic: runtime error: invalid memory address or nil pointer dereference<br>通过Go提供了new来初始化这一地址就可以解决。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var v *int</span><br><span class="line">&#x2F;&#x2F;fmt.Println(*v) &#x2F;&#x2F; panic</span><br><span class="line">fmt.Println(v) &#x2F;&#x2F;&lt;nil&gt;</span><br><span class="line">v &#x3D; new(int)</span><br><span class="line">fmt.Println(*v) &#x2F;&#x2F; 0</span><br><span class="line">fmt.Println(v) &#x2F;&#x2F; 0xc0000b4010</span><br></pre></td></tr></table></figure>
-对于普通类型，var后是nil, new不仅会返回一个指针，还会初始化指针指向的内容。所以之后可以直接通过指针赋值了。但对于引用类型不可以，new以后还是不可以赋值，因为new之后内容还是nil。<br>but:<br>主要区别在于引用类型。go会给引用类型初始化为nil，nil是不能直接赋值的。不能用new分配内存，无法直接赋值。<br>make 不仅可以开辟内存，还可以给内存的类型初始化为其默认值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">av :&#x3D; make([]int, 5)</span><br><span class="line">fmt.Printf(&quot;av: %p %#v \n&quot;, &amp;av, av) &#x2F;&#x2F;av: 0xc000046400 []int&#123;0, 0, 0, 0, 0&#125;</span><br><span class="line">av[0] &#x3D; 1</span><br><span class="line">fmt.Printf(&quot;av: %p %#v \n&quot;, &amp;av, av) &#x2F;&#x2F;av: 0xc000046400 []int&#123;1, 0, 0, 0, 0&#125;</span><br><span class="line">mv :&#x3D; make(map[string]string)</span><br><span class="line">fmt.Printf(&quot;mv: %p %#v \n&quot;, &amp;mv, mv) &#x2F;&#x2F;mv: 0xc000074020 map[string]string&#123;&#125;</span><br><span class="line">mv[&quot;m&quot;] &#x3D; &quot;m&quot;</span><br><span class="line">fmt.Printf(&quot;mv: %p %#v \n&quot;, &amp;mv, mv) &#x2F;&#x2F;mv: 0xc000074020 map[string]string&#123;&quot;m&quot;:&quot;m&quot;&#125;</span><br><span class="line">chv :&#x3D; make(chan string)</span><br><span class="line">fmt.Printf(&quot;chv: %p %#v \n&quot;, &amp;chv, chv) &#x2F;&#x2F;chv: 0xc000074028 (chan string)(0xc00003e060)</span><br><span class="line">go func(message string) &#123;</span><br><span class="line">   chv &lt;- message &#x2F;&#x2F; 存消息</span><br><span class="line">&#125;(&quot;Ping!&quot;)</span><br><span class="line">fmt.Println(&lt;-chv) &#x2F;&#x2F; 取消息 &#x2F;&#x2F;&quot;Ping!&quot;</span><br><span class="line">close(chv)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="print-fmt"><a href="#print-fmt" class="headerlink" title="print, fmt"></a>print, fmt</h1><ul>
-<li>print/println</li>
-</ul>
-<ol>
-<li>go的内置函数, 写入标准错误流</li>
-<li>print无法打印出数组和结构体<br>illegal types for operand: print for 复合类型，数组和结构体</li>
-<li>对于值类型就会打印出值，对于引用类型就会打印出指针<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The print built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Print is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func print(args ...Type)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The println built-in function formats its arguments in an</span><br><span class="line">&#x2F;&#x2F; implementation-specific way and writes the result to standard error.</span><br><span class="line">&#x2F;&#x2F; Spaces are always added between arguments and a newline is appended.</span><br><span class="line">&#x2F;&#x2F; Println is useful for bootstrapping and debugging; it is not guaranteed</span><br><span class="line">&#x2F;&#x2F; to stay in the language.</span><br><span class="line">func println(args ...Type)</span><br></pre></td></tr></table></figure>
-fmt, 写入标准输出流</li>
-</ol>
-<p>Ref:</p>
-<ol>
-<li>‘Go语言参数传递是传值还是传引用’<br><a target="_blank" rel="noopener" href="https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html">https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html</a> </li>
-<li>‘slice与array的区别’<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013148775">https://segmentfault.com/a/1190000013148775</a><br><a target="_blank" rel="noopener" href="https://halfrost.com/go_slice/">https://halfrost.com/go_slice/</a><br><a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/">https://draveness.me/golang/docs/part2-foundation/ch03-datastructure/golang-array-and-slice/</a><br><a target="_blank" rel="noopener" href="https://i6448038.github.io/2018/08/11/array-and-slice-principle/">https://i6448038.github.io/2018/08/11/array-and-slice-principle/</a></li>
-</ol>
-<p>Next:<br>go - knowledge</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/Traffic-Replay/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/05/Traffic-Replay/" class="post-title-link" itemprop="url">Traffic Replay</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-04-05 19:54:29 / Modified: 20:14:11" itemprop="dateCreated datePublished" datetime="2021-04-05T19:54:29+08:00">2021-04-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="“流量回放”-调研"><a href="#“流量回放”-调研" class="headerlink" title="“流量回放” 调研"></a>“流量回放” 调研</h1><p>next: </p>
-<ol>
-<li>core dump or 系统/虚拟机状态快照<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24591108">https://zhuanlan.zhihu.com/p/24591108</a></li>
-<li>利用快照恢复数据<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/s/video/BV1kp4y1S7qv">https://www.bilibili.com/s/video/BV1kp4y1S7qv</a></li>
-<li>Go-cupaloy:简单的golang快照测试<br><a href="https://github.com/bradleyjkemp/cupaloy">https://github.com/bradleyjkemp/cupaloy</a></li>
-<li>Apollo灰度发布功能</li>
+<h1 id="肩"><a href="#肩" class="headerlink" title="肩"></a>肩</h1><ol>
+<li>史密斯推肩（杆）：</li>
+<li>侧平举：</li>
+<li>绳索面拉：</li>
+<li>绳索下压：</li>
 </ol>
 
       
@@ -843,7 +1002,7 @@ fmt, 写入标准输出流</li>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/05/why-we-need-kafka/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/24/go-for-range/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -857,7 +1016,7 @@ fmt, 写入标准输出流</li>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/05/why-we-need-kafka/" class="post-title-link" itemprop="url">why we need kafka</a>
+            <a href="/2021/04/24/go-for-range/" class="post-title-link" itemprop="url">go - for...range</a>
         </h2>
 
         <div class="post-meta-container">
@@ -867,9 +1026,8 @@ fmt, 写入标准输出流</li>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-04-05 18:48:19 / Modified: 19:48:44" itemprop="dateCreated datePublished" datetime="2021-04-05T18:48:19+08:00">2021-04-05</time>
+      <time title="Created: 2021-04-24 15:35:19" itemprop="dateCreated datePublished" datetime="2021-04-24T15:35:19+08:00">2021-04-24</time>
     </span>
 
   
@@ -882,12 +1040,7 @@ fmt, 写入标准输出流</li>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>data powers the development of enterprise.<br>consumers views products on the web page -&gt; collect infos -&gt; recommend products</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>数据是非常重要的，而且不能是片面的数据，而是全面的数据。<br>所以需要数据管道，这样一个关键性的组件，将来自各个不同地方的数据，以最高效的方式聚集在一起。</p>
-<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>消息队列，进程间通道<br>-&gt; 出现多对多, 节点间连接混乱<br>-&gt; 独立中间件, 提供应用程序接收来自其他应用程序的度量指标，并为其他系统提供查询服务器，即独立的队列系统<br>-&gt; 业务场景多，如用户页面指标，活动指标，日志，监控(数据库)等。出现多个队列系统<br>-&gt; 集成多个消息系统为单一的集中式的队列系统，可以发布通用型的数据，可以随业务数据增长而增长。</p>
-<h1 id="因为以上问题，kafka出现了"><a href="#因为以上问题，kafka出现了" class="headerlink" title="因为以上问题，kafka出现了"></a>因为以上问题，kafka出现了</h1><p>kafka是一款基于发布与订阅的消息系统，用于保存所有事务的持久化记录，可以按需读取，可以用于通过重放日志重建系统状态。<br>具有数据故障保护能力和性能伸缩能力。</p>
-<p>next: kafka 与其他发布订阅消息系统的不同 </p>
-
+          
       
     </div>
 
@@ -913,7 +1066,7 @@ fmt, 写入标准输出流</li>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/02/13/A-New-Year-Talk-for-2021/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/04/24/go-%E6%A0%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -927,79 +1080,7 @@ fmt, 写入标准输出流</li>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/13/A-New-Year-Talk-for-2021/" class="post-title-link" itemprop="url">A New Year Talk for 2021</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-02-13 22:49:45 / Modified: 23:08:44" itemprop="dateCreated datePublished" datetime="2021-02-13T22:49:45+08:00">2021-02-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>A new year is coming, I need you to forget who you were and anything you achieved before, just look forward and do what you want to right now!</p>
-<p>And please remember this, don’t be afraid to lose something, if you don’t lose, you won’t get! Especially your effort and money.</p>
-<p>And don’t be afraid to what you don’t know, because you will know, and know better than anyone else.</p>
-<p>You will be who you are, so never give up. Even you’re too tired to give up. Hi bro, it will never be late to stand up again! </p>
-<p>This world is big, colorful and chanceful, you deserve the best.</p>
-<p>Proud of you, baby!</p>
-<p>And happy new year!</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/01/11/is-go-an-object-oriented-language/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/11/is-go-an-object-oriented-language/" class="post-title-link" itemprop="url">Is go an object-oriented language?</a>
+            <a href="/2021/04/24/go-%E6%A0%88/" class="post-title-link" itemprop="url">go - 栈</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1010,98 +1091,7 @@ fmt, 写入标准输出流</li>
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-01-11 21:38:16" itemprop="dateCreated datePublished" datetime="2021-01-11T21:38:16+08:00">2021-01-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-05 18:50:41" itemprop="dateModified" datetime="2021-04-05T18:50:41+08:00">2021-04-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>According to official documents, this is one of the “Frequently Asked Questions(FAQ)”. And it’s what the answer is in the documents below.</p>
-<p>I divided it into 5 points.</p>
-<ol>
-<li><p>Although go has types and methods and allows an object-oriented style of programming. there is no type hierarchy.</p>
-</li>
-<li><p>The concept of “interface” in go provides a different approach that we believe is easy to use and in some ways more general.</p>
-</li>
-<li><p>There are also ways to embed types in other types to provides something analogous, but not identical, to subclassing.</p>
-</li>
-<li><p>Moreover, methods in go are more general than in C++ or Java: they can be defined for any sort of data, even built-in types, such as plain, “unboxed” integers. They are not restricted to structs(classes).</p>
-</li>
-<li><p>Also the lack of an type hierarchy, makes “objects” in go feel much more lightweight than in languages such as C++ or Java.</p>
-</li>
-</ol>
-<p>In Short:</p>
-<ol>
-<li>没有继承，但可以实现子类，使得对象更加轻量</li>
-<li>有interface, 并且可以给所有数据类型定义方法，而C++和Java只能给结构体和类定义方法。</li>
-</ol>
-<p>ref: <a target="_blank" rel="noopener" href="https://golang.org/doc/faq">https://golang.org/doc/faq</a><br>key-word: object-oriented</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2020/11/10/try-new-page/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/10/try-new-page/" class="post-title-link" itemprop="url">try new page</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-10 20:44:35" itemprop="dateCreated datePublished" datetime="2020-11-10T20:44:35+08:00">2020-11-10</time>
+      <time title="Created: 2021-04-24 15:35:08" itemprop="dateCreated datePublished" datetime="2021-04-24T15:35:08+08:00">2021-04-24</time>
     </span>
 
   
@@ -1135,7 +1125,7 @@ fmt, 写入标准输出流</li>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1176,7 +1166,7 @@ fmt, 写入标准输出流</li>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
