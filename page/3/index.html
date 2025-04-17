@@ -159,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,201 +196,6 @@
       
 
       
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/09/27/algorithm-graph/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/27/algorithm-graph/" class="post-title-link" itemprop="url">algorithm - graph</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-09-27 11:20:16" itemprop="dateCreated datePublished" datetime="2022-09-27T11:20:16+08:00">2022-09-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-10-12 13:32:37" itemprop="dateModified" datetime="2022-10-12T13:32:37+08:00">2022-10-12</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>主要是看有没有方向，有没有环<br>有向无环图<br>无向无环图</p>
-<h1 id="数据结构：如何表示"><a href="#数据结构：如何表示" class="headerlink" title="数据结构：如何表示"></a>数据结构：如何表示</h1><p>临接矩阵<br>临接链表</p>
-<p>不过这两种数据结构，都只能表示连接关系，没有办法表示起点和终点</p>
-<h1 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h1><ol>
-<li>什么是二分图？</li>
-<li>如何判断是否是二分图？</li>
-<li>二分图有什么用？</li>
-<li>最大匹配和最小定点覆盖</li>
-<li>贪心算法得到最小定点覆盖</li>
-</ol>
-<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><p>把一个图，排序成一个线性序列。<br>方法：类似于广度优先</p>
-<ol>
-<li>建立图和入度表</li>
-<li>先把入度为0的起始点加入队列</li>
-<li>如果队列不为空，弹出队列中的第一个点，加入res</li>
-<li>将与这个点相连的点的入度减一，如果为0，则加入队列</li>
-<li>执行2，3直到队列为空</li>
-<li>如果res的长度和点数相同，说明排序完成，否则说明图中有环</li>
-</ol>
-<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><p>并查集，故名思义包含两个操作<br>一个是 “合并”： union(a,b) 将a所属集合和b所属集合合并<br>一个是“查询”： find(c) 查找c的祖先<br>所以如何判断a和b是否联通呢？if find(a)==find(b)<br>通过使用并查集，我们可以将一堆点分成相互连通的不同的几个集合。</p>
-<h2 id="函数的实现以及优化"><a href="#函数的实现以及优化" class="headerlink" title="函数的实现以及优化"></a>函数的实现以及优化</h2><p>有两个数据结构 id 和 size<br>初始化每一个点的父节点是自己id[i]=i，集合个数是1 size[i]=1<br>find 做的事情是找到父节点，顺便路径压缩以增加查找速度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func find(a int) int&#123;</span><br><span class="line">    if id[a]!&#x3D;a &#123;</span><br><span class="line">        id[a] &#x3D; id[id[a]]</span><br><span class="line">        a &#x3D; id[a]</span><br><span class="line">    &#125;</span><br><span class="line">    return a</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>union 做的事情是找到两个点的父节点，将小的集合和并入大的集合(俗称按秩合并)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func union(a,b int) &#123;</span><br><span class="line"> s,t :&#x3D; find(a),find(b)</span><br><span class="line"> if s!&#x3D;t &#123;</span><br><span class="line">    if size[s]&gt;size[t] &#123;</span><br><span class="line">        id[t] &#x3D; s</span><br><span class="line">        size[s] +&#x3D; size[t]</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        id[s] &#x3D; t</span><br><span class="line">        size[t] +&#x3D; size[s]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="最低成本联通所有城市-或-最短路径"><a href="#最低成本联通所有城市-或-最短路径" class="headerlink" title="最低成本联通所有城市 或 最短路径"></a>最低成本联通所有城市 或 最短路径</h1><p>MST 最小生成树</p>
-<h2 id="什么是联通图的生成树"><a href="#什么是联通图的生成树" class="headerlink" title="什么是联通图的生成树"></a>什么是联通图的生成树</h2><p>一个连通图的生成树是一个极小的连通子图，它包含图中全部的n个顶点，但只有构成一棵树的n-1条边。</p>
-<h2 id="有两种思路找最小生成树"><a href="#有两种思路找最小生成树" class="headerlink" title="有两种思路找最小生成树"></a>有两种思路找最小生成树</h2><p>整体是贪心算法的思想<br>实现<br>Prim’s Tree - 优先队列，树的方法，从一个点开始覆盖其他点，优先队列选择最小消耗<br>也就是从任意一点开始，每次加入的点都是离它最近的，直到覆盖所有点<br>kruskal’s Forest - 并差集，森林的方法，从一棵树开始覆盖其他的边，排序后使用并查集<br>在森林中，每次找最近的两颗树相连</p>
-<h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>Elog(V) E是边的个数，V是点的个数</p>
-<h2 id="kruskal实现"><a href="#kruskal实现" class="headerlink" title="kruskal实现"></a>kruskal实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MST-KRUSKAL(G, w)</span><br><span class="line">A &#x3D; 空集</span><br><span class="line">for each vertex v属于G.V</span><br><span class="line">    MAKE-SET(v)</span><br><span class="line">sort the edges of G.E into nondecreasing order by weight w</span><br><span class="line">for each edge(u,v)属于G.E, taken in nondecreasing order by weight</span><br><span class="line">    if FIND-SET(v)!&#x3D;FIND-SET(u)</span><br><span class="line">        A &#x3D; A 合 &#123;(u,v)&#125;</span><br><span class="line">        UNION(u,v)</span><br><span class="line">return A</span><br></pre></td></tr></table></figure>
-<p>A是一个挑选出来的边的集合，先对所有边按权重排序O(ElogE)，然后依次遍历这些边，如果边的两个顶点不属于同一颗树，那么合并两颗树(ElogV)，挑出这条边，如果属于同一颗树则跳过。</p>
-<h2 id="prim-实现"><a href="#prim-实现" class="headerlink" title="prim 实现"></a>prim 实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST_PRIM(G,w,r)</span><br><span class="line">for each u属于G.V</span><br><span class="line">    u.weight &#x3D; inf</span><br><span class="line">    u.father &#x3D; nil</span><br><span class="line">r.weight &#x3D; 0</span><br><span class="line">Q &#x3D; G.V</span><br><span class="line">while Q不为空              v</span><br><span class="line">    u &#x3D; extract-min(Q)    logv</span><br><span class="line">    for each 与u相连的v     e</span><br><span class="line">        if v属于Q &amp;&amp; w(u,v)&lt;v.weight</span><br><span class="line">        v.weight &#x3D; w(u,v)</span><br><span class="line">        v.father &#x3D; u      logv</span><br></pre></td></tr></table></figure>
-<p>r为任选的一个根结点<br>在二叉堆上操作就是logv<br>总体时间复杂度就是：O(ElogV) + O(VlogV)=O(ElogV)</p>
-<h2 id="lc1135-最低成本连通所有城市的代码"><a href="#lc1135-最低成本连通所有城市的代码" class="headerlink" title="lc1135 最低成本连通所有城市的代码"></a>lc1135 最低成本连通所有城市的代码</h2><h3 id="kruskal-：-边排序-并查集"><a href="#kruskal-：-边排序-并查集" class="headerlink" title="kruskal ： 边排序 + 并查集"></a>kruskal ： 边排序 + 并查集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;sort&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func minimumCost(n int, connections [][]int) int &#123;</span><br><span class="line">    cost :&#x3D; 0</span><br><span class="line">    sides :&#x3D; 0</span><br><span class="line">    id :&#x3D; make([]int, n+1)</span><br><span class="line">    for i:&#x3D;1;i&lt;&#x3D;n;i++ &#123;</span><br><span class="line">        id[i] &#x3D; i</span><br><span class="line">    &#125;</span><br><span class="line">    size :&#x3D; make([]int, n+1)</span><br><span class="line">    fset :&#x3D; FindUnionSet&#123;</span><br><span class="line">        id,</span><br><span class="line">        size,</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Slice(connections, func(i, j int) bool &#123;</span><br><span class="line">        return connections[i][2]&lt;connections[j][2]</span><br><span class="line">    &#125;)</span><br><span class="line">    for _,c :&#x3D; range connections &#123;</span><br><span class="line">        u,v,weight :&#x3D; c[0],c[1], c[2]</span><br><span class="line">        if fset.Find(u)!&#x3D;fset.Find(v) &#123;</span><br><span class="line">            cost +&#x3D; weight</span><br><span class="line">            fset.Union(u,v)</span><br><span class="line">            sides +&#x3D; 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if sides!&#x3D;n-1 &#123;</span><br><span class="line">        cost &#x3D; -1</span><br><span class="line">    &#125;</span><br><span class="line">    return cost</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type FindUnionSet struct &#123;</span><br><span class="line">    id []int</span><br><span class="line">    size []int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (f FindUnionSet) Find(v int) int &#123;</span><br><span class="line">    for v!&#x3D;f.id[v] &#123;</span><br><span class="line">        f.id[v] &#x3D; f.id[f.id[v]]</span><br><span class="line">        v &#x3D; f.id[v]</span><br><span class="line">    &#125;</span><br><span class="line">    return v</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (f FindUnionSet) Union(u,v int) &#123;</span><br><span class="line">    p,q :&#x3D; f.Find(u),f.Find(v)</span><br><span class="line">    if p!&#x3D;q &#123;</span><br><span class="line">        if f.size[p]&gt;f.size[q] &#123;</span><br><span class="line">            f.id[q] &#x3D; p</span><br><span class="line">            f.size[p] +&#x3D; f.size[q]</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            f.id[p] &#x3D; q</span><br><span class="line">            f.size[q] +&#x3D; f.size[p]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="dijkstra-单源最短路径算法"><a href="#dijkstra-单源最短路径算法" class="headerlink" title="dijkstra 单源最短路径算法"></a>dijkstra 单源最短路径算法</h1><p>计算从起点出发，到每个点的最短距离<br>算法思路：<br>每次从”未求出最短路径的点”中取出“距离起点最近的点”，以这个点为桥梁刷新“未求出最短路径的点的”距离<br>也就是记录每个点到起点的最短距离<br>流程：</p>
-<ol>
-<li>建立临接链表edges[i] = append(edges[i], edge{city, cost})<br>建立初始dist[i] = math.MaxInt32</li>
-<li>把起点放进优先队列</li>
-<li>对于优先队列中的每一个点执行以下循环：</li>
-</ol>
-<ul>
-<li>弹出cost最小的加入结果队列，cost为d1</li>
-<li>遍历该点的所有临接，如果d1+v.cost&lt;dist[i], 说明之前没有访问过，更新dist[i]和v.cost</li>
-</ul>
-<ol start="4">
-<li>如果len(结果队列)==点的总数，返回结果队列最后一个点的cost, 否则返回-1<h2 id="dijkstra算法实现"><a href="#dijkstra算法实现" class="headerlink" title="dijkstra算法实现"></a>dijkstra算法实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">func minimumCost(n int, connections [][]int) []edge &#123;</span><br><span class="line">    &#x2F;&#x2F; 建立临接链表</span><br><span class="line">    edges :&#x3D; make([][]edge, n+1)</span><br><span class="line">    for _,c :&#x3D; range connections &#123;</span><br><span class="line">        u,v,w :&#x3D; c[0],c[1],c[2]</span><br><span class="line">        edges[u] &#x3D; append(edges[u], edge&#123;v,w&#125;)</span><br><span class="line">        edges[v] &#x3D; append(edges[v], edge&#123;u, w&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 建立cost矩阵</span><br><span class="line">    costs :&#x3D; make([]int, n+1)</span><br><span class="line">    for i:&#x3D;1;i&lt;&#x3D;n;i++ &#123;</span><br><span class="line">        costs[i] &#x3D; math.MaxInt32</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 建堆</span><br><span class="line">    queue :&#x3D; &amp;edgeHeap&#123;&#125;</span><br><span class="line">    heap.Init(queue)</span><br><span class="line">    heap.Push(queue, edge&#123;1,0&#125;)</span><br><span class="line">    res :&#x3D; []edge&#123;&#125;</span><br><span class="line">    counts :&#x3D; 0</span><br><span class="line">    for queue.Len()&gt;0 &#123;</span><br><span class="line">        v :&#x3D; heap.Pop(queue).(edge)</span><br><span class="line">        city,cost :&#x3D; v.city,v.cost</span><br><span class="line">        if cost&gt;costs[city] &#123;</span><br><span class="line">            continue</span><br><span class="line">        &#125;</span><br><span class="line">        res &#x3D; append(res, v)</span><br><span class="line">        counts +&#x3D; 1</span><br><span class="line">        for _,e :&#x3D; range edges[city] &#123;</span><br><span class="line">            u,w :&#x3D; e.city,e.cost</span><br><span class="line">            d :&#x3D; cost+w</span><br><span class="line">            if d&lt;costs[u] &#123;</span><br><span class="line">                heap.Push(queue, edge&#123;u, d&#125;)</span><br><span class="line">                costs[u] &#x3D; d</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type edge struct &#123;</span><br><span class="line">    city int</span><br><span class="line">    cost int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type edgeHeap []edge</span><br><span class="line"></span><br><span class="line">func (h edgeHeap) Len() int &#123; return len(h) &#125;</span><br><span class="line">func (h edgeHeap) Less(i,j int) bool &#123; return h[i].cost&lt;h[j].cost &#125;</span><br><span class="line">func (h edgeHeap) Swap(i,j int) &#123; h[i],h[j] &#x3D; h[j],h[i]&#125;</span><br><span class="line"></span><br><span class="line">func (h *edgeHeap) Push(x interface&#123;&#125;) &#123;</span><br><span class="line">    *h &#x3D; append(*h, x.(edge))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (h *edgeHeap) Pop() interface&#123;&#125; &#123;</span><br><span class="line">    old :&#x3D; *h</span><br><span class="line">    size :&#x3D; len(old)</span><br><span class="line">    *h &#x3D; old[:size-1]</span><br><span class="line">    return old[size-1]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="lc882-细分图中可到达结点"><a href="#lc882-细分图中可到达结点" class="headerlink" title="lc882 细分图中可到达结点"></a>lc882 细分图中可到达结点</h2>使用used来记录边的使用情况，最后一起统计<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">func reachableNodes(edges [][]int, maxMoves int, n int) int &#123;</span><br><span class="line">    &#x2F;&#x2F; 建立临接链表</span><br><span class="line">    graph :&#x3D; make([][]edge, n)</span><br><span class="line">    for _,c :&#x3D; range edges &#123;</span><br><span class="line">        u,v,w :&#x3D; c[0],c[1],c[2]</span><br><span class="line">        graph[u] &#x3D; append(graph[u], edge&#123;v, w&#125;)</span><br><span class="line">        graph[v] &#x3D; append(graph[v], edge&#123;u, w&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 建立cost矩阵</span><br><span class="line">    costs :&#x3D; make([]int, n)</span><br><span class="line">    for i:&#x3D;1;i&lt;n;i++ &#123;</span><br><span class="line">        costs[i] &#x3D; math.MaxInt32</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 建堆</span><br><span class="line">    queue :&#x3D; &amp;edgeHeap&#123;&#125;</span><br><span class="line">    heap.Init(queue)</span><br><span class="line">    heap.Push(queue, edge&#123;0,0&#125;)</span><br><span class="line">    res :&#x3D; 0</span><br><span class="line">    used :&#x3D; make(map[side]int)</span><br><span class="line">    for queue.Len()&gt;0 &#123;</span><br><span class="line">        v :&#x3D; heap.Pop(queue).(edge)</span><br><span class="line">        city,cost :&#x3D; v.city,v.cost</span><br><span class="line">        if cost&gt;costs[city] &#123;</span><br><span class="line">            continue</span><br><span class="line">        &#125;</span><br><span class="line">        res++</span><br><span class="line">        for _,e :&#x3D; range graph[city] &#123;</span><br><span class="line">            u,w :&#x3D; e.city,e.cost</span><br><span class="line">            used[side&#123;city,u&#125;] &#x3D; min(w, maxMoves-cost)</span><br><span class="line">            &#x2F;&#x2F; fmt.Println(city, u, used)</span><br><span class="line">            d :&#x3D; cost+w+1</span><br><span class="line">            if d&lt;min(maxMoves+1, costs[u]) &#123;</span><br><span class="line">                heap.Push(queue, edge&#123;u, d&#125;)</span><br><span class="line">                costs[u] &#x3D; d</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for _,e :&#x3D; range edges &#123;</span><br><span class="line">        u,v,w :&#x3D; e[0],e[1],e[2]</span><br><span class="line">        res +&#x3D; min(w, used[side&#123;u,v&#125;]+used[side&#123;v,u&#125;])</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; fmt.Println(used)</span><br><span class="line"></span><br><span class="line">    return res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func min(a,b int) int &#123;</span><br><span class="line">    if a&lt;b &#123;</span><br><span class="line">        return a</span><br><span class="line">    &#125;</span><br><span class="line">    return b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type side struct &#123;</span><br><span class="line">    v int</span><br><span class="line">    u int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type edge struct &#123;</span><br><span class="line">    city int</span><br><span class="line">    cost int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type edgeHeap []edge</span><br><span class="line"></span><br><span class="line">func (h edgeHeap) Len() int &#123; return len(h) &#125;</span><br><span class="line">func (h edgeHeap) Less(i,j int) bool &#123; return h[i].cost&lt;h[j].cost &#125;</span><br><span class="line">func (h edgeHeap) Swap(i,j int) &#123; h[i],h[j] &#x3D; h[j],h[i]&#125;</span><br><span class="line"></span><br><span class="line">func (h *edgeHeap) Push(x interface&#123;&#125;) &#123;</span><br><span class="line">    *h &#x3D; append(*h, x.(edge))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (h *edgeHeap) Pop() interface&#123;&#125; &#123;</span><br><span class="line">    old :&#x3D; *h</span><br><span class="line">    size :&#x3D; len(old)</span><br><span class="line">    *h &#x3D; old[:size-1]</span><br><span class="line">    return old[size-1]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h1><p>图的问题，要么用bfs，要么用dfs，bfs一般都可以解决且更快一些</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2022/09/25/gym-vocabulary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yuxin.zhang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuxin's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/25/gym-vocabulary/" class="post-title-link" itemprop="url">English class - gym vocabulary</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-09-25 15:26:08" itemprop="dateCreated datePublished" datetime="2022-09-25T15:26:08+08:00">2022-09-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-10-24 09:48:13" itemprop="dateModified" datetime="2022-10-24T09:48:13+08:00">2022-10-24</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>category:<br> athletic sports, cardio, weight training<br> cardio, aerobic<br>personal trainer<br>motivation<br>definitely<br>adapt and overcome<br>efficient<br>squat<br>glutes<br>butt<br>stationary - not moving</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
     
 
 
@@ -1051,10 +856,191 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/09/mysql-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/09/mysql-log/" class="post-title-link" itemprop="url">mysql log</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-09 22:44:40 / Modified: 23:27:09" itemprop="dateCreated datePublished" datetime="2021-11-09T22:44:40+08:00">2021-11-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>cd /usr/local/mysql/<br>index文件： mysql-bin.index<br>binlog文件：mysql-bin.000055<br>redolog文件：ib_logfile0<br>undolog文件：undo_001</p>
+<h1 id="查看binlog"><a href="#查看binlog" class="headerlink" title="查看binlog"></a>查看binlog</h1><p>../bin/mysqlbinlog –no-defaults mysql-bin.000055</p>
+<p>sql -&gt; show binlog events in ‘mysql-bin.000055’;<br>sql -&gt; show variables like ‘binlog_format’; // statement or row<br>sql -&gt; show variables like ‘log_%’;<br>sql -&gt; show master status\G;</p>
+<h2 id="查询-BINLOG-格式"><a href="#查询-BINLOG-格式" class="headerlink" title="查询 BINLOG 格式"></a>查询 BINLOG 格式</h2><p>show VARIABLES like ‘binlog_format’;</p>
+<h2 id="查询-BINLOG-位置"><a href="#查询-BINLOG-位置" class="headerlink" title="查询 BINLOG 位置"></a>查询 BINLOG 位置</h2><p>show VARIABLES like ‘datadir’;</p>
+<h2 id="查询当前数据库中-BINLOG-名称及大小"><a href="#查询当前数据库中-BINLOG-名称及大小" class="headerlink" title="查询当前数据库中 BINLOG 名称及大小"></a>查询当前数据库中 BINLOG 名称及大小</h2><p>show binary logs;</p>
+<h2 id="查看-master-正在写入的-BINLOG-信息"><a href="#查看-master-正在写入的-BINLOG-信息" class="headerlink" title="查看 master 正在写入的 BINLOG 信息"></a>查看 master 正在写入的 BINLOG 信息</h2><p>show master status\G;</p>
+<h2 id="通过-offset-查看-BINLOG-信息"><a href="#通过-offset-查看-BINLOG-信息" class="headerlink" title="通过 offset 查看 BINLOG 信息"></a>通过 offset 查看 BINLOG 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ limit 9000,  10;</p>
+<h2 id="通过-position-查看-binlog-信息"><a href="#通过-position-查看-binlog-信息" class="headerlink" title="通过 position 查看 binlog 信息"></a>通过 position 查看 binlog 信息</h2><p>show BINLOG events in ‘mysql-bin.000034’ from 1742635 limit 10;</p>
+<h2 id="查询-binlog"><a href="#查询-binlog" class="headerlink" title="查询 binlog"></a>查询 binlog</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055| less</p>
+<h2 id="导出-BINLOG"><a href="#导出-BINLOG" class="headerlink" title="导出 BINLOG"></a>导出 BINLOG</h2><p>mysqlbinlog –no-defaults –base64-output=decode-rows -v <br> –start-datetime  “2021-11-09 20:00:00” <br> –database testdb  mysql-bin.000055 &gt; binlog_raw.sql </p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="通过-BINLOG-进行恢复。"><a href="#通过-BINLOG-进行恢复。" class="headerlink" title="通过 BINLOG 进行恢复。"></a>通过 BINLOG 进行恢复。</h3><p>../bin/mysqlbinlog –no-defaults –start-position=482 –stop-position=1327 –database=testdb  mysql-bin.000055 | mysql -u username -p password</p>
+<h3 id="通过-BINLOG-导出的-sql-进行恢复。"><a href="#通过-BINLOG-导出的-sql-进行恢复。" class="headerlink" title="通过 BINLOG 导出的 sql 进行恢复。"></a>通过 BINLOG 导出的 sql 进行恢复。</h3><p>mysql -u username -p password &lt; binlog_raw.sql </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/Melody-Zhang/2021/11/06/https%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuxin.zhang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuxin's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/06/https%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">https服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-06 19:12:06" itemprop="dateCreated datePublished" datetime="2021-11-06T19:12:06+08:00">2021-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-08 21:13:17" itemprop="dateModified" datetime="2021-11-08T21:13:17+08:00">2021-11-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>在tcp连接之外，增加了ssl/tls协议。<br>tls协议在tcp协议之后建立。</p>
+<h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>ssl: secure sockets layer 安全套接层<br>tls: transport layer security 传输层安全</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>tcp<br>client: syn<br>server: syn,ack<br>client: ack</p>
+<p>tlsv1.2<br>client: Client Hello<br>server: Server Hello, Certificate, Server Key Exchange, Server Hello Done<br>client: Client Key Exchange, Change Cipher Spec, Encrypted Handshake message<br>server: New Session Ticket, Change Cipher Spec, Encrypted Handshake message</p>
+<p>开始通信：<br>client: Application Data<br>server: Application Data</p>
+<h2 id="证书中包含的信息"><a href="#证书中包含的信息" class="headerlink" title="证书中包含的信息"></a>证书中包含的信息</h2><p>申请人信息<br>签名算法：带RSA加密的SHA-1<br>有效期<br>公共密钥信息</p>
+<ul>
+<li>算法：RSA</li>
+<li>公共密钥：256字节</li>
+<li>密钥大小：2048位<br>签名<br>密钥ID<br>指纹：SHA-256,SHA-1 (摘要-安全散列算法)</li>
+</ul>
+<h2 id="信任本地根证书"><a href="#信任本地根证书" class="headerlink" title="信任本地根证书"></a>信任本地根证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo security add-trusted-cert -d -r trustRoot -k &#x2F;Library&#x2F;Keychains&#x2F;System.keychain &#x2F;Users&#x2F;zhangyuxin&#x2F;language_learn&#x2F;entrytask_go&#x2F;cert.pem</span><br></pre></td></tr></table></figure>
+
+<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><p>高级 -&gt; thisisunsafe</p>
+<h1 id="go配置文件解析"><a href="#go配置文件解析" class="headerlink" title="go配置文件解析"></a>go配置文件解析</h1><h2 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h2><h2 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h2><h1 id="鉴权：Auth-Session-Token的鉴权机制"><a href="#鉴权：Auth-Session-Token的鉴权机制" class="headerlink" title="鉴权：Auth/Session Token的鉴权机制"></a>鉴权：Auth/Session Token的鉴权机制</h1><h2 id="四种方法"><a href="#四种方法" class="headerlink" title="四种方法"></a>四种方法</h2><p>http basic<br>session-cookie<br>token<br>oauth</p>
+<h2 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h2><ol>
+<li>请求授权码</li>
+<li>返回授权码</li>
+<li>请求令牌</li>
+<li>返回令牌</li>
+</ol>
+<h2 id="sso-single-sign-on"><a href="#sso-single-sign-on" class="headerlink" title="sso  single sign-on"></a>sso  single sign-on</h2><p>一个账号对应的token同一时间只有一个生效</p>
+<h2 id="JWT生成规则-json-web-token"><a href="#JWT生成规则-json-web-token" class="headerlink" title="JWT生成规则 (json web token)"></a>JWT生成规则 (json web token)</h2><h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><h2 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h2><p>“github.com/gomodule/redigo/redis”<br>“github.com/go-redis/redis/v8”</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li>Golang创建最简单的HTTP和HTTPS服务 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/14947">https://studygolang.com/articles/14947</a></li>
+<li>详解TCP三次握手以及TLS-SSL握手 <a target="_blank" rel="noopener" href="https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/">https://ocdman.github.io/2018/11/02/%E8%AF%A6%E8%A7%A3TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%BB%A5%E5%8F%8ATLS-SSL%E6%8F%A1%E6%89%8B/</a></li>
+<li>常见登录鉴权方案 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/271768645">https://zhuanlan.zhihu.com/p/271768645</a></li>
+<li>Go 鉴权 <a target="_blank" rel="noopener" href="https://studygolang.com/articles/22040">https://studygolang.com/articles/22040</a></li>
+<li>单点登录（SSO）看这一篇就够了 <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/636281">https://developer.aliyun.com/article/636281</a></li>
+<li>在 GO 语言中创建你自己的 OAuth2 服务：客户端凭据授权流程 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903784498331661">https://juejin.cn/post/6844903784498331661</a></li>
+<li>理解OAuth 2.0 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1095,7 +1081,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
